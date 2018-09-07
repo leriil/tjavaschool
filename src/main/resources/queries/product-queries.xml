@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+
+<properties>
+
+	<entry key="getProductById">
+        	<![CDATA[
+                SELECT
+                	id AS id,
+                	name AS name,
+                	price AS price,
+                	in_stock AS inStock,
+                	volume AS volume
+                FROM products
+                WHERE id = :id
+        	]]>
+	</entry>
+
+</properties>
