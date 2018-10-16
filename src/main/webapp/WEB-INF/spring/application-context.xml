@@ -4,13 +4,56 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:sec="http://www.springframework.org/schema/security"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/mvc
-        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/security
+        http://www.springframework.org/schema/security/spring-security.xsd
+        http://www.springframework.org/schema/data/jpa
+        http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
+    <!--<bean name="bcryptEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>-->
+    <!--<bean id="userService" class="com.tsystems.tshop.services.impl.UserDetailsServiceImpl"/>-->
+    <context:component-scan base-package="com.tsystems.tshop"/>
+    <jpa:repositories base-package="com.tsystems.tshop.repositories"/>
+
+    <mvc:annotation-driven/>
+    <mvc:resources mapping="/resources/**" location="/resources/"/>
+    <bean id="dataSource"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost:3306/test?useLegacyDatetimeCode=false&amp;serverTimezone=UTC" />
+        <property name="username" value="nonroot" />
+        <property name="password" value="123" />
+    </bean>
+    <bean id="entityManagerFactory"
+          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="packagesToScan" value="com.tsystems.tshop.domain" />
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+        </property>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">create</prop>
+                <prop key="hibernate.hbm2ddl.import_files">db/sql/init.sql</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL55Dialect</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.use_sql_comments">true</prop>
+
+            </props>
+        </property>
+    </bean>
+    <bean id="transactionManager"
+          class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
 <!--     <bean id="simpleService" class="com.tsystems.services.impl.SimpleServiceImpl" init-method="init" destroy-method="destroy">
         <constructor-arg name="simpleDomainModel">
             <bean class="com.tsystems.domain.SimpleDomainModel" init-method="init" destroy-method="destroy">
@@ -35,10 +78,31 @@
 
     <bean class="com.tsystems.postprocessors.SimpleServiceBeanPostProcessor"/>
     <bean class="com.tsystems.listeners.ApplicationContextRefreshedApplicationListener"/> -->
-    
-    <context:component-scan base-package="com.tsystems.tshop"/>
-    
-    <mvc:annotation-driven/>
-    <mvc:resources mapping="/resources/**" location="/resources/"/>
+    <!--<sec:http pattern="/css/**" security="none"/>-->
+    <!--<sec:http pattern="/login.jsp*" security="none"/>-->
+    <!--<sec:http use-expressions="true">-->
+        <!--<sec:intercept-url pattern="/login.jsp*" access="permitAll()"/>-->
+    <!---->
+        <!--<sec:intercept-url pattern="/**" access="USER_ROLE" />-->
+        <!--<sec:form-login-->
+                <!--login-page="/WEB-INF/views/login.jsp"-->
+                <!--login-processing-url="/j_spring_security_check"-->
+                <!--authentication-failure-url="/WEB-INF/views/index.jsp"-->
+                <!--default-target-url="/WEB-INF/views/index.jsp"-->
+        <!--always-use-default-target="true"/>-->
+        <!--<sec:logout logout-success-url="/WEB-INF/views/index.jsp" />-->
+    <!--</sec:http>-->
+
+    <!--<sec:authentication-manager>-->
+        <!--<sec:authentication-provider>-->
+            <!--&lt;!&ndash;<sec:password-encoder ref="bcryptEncoder"/>&ndash;&gt;-->
+            <!--<sec:user-service>-->
+                <!--<sec:user name="katya" password="pass" authorities="ROLE_USER"/>-->
+                <!--<sec:user name="bob" password="$2a$04$zgVc2KQ6kLlqHzLYldjJ0.WbM5btUjFzFcpDQwh2bs9f0nZkwXpMW" authorities="ROLE_SUPERVISOR, ROLE_USER" />-->
+                <!--<sec:user name="sam" password="$2a$04$S3Hv9y3rQG5DcGz3uH0HHufZ1uisSa03AZZJd5Qd1Xhna7IdY.jvy" authorities="ROLE_USER" />-->
+            <!--</sec:user-service>-->
+        <!--</sec:authentication-provider>-->
+    <!--</sec:authentication-manager>-->
+
 
 </beans>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:sec="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/security
+       http://www.springframework.org/schema/security/spring-security.xsd">
+    <bean class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler"/>
+    <bean name="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+<sec:http auto-config="true" use-expressions="false">
+    <sec:logout logout-url="/logout" logout-success-url="/product/all?logout=true"/>
+    <sec:form-login
+                    login-page="/login"
+                    login-processing-url="/login"
+                    username-parameter="custom_username"
+                    password-parameter="custom_password"
+                    default-target-url="/product/all"
+                    always-use-default-target="true"
+                    authentication-failure-url="/login?error=true"/>
+    <sec:intercept-url pattern="/client/*" access="ROLE_USER"/>
+    <sec:intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+    <!--<sec:csrf disabled="true"/>-->
+</sec:http>
+
+
+    <sec:authentication-manager>
+        <sec:authentication-provider user-service-ref="userDetailsServiceImpl">
+            <!--<sec:password-encoder ref="passwordEncoder"/>-->
+            <!--<sec:user-service>-->
+                <!--<sec:user name="katya" password="$2a$04$Tv6i5jzZ7OzQ50gMm9FhC.CmoOZh1OtSZlbktGSz31FEjV2oDu8Im" authorities="ROLE_USER"/>-->
+            <!--</sec:user-service>-->
+        </sec:authentication-provider>
+    </sec:authentication-manager>
+</beans>
