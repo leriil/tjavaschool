@@ -9,7 +9,8 @@
     <bean class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler"/>
     <bean name="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 <sec:http auto-config="true" use-expressions="false">
-    <sec:logout logout-url="/logout" logout-success-url="/product/all?logout=true"/>
+    <sec:logout logout-url="/logout"
+                logout-success-url="/login?logout=true"/>
     <sec:form-login
                     login-page="/login"
                     login-processing-url="/login"
@@ -18,7 +19,8 @@
                     default-target-url="/product/all"
                     always-use-default-target="true"
                     authentication-failure-url="/login?error=true"/>
-    <sec:intercept-url pattern="/client/*" access="ROLE_USER"/>
+    <!--<sec:intercept-url pattern="/client/*" access="ROLE_USER"/>-->
+    <!--<sec:intercept-url pattern="/product/*" access="IS_AUTHENTICATED_FULLY"/>-->
     <sec:intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
     <!--<sec:csrf disabled="true"/>-->
 </sec:http>

@@ -17,12 +17,7 @@
 <body>
 <jsp:include page="../views/fragments/header.jsp"></jsp:include>
 <div class="container">
-    <c:if test="${param.logout!=null}">
-        <div class="alert alert-secondary alert-dismissible">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            You've been successfully signed out.
-        </div>
-    </c:if>
+
     <h2>All Products</h2>
     <table class="table table-hover table-striped">
         <tbody>

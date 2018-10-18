@@ -30,7 +30,7 @@ private List<Product> products = new ArrayList<>();
 //    @JoinColumn(name = "user_id")
 //    private User user;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "sale_address_id")
     private Address address;
 

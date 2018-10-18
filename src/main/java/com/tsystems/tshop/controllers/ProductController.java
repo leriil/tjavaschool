@@ -9,13 +9,18 @@ package com.tsystems.tshop.controllers;//package com.tsystems.tshop.controllers;
 //import com.tsystems.tshop.services.ProductService;
 //
 
+import com.tsystems.tshop.domain.Address;
 import com.tsystems.tshop.domain.Product;
 import com.tsystems.tshop.domain.Sale;
+import com.tsystems.tshop.domain.User;
 import com.tsystems.tshop.enums.ProductCategory;
+import com.tsystems.tshop.services.AddressService;
 import com.tsystems.tshop.services.ProductService;
 import com.tsystems.tshop.services.SaleService;
 import com.tsystems.tshop.services.UserService;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +33,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 @Controller
-@SessionAttributes({"product","sale","products"})
+@SessionAttributes({"product","sale","productsInCart","address","user"})
 @RequestMapping("/product")
 public class ProductController {
     @Autowired
@@ -40,9 +45,27 @@ public class ProductController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    AddressService addressService;
+
+
     private static final Logger log=Logger.getLogger("Log");
 
-    List<Product> products=new ArrayList<>();
+    @ModelAttribute("user")
+    public User getUser(){
+    return new User();
+}
+
+    @ModelAttribute("productsInCart")
+        public List<Product> getProducts(){
+    return new ArrayList<>();
+}
+
+    @ModelAttribute("address")
+     public Address getAddress(){
+    return new Address();
+}
+//    List<Product> products=new ArrayList<>();
 
 
 
@@ -74,7 +97,8 @@ public class ProductController {
 
 
     @RequestMapping (value = "/add",method=RequestMethod.GET)
-    public String addProduct(Model model){
+    public String addProduct(Model model,
+                             @ModelAttribute("product")Product product){
        return "product_add";
     }
 
@@ -105,25 +129,52 @@ public class ProductController {
     }
 
 //    @ResponseBody
-//    @RequestMapping(value = "/addtocart")
-//    public String placeOrder(@ModelAttribute Sale sale, @ModelAttribute Product product) {
-//        System.out.println(product.toString()+"this is the product id");
-//        products.add(product);
-//        sale.setProducts(products);
-//        String username=SecurityContextHolder.getContext().getAuthentication().getName();
-//        sale.setUser(this.userService.getUser(username));
+    @RequestMapping(value = "/placeOrder")
+    public String placeOrder(@ModelAttribute Sale sale,
+//                             @ModelAttribute Product product,
+                             @ModelAttribute ("productsInCart") List<Product> productsInCart,
+                             @ModelAttribute("user") User user,
+                             @ModelAttribute("address")Address address) {
+
+//       sale.setProducts(productsInCart);
+        String username=SecurityContextHolder.getContext().getAuthentication().getName();
+        user=this.userService.getUser(username);
+        if(username!=null){
+            List<Address> userAddresses=this.addressService.getUserAddresses(username);
+            if(userAddresses!=null){
+                System.out.println(userAddresses);
+                address=userAddresses.get(0);
+            }
+        }
+this.addressService.saveAddress(address);
+// address.setCountry("Rus");
+//        this.addressService.saveAddress(address);
+        sale.setUser(user);
+        sale.setAddress(address);
+
 //        sale.setDeliveryMethod("delivery");
 //        sale.setPaymentMethod("cash");
 //        this.saleService.saveSale(sale);
+        return "order_place";
+    }
+//    @RequestMapping (value = "/placeOrder")
+//    public String orderPlace(
+////            @ModelAttribute("address") Address address,
+//                             @ModelAttribute("user") User user,
+//                             @ModelAttribute Sale sale){
+//        String username=SecurityContextHolder.getContext().getAuthentication().getName();
+//        sale.setUser(this.userService.getUser(username));
+//        System.out.println(this.userService.getUser(username));
 //        return "order_place";
 //    }
-@ResponseBody
+    @ResponseBody
     @RequestMapping(value = "/addToCart",method = RequestMethod.POST)
-    public Long addToCart(@RequestBody Long productId){
+    public Long addToCart(@RequestBody Long productId,
+                          @ModelAttribute ("productsInCart") List <Product> productsInCart){
        // Long Id=Long.parseLong(productId);
-        products.add(this.productService.findOne(productId));
+        productsInCart.add(this.productService.findOne(productId));
         System.out.println(productId);
-    System.out.println(products);
+    System.out.println(productsInCart);
 //        Long id=Long.parseLong(productId);
         return productId;
     }
@@ -134,4 +185,34 @@ public class ProductController {
 //    status.setComplete();
 //        return "redirect:/product/add";
 //    }
+//
+
+    @RequestMapping(value = "/order/save",method = RequestMethod.POST)
+    public String saveSale( @ModelAttribute("sale")Sale sale){
+        System.out.println(sale);
+        return "order_review";
+    }
+
+    @RequestMapping(value = "/order/confirm")
+    public String orderConfirm(@ModelAttribute("productsInCart")List<Product> productsIncart,
+                               @ModelAttribute("sale")Sale sale,
+                               @ModelAttribute("address")Address address,
+                               SessionStatus status,
+Session session
+//                               @ModelAttribute("address") Address address,
+//                               @ModelAttribute("products")List<Product>products
+    ){
+//        sale.setAddress(address);
+//        sale.setProducts(products);
+//        String username=SecurityContextHolder.getContext().getAuthentication().getName();
+//        sale.setUser(this.userService.getUser(username));
+//        sale.setDeliveryMethod(sale.getDeliveryMethod());
+//        sale.setPaymentMethod(sale.getPaymentMethod());
+        sale.setOrderStatus("waiting for approval");
+        sale.setPaymentStatus("not paid");
+//        this.saleService.saveSale(sale);
+//        session.getSession().remove(productsIncart);
+////        status.setComplete();
+        return "redirect:/product/all";
+    }
 }

@@ -72,7 +72,7 @@
 
                 <!-- Modal footer -->
                 <div class="modal-footer align-content-lg-center">
-                    <a href="<spring:url value="#"/>" class="btn btn-dark" id="addToCart" > Check out</a>
+                    <a href="<spring:url value="/product/placeOrder"/>" class="btn btn-dark" id="addToCart" > Check out</a>
                     <a href="<spring:url value="#"/>" class="btn btn-dark" >Continue shopping</a>
                     <%--<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>--%>
                 </div>

@@ -39,6 +39,12 @@
         <c:if test="${param.error!=null}">
             <p>Invalid Username or Password</p>
         </c:if>
+        <c:if test="${param.logout!=null}">
+            <div class="alert alert-secondary alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                You've been successfully signed out.
+            </div>
+        </c:if>
         <%--<c:if test="${param.logout!=null}">--%>
             <%--<p>You have successfully been signed out</p>--%>
         <%--</c:if>--%>
