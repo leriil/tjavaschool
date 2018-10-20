@@ -15,7 +15,7 @@ insert into user_role(user_id,role_id)values (3,1);
 insert into user_role(user_id,role_id)values (4,2);
 insert into user_role(user_id,role_id)values (3,2);
 
-insert into address(country, city, zipCode, street, house, flat) values ('US','Washington D.C.','20001','Bloomingdale' ,'3' ,'5B');
+insert into address(country, city, zip_code, street, house, flat) values ('US','Washington','20001','Bloomingdale' ,'3' ,'5B');
 
 insert into user_address(user_id,address_id) values(1,1);
 insert into user_address(user_id,address_id) values(2,1);
