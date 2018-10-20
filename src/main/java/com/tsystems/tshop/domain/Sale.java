@@ -10,7 +10,7 @@ public class Sale {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "sale_id")
-    private Long orderId;
+    private Long saleId;
 
 //    @ManyToMany(cascade = CascadeType.ALL)
 //    @JoinTable(name="order_product", joinColumns=@JoinColumn(name="order_id"),
@@ -20,7 +20,7 @@ public class Sale {
 //        CascadeType.ALL
 //})
 //@ManyToMany(cascade = CascadeType.ALL)
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany( fetch = FetchType.EAGER)
 @JoinTable(name = "sale_product",
         joinColumns = @JoinColumn(name = "sale_id"),
         inverseJoinColumns = @JoinColumn(name = "product_id")
@@ -51,12 +51,12 @@ private Set<Product> products = new HashSet<>();
     @Column(name = "order_status")
     private String orderStatus;
 
-//    public Long getOrderId() {
-//        return orderId;
+//    public Long getSaleId() {
+//        return saleId;
 //    }
 //
-//    public void setOrderId(Long orderId) {
-//        this.orderId = orderId;
+//    public void setSaleId(Long saleId) {
+//        this.saleId = saleId;
 //    }
 
     public String getPaymentMethod() {
@@ -91,12 +91,12 @@ private Set<Product> products = new HashSet<>();
         this.orderStatus = orderStatus;
     }
 
-    public Long getOrderId() {
-        return orderId;
+    public Long getSaleId() {
+        return saleId;
     }
 
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
+    public void setSaleId(Long saleId) {
+        this.saleId = saleId;
     }
 
     public Set<Product> getProducts() {
@@ -133,7 +133,7 @@ private Set<Product> products = new HashSet<>();
     @Override
     public String toString() {
         return "Sale{" +
-                "orderId=" + orderId +
+                "saleId=" + saleId +
                 ", products=" + products +
                 ", address=" + address +
                 ", user=" + user +
