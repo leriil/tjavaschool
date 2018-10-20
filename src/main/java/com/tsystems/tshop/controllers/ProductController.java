@@ -210,6 +210,7 @@ public class ProductController {
         sale.setOrderStatus("waiting for approval");
         sale.setPaymentStatus("not paid");
         this.saleService.saveSale(sale);
+        status.setComplete();
 //        session.getSession().remove(productsIncart);
 ////        status.setComplete();
         return "redirect:/product/all";
