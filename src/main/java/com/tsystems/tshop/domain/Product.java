@@ -4,6 +4,8 @@ import com.tsystems.tshop.enums.ProductCategory;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "product")
@@ -13,8 +15,8 @@ public class Product {
 	@Column(name = "product_id")
 	private Long productId;
 
-//	@ManyToMany(mappedBy = "products", fetch = FetchType.EAGER)
-//	private List<Sale> sales=new ArrayList<>();
+	@ManyToMany(mappedBy = "products")
+	private Set<Sale> sales=new HashSet<>();
 
 	@Column(name = "name")
 	private String name;
@@ -97,7 +99,14 @@ public class Product {
 		this.volume = volume;
 	}
 
-//	public List<Sale> getSales() {
+	public Set<Sale> getSales() {
+		return sales;
+	}
+
+	public void setSales(Set<Sale> sales) {
+		this.sales = sales;
+	}
+	//	public List<Sale> getSales() {
 //		return sales;
 //	}
 //
