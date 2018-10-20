@@ -171,7 +171,7 @@ public class ProductController {
     @ResponseBody
     @RequestMapping(value = "/addToCart",method = RequestMethod.POST)
     public Long addToCart(@RequestBody Long productId,
-                          @ModelAttribute ("productsInCart") List <Product> productsInCart){
+                          @ModelAttribute ("productsInCart") Set <Product> productsInCart){
        // Long Id=Long.parseLong(productId);
         productsInCart.add(this.productService.findOne(productId));
         System.out.println(productId);
