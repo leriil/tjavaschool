@@ -17,7 +17,7 @@ public class SaleService {
 
     public void saveSale(Sale sale){
         this.saleRepository.save(sale);
-        log.log(Level.WARNING,"sale saved"+sale.toString());
+        log.log(Level.WARNING,"we have saved::"+sale.toString());
     }
 
 }
