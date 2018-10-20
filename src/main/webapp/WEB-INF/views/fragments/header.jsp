@@ -77,8 +77,9 @@
 								<li><a href="<spring:url value="/user/account"/>">Account</a></li>
 								<li>
 									<a id="logout" href="#">Sign out</a>
-									<form id="logout-form" action="<spring:url value="/logout"/>" method="post"/>
+									<form id="logout-form" action="<spring:url value="/logout"/>" method="post">
 									<sec:csrfInput/>
+									</form>
 								</li>
 							</ul>
 						</li>
