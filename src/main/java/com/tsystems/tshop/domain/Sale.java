@@ -1,7 +1,8 @@
 package com.tsystems.tshop.domain;
+
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "sale")
@@ -19,23 +20,23 @@ public class Sale {
 //        CascadeType.ALL
 //})
 //@ManyToMany(cascade = CascadeType.ALL)
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
 @JoinTable(name = "sale_product",
         joinColumns = @JoinColumn(name = "sale_id"),
         inverseJoinColumns = @JoinColumn(name = "product_id")
 )
-private List<Product> products = new ArrayList<>();
+private Set<Product> products = new HashSet<>();
 
 //    @ManyToOne
 //    @JoinColumn(name = "user_id")
 //    private User user;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "sale_address_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id")
     private Address address;
 
-    @ManyToOne
-    @JoinColumn(name = "sale_user_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Column(name = "payment_method")
@@ -98,11 +99,11 @@ private List<Product> products = new ArrayList<>();
         this.orderId = orderId;
     }
 
-    public List<Product> getProducts() {
+    public Set<Product> getProducts() {
         return products;
     }
 
-    public void setProducts(List<Product> products) {
+    public void setProducts(Set<Product> products) {
         this.products = products;
     }
 
