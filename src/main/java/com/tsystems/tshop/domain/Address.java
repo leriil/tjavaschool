@@ -1,8 +1,7 @@
 package com.tsystems.tshop.domain;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "address")
@@ -12,16 +11,16 @@ public class Address {
     @Column(name = "address_id")
     private Long addressId;
 
-    @OneToMany(mappedBy = "address")
-    private List<Sale>sales=new ArrayList<>();
+//    @OneToMany(mappedBy = "address")
+//    private Set<Sale> sales=new HashSet<>();
 
 //    @ManyToMany(cascade = CascadeType.ALL)
 //    @JoinTable(name="user_address", joinColumns=@JoinColumn(name="address_id"),
 //            inverseJoinColumns=@JoinColumn(name="user_id"))
 //    private List<User> users=new ArrayList<>();
 
-    @ManyToMany(mappedBy = "addresses")
-    private List<User> users = new ArrayList<>();
+//    @ManyToMany(mappedBy = "addresses")
+//    private Set<User> users = new HashSet<>();
 
     @Column(name = "country")
     private String country;
@@ -87,6 +86,25 @@ public class Address {
 
     public void setFlat(String flat) {
         this.flat = flat;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Address address = (Address) o;
+        return Objects.equals(country, address.country) &&
+                Objects.equals(city, address.city) &&
+                Objects.equals(zipCode, address.zipCode) &&
+                Objects.equals(street, address.street) &&
+                Objects.equals(house, address.house) &&
+                Objects.equals(flat, address.flat);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(country, city, zipCode, street, house, flat);
     }
 
     @Override
