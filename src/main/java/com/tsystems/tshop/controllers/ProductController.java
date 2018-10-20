@@ -180,6 +180,11 @@ public class ProductController {
         return productId;
     }
 
+    @ExceptionHandler(Exception.class)
+    public String handleError(){
+        return "global_error";
+    }
+
 //    @RequestMapping (value = "/add",method=RequestMethod.POST)
 //    public String saveProduct(@ModelAttribute Product product, SessionStatus status){
 //    this.productService.save(product);
