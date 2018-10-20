@@ -3,9 +3,7 @@ package com.tsystems.tshop.domain;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name="user")
@@ -24,17 +22,17 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private List<Role> roles = new ArrayList<>();
+    private Set<Role> roles = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_address",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "address_id")
     )
-    private List<Address> addresses = new ArrayList<>();
+    private Set<Address> addresses = new HashSet<>();
 
-    @OneToMany(mappedBy = "user")
-    private List<Sale>sales=new ArrayList<>();
+//    @OneToMany(mappedBy = "user")
+//    private Set<Sale>sales=new HashSet<>();
 
 //    @OneToMany(cascade = CascadeType.ALL)
 //    @JoinColumn(name="user_id", nullable = false)
@@ -146,29 +144,29 @@ public class User {
         this.email = email;
     }
 
-    public List<Role> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 
-    public List<Address> getAddresses() {
+    public Set<Address> getAddresses() {
         return addresses;
     }
 
-    public void setAddresses(List<Address> addresses) {
+    public void setAddresses(Set<Address> addresses) {
         this.addresses = addresses;
     }
 
-    public List<Sale> getSales() {
-        return sales;
-    }
-
-    public void setSales(List<Sale> sales) {
-        this.sales = sales;
-    }
+//    public Set<Sale> getSales() {
+//        return sales;
+//    }
+//
+//    public void setSales(Set<Sale> sales) {
+//        this.sales = sales;
+//    }
 
     @Override
     public String toString() {
@@ -176,7 +174,7 @@ public class User {
                 "userId=" + userId +
                 ", roles=" + roles +
                 ", addresses=" + addresses +
-                ", sales=" + sales +
+//                ", sales=" + sales +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
