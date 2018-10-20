@@ -4,8 +4,6 @@ import com.tsystems.tshop.enums.ProductCategory;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "product")
@@ -15,8 +13,8 @@ public class Product {
 	@Column(name = "product_id")
 	private Long productId;
 
-	@ManyToMany(mappedBy = "products", fetch = FetchType.EAGER)
-	private List<Sale> sales=new ArrayList<>();
+//	@ManyToMany(mappedBy = "products", fetch = FetchType.EAGER)
+//	private List<Sale> sales=new ArrayList<>();
 
 	@Column(name = "name")
 	private String name;
