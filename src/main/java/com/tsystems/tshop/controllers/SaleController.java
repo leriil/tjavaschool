@@ -1,5 +1,6 @@
 package com.tsystems.tshop.controllers;
 
+import com.tsystems.tshop.domain.Product;
 import com.tsystems.tshop.domain.Sale;
 import com.tsystems.tshop.services.ProductService;
 import com.tsystems.tshop.services.SaleService;
@@ -8,16 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Logger;
 @Controller
 @RequestMapping("/order")
-@SessionAttributes({"order"})
+@SessionAttributes({"order","productsInCart"})
 
 public class SaleController {
 
@@ -32,10 +32,25 @@ public class SaleController {
 @Autowired
     ProductService productService;
 
+    @ModelAttribute("productsInCart")
+    public Set<Product> getProducts(){
+        return new HashSet<>();
+    }
+
 @ModelAttribute("order")
 public Sale getSale(){
     return new Sale();
 }
+
+    @ResponseBody
+    @RequestMapping(value = "/cart/add",method = RequestMethod.POST)
+    public Long addToCart(@RequestBody Long productId,
+                          @ModelAttribute ("productsInCart") Set <Product> productsInCart){
+        productsInCart.add(this.productService.findOne(productId));
+        System.out.println(productId);
+        System.out.println(productsInCart);
+        return productId;
+    }
 
 @RequestMapping("/history")
 public String repeatOrder(Model model){

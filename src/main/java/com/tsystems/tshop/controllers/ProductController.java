@@ -55,10 +55,7 @@ public class ProductController {
     return new User();
 }
 
-    @ModelAttribute("productsInCart")
-        public Set<Product> getProducts(){
-    return new HashSet<>();
-}
+
 
     @ModelAttribute("address")
      public Address getAddress(){
@@ -96,8 +93,10 @@ public class ProductController {
 
 
     @RequestMapping (value = "/add",method=RequestMethod.GET)
-    public String addProduct(Model model,
-                             @ModelAttribute("product")Product product){
+    public String addProduct (Model model,
+                             @ModelAttribute("product")Product product) throws Exception{
+        if(1==1){
+            throw new Exception();}
        return "product_add";
     }
 
@@ -168,21 +167,11 @@ public class ProductController {
 //        System.out.println(this.userService.getUser(username));
 //        return "order_place";
 //    }
-    @ResponseBody
-    @RequestMapping(value = "/addToCart",method = RequestMethod.POST)
-    public Long addToCart(@RequestBody Long productId,
-                          @ModelAttribute ("productsInCart") Set <Product> productsInCart){
-       // Long Id=Long.parseLong(productId);
-        productsInCart.add(this.productService.findOne(productId));
-        System.out.println(productId);
-    System.out.println(productsInCart);
-//        Long id=Long.parseLong(productId);
-        return productId;
-    }
 
-    @ExceptionHandler(Exception.class)
+
+    @ExceptionHandler(NullPointerException.class)
     public String handleError(){
-        return "global_error";
+        return "controller_error";
     }
 
 //    @RequestMapping (value = "/add",method=RequestMethod.POST)
@@ -195,7 +184,8 @@ public class ProductController {
 
     @RequestMapping(value = "/order/save",method = RequestMethod.POST)
     public String saveSale( @ModelAttribute("sale")Sale sale){
-        System.out.println(sale);
+        this.saleService.saveSale(sale);
+//        System.out.println(sale);
         return "order_review";
     }
 
