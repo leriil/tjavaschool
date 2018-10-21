@@ -20,7 +20,9 @@
 	<div class="container">
 		
 		<h2>An error was encountered and handled by a global ExceptionHandlerResolver</h2>
+		Requested URL= ${requestUri}<br><br>
 
+		Exception= ${exception}<br><br>
 	</div>
 </body>
 </html>
