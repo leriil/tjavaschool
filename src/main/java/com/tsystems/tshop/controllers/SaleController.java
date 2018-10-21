@@ -1,17 +1,16 @@
 package com.tsystems.tshop.controllers;
 
-import com.tsystems.tshop.domain.Product;
 import com.tsystems.tshop.services.ProductService;
 import com.tsystems.tshop.services.SaleService;
 import com.tsystems.tshop.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Logger;
 @Controller
 @RequestMapping("/order")
@@ -21,8 +20,6 @@ public class SaleController {
 
     private static final Logger log=Logger.getLogger("Log");
 
-List<Product> products=new ArrayList<>();
-public static int productCounter;
 
 @Autowired
     UserService userService;
@@ -32,10 +29,21 @@ public static int productCounter;
 @Autowired
     ProductService productService;
 
-@ModelAttribute("product")
-public Product getProduct(){
-    return new Product();
+@RequestMapping("/history")
+public String repeatOrder(Model model){
+    String login=SecurityContextHolder.getContext().getAuthentication().getName();
+    model.addAttribute("orders",this.saleService.findUserOrders(login));
+    return "order_history";
 }
+
+    @RequestMapping(value = "/{saleId}")
+    public String findProduct(Model model, @PathVariable Long saleId){
+        try{model.addAttribute("order",this.saleService.findSale(saleId));
+        }catch (RuntimeException e){
+            return "order_not_found";
+        }
+        return "order";
+    }
 
 
 
