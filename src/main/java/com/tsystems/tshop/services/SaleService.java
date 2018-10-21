@@ -29,8 +29,14 @@ public class SaleService {
 
     }
 
-    public Optional<Sale> findSale(Long id){
-        return this.saleRepository.findById(id);
+    public Sale findSale(Long id){
+        Optional<Sale> sale = this.saleRepository.findById(id);
+        if (sale.isPresent()) {
+            return sale.get();
+        } else
+        {log.log(Level.WARNING,"There is no product with id: "+id.toString());
+            throw new RuntimeException();}
+    }
     }
 
-}
+
