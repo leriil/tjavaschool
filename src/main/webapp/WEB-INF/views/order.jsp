@@ -12,6 +12,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="<c:url value="/resources/js/global.js"/>"></script>
     <script src="<c:url value="/resources/js/cartNumber.js"/>"></script>
+    <script src="<c:url value="/resources/js/order.js"/>"></script>
     <script>var ctx = "${pageContext.request.contextPath}"</script>
     <sec:csrfMetaTags/>
 
@@ -104,8 +105,8 @@
             </div>
         </div>
 </div>
-    <a href="<spring:url value="/product/order/save"/>" class="btn btn-default">Repeat the order</a>
-    <%--<a href="<spring:url value="/product/addToCart"/>" class="btn btn-dark" id="addToCart" > Check out</a>--%>
+
+    <a href="<spring:url value="/order/repeat/save"/>"> Check out</a>
     <%--<a href="<spring:url value="/order/place"/>" class="btn btn-default" id="addToCart">buy</a>--%>
     <%--<button id="addProductToCart" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">--%>
         <%--<form id="cart-form" action="<spring:url value="/product/addToCart"/>" method="post"></form>--%>

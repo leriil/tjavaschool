@@ -26,7 +26,7 @@
           				aria-expanded="false">Orders <span class="caret"></span></a>
           	
           			<ul class="dropdown-menu" role="menu">
-						<li><a href="<spring:url value="/order/repeat"/>">Repeat an order</a></li>
+						<%--<li><a href="<spring:url value="/order/repeat"/>">Repeat an order</a></li>--%>
 						<li><a href="<spring:url value="/order/history"/>">History</a></li>
 						<li><a href="<spring:url value="/order/place"/>">Place an order</a></li>
             			<li><a href="<spring:url value="/order/find"/>">Find</a></li>
