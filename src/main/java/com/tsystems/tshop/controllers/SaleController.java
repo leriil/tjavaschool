@@ -1,7 +1,10 @@
 package com.tsystems.tshop.controllers;
 
+import com.tsystems.tshop.domain.Address;
 import com.tsystems.tshop.domain.Product;
 import com.tsystems.tshop.domain.Sale;
+import com.tsystems.tshop.domain.User;
+import com.tsystems.tshop.services.AddressService;
 import com.tsystems.tshop.services.ProductService;
 import com.tsystems.tshop.services.SaleService;
 import com.tsystems.tshop.services.UserService;
@@ -12,17 +15,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 @Controller
 @RequestMapping("/order")
-@SessionAttributes({"order","productsInCart"})
+@SessionAttributes({"order","productsInCart","address","user"})
 
 public class SaleController {
 
     private static final Logger log=Logger.getLogger("Log");
 
+@Autowired
+    AddressService addressService;
 
 @Autowired
     UserService userService;
@@ -33,8 +38,18 @@ public class SaleController {
     ProductService productService;
 
     @ModelAttribute("productsInCart")
-    public Set<Product> getProducts(){
-        return new HashSet<>();
+    public List<Product> getProducts(){
+        return new ArrayList<>();
+    }
+
+    @ModelAttribute("address")
+    public Address getAddress(){
+        return new Address();
+    }
+
+    @ModelAttribute("user")
+    public User getUser(){
+        return new User();
     }
 
 @ModelAttribute("order")
@@ -45,10 +60,10 @@ public Sale getSale(){
     @ResponseBody
     @RequestMapping(value = "/cart/add",method = RequestMethod.POST)
     public Long addToCart(@RequestBody Long productId,
-                          @ModelAttribute ("productsInCart") Set <Product> productsInCart){
+                          @ModelAttribute ("productsInCart") List <Product> productsInCart){
         productsInCart.add(this.productService.findOne(productId));
-        System.out.println(productId);
-        System.out.println(productsInCart);
+        System.out.println("product with id: "+productId+" has been added to cart");
+        System.out.println("products in cart : "+productsInCart);
         return productId;
     }
 
@@ -71,6 +86,55 @@ public String repeatOrder(Model model){
         return "order";
     }
 
+    @RequestMapping(value = "/place")
+    public String saveSale( @ModelAttribute("order")Sale sale,
+//                            @ModelAttribute("productsInCart")List<Product> productsInCart,
+                            @ModelAttribute("address")Address address,
+                            @ModelAttribute("user") User user
+    ) {
+        String login=SecurityContextHolder.getContext().getAuthentication().getName();
+        user=this.userService.getUser(login);
+        sale.setUser(this.userService.getUser(login));
+       if(user.getAddresses().iterator().hasNext()){
+           address=user.getAddresses().iterator().next();
+           sale.setAddress(address);
+       }
+//        this.saleService.saveSale(sale);
+//        System.out.println(sale);
+        return "order_place";
+    }
+
+    @RequestMapping(value = "/review",method = RequestMethod.POST)
+    public String reviewOrder(@ModelAttribute("order")Sale sale,
+                              @ModelAttribute("productsInCart")List<Product> productsInCart,
+                              @ModelAttribute("address")Address address,
+                              @ModelAttribute("user") User user
+    ) {
+        return "order_review";
+    }
+
+    @RequestMapping("/save")
+    public String saveOrder(@ModelAttribute("order")Sale sale,
+                            @ModelAttribute("productsInCart")List<Product> productsInCart,
+//                            @ModelAttribute("address")Address address,
+//                            @ModelAttribute("user") User user,
+                            SessionStatus sessionStatus){
+        //start here with bedug, find out why address and user are null
+//        sale.getAddress().setAddressId(null);
+//            this.addressService.saveAddress(sale.getAddress());
+
+        this.addressService.saveAddress(sale.getAddress());
+//        sale.setAddress(address);
+        sale.setProducts(productsInCart);
+//        sale.setDeliveryMethod(sale.getDeliveryMethod());
+//        sale.setPaymentMethod(sale.getPaymentMethod());
+        sale.setOrderStatus("waiting for approval");
+        sale.setPaymentStatus("not paid");
+        this.saleService.saveSale(sale);
+        sessionStatus.setComplete();
+        return "redirect:/product/all";
+    }
+
     @RequestMapping(value = "/repeat/save")
     public String saveSale(@ModelAttribute("order")Sale sale, SessionStatus status){
     sale.setSaleId(null);
@@ -81,9 +145,10 @@ public String repeatOrder(Model model){
         return "redirect:/product/all";
     }
 
-    @RequestMapping(value = "/")
-    public String confirmOrder(){
-        return "order_confirm";
-    }
+
+//    @RequestMapping(value = "/")
+//    public String confirmOrder(){
+//        return "order_confirm";
+//    }
 
 }
