@@ -124,7 +124,7 @@ public class ProductController {
         }catch (RuntimeException e){
             return "product_not_found";
         }
-        status.setComplete();
+//        status.setComplete();
         return "product";
     }
 
