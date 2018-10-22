@@ -1,7 +1,9 @@
 package com.tsystems.tshop.domain;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "address")
@@ -19,8 +21,8 @@ public class Address {
 //            inverseJoinColumns=@JoinColumn(name="user_id"))
 //    private List<User> users=new ArrayList<>();
 
-//    @ManyToMany(mappedBy = "addresses")
-//    private Set<User> users = new HashSet<>();
+    @ManyToMany(mappedBy = "addresses")
+    private Set<User> users = new HashSet<>();
 
     @Column(name = "country")
     private String country;
@@ -88,12 +90,21 @@ public class Address {
         this.flat = flat;
     }
 
+    public Long getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(Long addressId) {
+        this.addressId = addressId;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
+//        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Address address = (Address) o;
-        return Objects.equals(country, address.country) &&
+        return Objects.equals(addressId, address.addressId) &&
+                Objects.equals(country, address.country) &&
                 Objects.equals(city, address.city) &&
                 Objects.equals(zipCode, address.zipCode) &&
                 Objects.equals(street, address.street) &&
