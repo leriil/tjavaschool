@@ -11,7 +11,6 @@ package com.tsystems.tshop.controllers;//package com.tsystems.tshop.controllers;
 
 import com.tsystems.tshop.domain.Address;
 import com.tsystems.tshop.domain.Product;
-import com.tsystems.tshop.domain.Sale;
 import com.tsystems.tshop.domain.User;
 import com.tsystems.tshop.enums.ProductCategory;
 import com.tsystems.tshop.repositories.UserRepository;
@@ -20,17 +19,18 @@ import com.tsystems.tshop.services.ProductService;
 import com.tsystems.tshop.services.SaleService;
 import com.tsystems.tshop.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Logger;
 
 @Controller
-@SessionAttributes({"product","sale","productsInCart","address","user"})
+@SessionAttributes({"product","productsInCart","address","user"})
 @RequestMapping("/product")
 public class ProductController {
     @Autowired
@@ -71,14 +71,14 @@ public class ProductController {
 //	}
     @ModelAttribute("product")
     public Product getProduct() {
-    log.info("adding a product to the model");
+
     return new Product();
 }
 
-    @ModelAttribute("sale")
-    public Sale getSale(){
-        return new Sale();
-    }
+//    @ModelAttribute("sale")
+//    public Sale getSale(){
+//        return new Sale();
+//    }
 
 
     @ModelAttribute("categoryOptions")
@@ -94,9 +94,8 @@ public class ProductController {
 
     @RequestMapping (value = "/add",method=RequestMethod.GET)
     public String addProduct (Model model,
-                             @ModelAttribute("product")Product product) throws Exception{
-        if(1==1){
-            throw new Exception();}
+                             @ModelAttribute("product")Product product)
+    {
        return "product_add";
     }
 
@@ -118,21 +117,24 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/{productId}")
-    public String findProduct(Model model, @PathVariable Long productId){
+    public String findProduct(Model model,
+                              @PathVariable Long productId,
+                              SessionStatus status){
         try{model.addAttribute("product",this.productService.findOne(productId));
         }catch (RuntimeException e){
             return "product_not_found";
         }
+        status.setComplete();
         return "product";
     }
 
-//    @ResponseBody
-    @RequestMapping(value = "/placeOrder")
-    public String placeOrder(@ModelAttribute("sale") Sale sale,
-//                             @ModelAttribute Product product,
-                             @ModelAttribute ("productsInCart") List<Product> productsInCart,
-                             @ModelAttribute("user") User user,
-                             @ModelAttribute("address")Address address) {
+////    @ResponseBody
+//    @RequestMapping(value = "/placeOrder")
+//    public String placeOrder(@ModelAttribute("sale") Sale sale,
+////                             @ModelAttribute Product product,
+//                             @ModelAttribute ("productsInCart") List<Product> productsInCart,
+//                             @ModelAttribute("user") User user,
+//                             @ModelAttribute("address")Address address) {
 
 //       sale.setProducts(productsInCart);
 //        String username=SecurityContextHolder.getContext().getAuthentication().getName();
@@ -155,7 +157,7 @@ public class ProductController {
 //        sale.setDeliveryMethod("delivery");
 //        sale.setPaymentMethod("cash");
 //        this.saleService.saveSale(sale);
-        return "order_place";
+//        return "order_place";
     }
 //    @RequestMapping (value = "/placeOrder")
 //    public String orderPlace(
@@ -169,10 +171,10 @@ public class ProductController {
 //    }
 
 
-    @ExceptionHandler(NullPointerException.class)
-    public String handleError(){
-        return "controller_error";
-    }
+//    @ExceptionHandler(NullPointerException.class)
+//    public String handleError(){
+//        return "controller_error";
+//    }
 
 //    @RequestMapping (value = "/add",method=RequestMethod.POST)
 //    public String saveProduct(@ModelAttribute Product product, SessionStatus status){
@@ -182,32 +184,27 @@ public class ProductController {
 //    }
 //
 
-    @RequestMapping(value = "/order/save",method = RequestMethod.POST)
-    public String saveSale( @ModelAttribute("sale")Sale sale){
-        this.saleService.saveSale(sale);
-//        System.out.println(sale);
-        return "order_review";
-    }
 
-    @RequestMapping(value = "/order/confirm")
-    public String orderConfirm(@ModelAttribute("productsInCart")Set<Product> productsInCart,
-                               @ModelAttribute("sale")Sale sale,
-                               @ModelAttribute("address")Address address,
-                               SessionStatus status
-//                               Session session
-    ){this.addressService.saveAddress(address);
-        sale.setAddress(address);
-        sale.setProducts(productsInCart);
-        String username=SecurityContextHolder.getContext().getAuthentication().getName();
-        sale.setUser(this.userService.getUser(username));
-        sale.setDeliveryMethod(sale.getDeliveryMethod());
-        sale.setPaymentMethod(sale.getPaymentMethod());
-        sale.setOrderStatus("waiting for approval");
-        sale.setPaymentStatus("not paid");
-        this.saleService.saveSale(sale);
-        status.setComplete();
-//        session.getSession().remove(productsIncart);
-////        status.setComplete();
-        return "redirect:/product/all";
-    }
-}
+
+//    @RequestMapping(value = "/order/save")
+//    public String orderConfirm(@ModelAttribute("productsInCart")List<Product> productsInCart,
+//                               @ModelAttribute("sale")Sale sale,
+//                               @ModelAttribute("address")Address address,
+//                               SessionStatus status
+////                               Session session
+//    ){this.addressService.saveAddress(address);
+//        sale.setAddress(address);
+//        sale.setProducts(productsInCart);
+//        String username=SecurityContextHolder.getContext().getAuthentication().getName();
+//        sale.setUser(this.userService.getUser(username));
+//        sale.setDeliveryMethod(sale.getDeliveryMethod());
+//        sale.setPaymentMethod(sale.getPaymentMethod());
+//        sale.setOrderStatus("waiting for approval");
+//        sale.setPaymentStatus("not paid");
+//        this.saleService.saveSale(sale);
+//        status.setComplete();
+////        session.getSession().remove(productsIncart);
+//////        status.setComplete();
+//        return "redirect:/product/all";
+//    }
+
