@@ -1,8 +1,8 @@
 package com.tsystems.tshop.domain;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "sale")
@@ -25,7 +25,7 @@ public class Sale {
         joinColumns = @JoinColumn(name = "sale_id"),
         inverseJoinColumns = @JoinColumn(name = "product_id")
 )
-private Set<Product> products = new HashSet<>();
+private List<Product> products = new ArrayList<>();
 
 //    @ManyToOne
 //    @JoinColumn(name = "user_id")
@@ -99,11 +99,11 @@ private Set<Product> products = new HashSet<>();
         this.saleId = saleId;
     }
 
-    public Set<Product> getProducts() {
+    public List<Product> getProducts() {
         return products;
     }
 
-    public void setProducts(Set<Product> products) {
+    public void setProducts(List<Product> products) {
         this.products = products;
     }
 
