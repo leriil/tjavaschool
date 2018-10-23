@@ -1,13 +1,16 @@
 package com.tsystems.tshop.domain;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name="user")
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -94,6 +97,44 @@ public class User {
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        Set<Role> roles=this.getRoles();
+        List<String>privileges=new ArrayList<>();
+        for (Role role:roles) {
+            privileges.add(role.getName());
+//            System.out.println(privileges);
+        }
+        final List<GrantedAuthority> authorities = privileges.stream()
+                .map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+        return authorities;
+    }
+
+    @Override
+    public String getUsername() {
+        return login;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     public String getPassword() {
