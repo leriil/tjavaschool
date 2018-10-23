@@ -66,6 +66,15 @@ public Sale getSale(){
         System.out.println("products in cart : "+productsInCart);
         return productId;
     }
+    @ResponseBody
+    @RequestMapping(value = "/cart/remove",method = RequestMethod.POST)
+    public Long removeFromCart(@RequestBody Long productId,
+                          @ModelAttribute ("productsInCart") List <Product> productsInCart){
+        productsInCart.remove(this.productService.findOne(productId));
+        System.out.println("product with id: "+productId+" has been removed from cart");
+        System.out.println("products in cart : "+productsInCart);
+        return productId;
+    }
 
 @RequestMapping("/history")
 public String repeatOrder(Model model){
@@ -92,13 +101,14 @@ public String repeatOrder(Model model){
                             @ModelAttribute("address")Address address,
                             @ModelAttribute("user") User user
     ) {
-        String login=SecurityContextHolder.getContext().getAuthentication().getName();
-        user=this.userService.getUser(login);
-        sale.setUser(this.userService.getUser(login));
-       if(user.getAddresses().iterator().hasNext()){
-           address=user.getAddresses().iterator().next();
-           sale.setAddress(address);
+//        String login=SecurityContextHolder.getContext().getAuthentication().getName();
+        user=this.userService.getUser();
+        sale.setUser(user);
+        Address currentAddress=this.addressService.userCurrentAddress(user);
+       if(currentAddress!=null){
+           sale.setAddress(currentAddress);
        }
+
 //        this.saleService.saveSale(sale);
 //        System.out.println(sale);
         return "order_place";
@@ -110,6 +120,10 @@ public String repeatOrder(Model model){
                               @ModelAttribute("address")Address address,
                               @ModelAttribute("user") User user
     ) {
+
+        if(!sale.getAddress().equals(this.addressService.userCurrentAddress(sale.getUser()))){
+            sale.getAddress().setAddressId(null);
+        }
         return "order_review";
     }
 
@@ -123,7 +137,8 @@ public String repeatOrder(Model model){
 //        sale.getAddress().setAddressId(null);
 //            this.addressService.saveAddress(sale.getAddress());
 
-        this.addressService.saveAddress(sale.getAddress());
+
+
 //        sale.setAddress(address);
         sale.setProducts(productsInCart);
 //        sale.setDeliveryMethod(sale.getDeliveryMethod());
