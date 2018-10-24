@@ -7,8 +7,14 @@
        http://www.springframework.org/schema/security
        http://www.springframework.org/schema/security/spring-security.xsd">
     <bean class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler"/>
-    <bean name="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
-<sec:http auto-config="true" use-expressions="false">
+    <!--<bean name="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>-->
+    <bean name="passwordEncoder" class="org.springframework.security.crypto.password.NoOpPasswordEncoder"/>
+    <!--<beans:bean id="concurrencyFilter"-->
+                <!--class="org.springframework.security.web.session.ConcurrentSessionFilter">-->
+        <!--<beans:constructor-arg ref="sessionRegistry" />-->
+        <!--<beans:constructor-arg value="/session-expired.htm" />-->
+    <!--</beans:bean>-->
+<sec:http use-expressions="true">
     <sec:logout logout-url="/logout"
                 logout-success-url="/login?logout=true"/>
     <sec:form-login
@@ -20,8 +26,12 @@
                     always-use-default-target="true"
                     authentication-failure-url="/login?error=true"/>
     <!--<sec:intercept-url pattern="/client/*" access="ROLE_USER"/>-->
-    <!--<sec:intercept-url pattern="/product/*" access="IS_AUTHENTICATED_FULLY"/>-->
-    <sec:intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+    <!--<sec:intercept-url pattern="/order/*" access="hasAuthority('CLIENT')"/>-->
+    <!--<sec:intercept-url pattern="/login" access="permitAll()"/>-->
+    <!--<sec:intercept-url pattern="/product/*" access="hasRole('CLIENT')"/>-->
+    <sec:intercept-url pattern="/order/*" access="hasAuthority('CLIENT')"/>
+    <!--<sec:intercept-url pattern="/**" access="hasAuthority('ANONYMOUS')"/>-->
+    <sec:intercept-url pattern="/**" access="permitAll()"/>
     <!--<sec:csrf disabled="true"/>-->
 </sec:http>
 
