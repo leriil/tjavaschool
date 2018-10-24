@@ -5,10 +5,13 @@
 <script type="text/javascript">
 	var productCounter=0;
 </script>
-
+<script>var ctx = "${pageContext.request.contextPath}"</script>
 <nav class="navbar navbar-default bg-light navbar-light fixed-top">
 
-	<sec:authorize access="isAuthenticated()" var="auth"/>
+	<sec:authorize access="hasAuthority('CLIENT')" var="auth"/>
+	<%--<sec:authorize access="isAuthenticated()" var="auth"/>--%>
+
+	<%--<sec:accesscontrollist hasPermission="" domainObject=""--%>
 		<div class="container-fluid">
 
 			<div class="navbar-header">
@@ -92,6 +95,7 @@
 								<span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="<spring:url value="/login"/>">Sign in</a></li>
+								<li><a href="<spring:url value="/register"/>">Register</a></li>
 							</ul>
 						</li>
 					</c:otherwise>
@@ -99,10 +103,8 @@
 
 
         		<li>
-					<button type="button" class="btn ">
-						Basket <span id="basket" class="badge badge-light">
-						<script type="text/javascript">document.write(productCounter)</script>
-					</span>
+					<button type="button" class="btn" onclick="window.location.href='<spring:url value="/order/place"/>'">Basket
+						<span id="basket" class="badge badge-light"></span>
 					</button>
 				</li>
     		</ul>
