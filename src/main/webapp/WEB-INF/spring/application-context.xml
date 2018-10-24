@@ -6,6 +6,7 @@
        xmlns:task="http://www.springframework.org/schema/task"
        xmlns:sec="http://www.springframework.org/schema/security"
        xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
@@ -15,15 +16,21 @@
         http://www.springframework.org/schema/security
         http://www.springframework.org/schema/security/spring-security.xsd
         http://www.springframework.org/schema/data/jpa
-        http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
-
+        http://www.springframework.org/schema/data/jpa/spring-jpa.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+    <tx:annotation-driven/>
     <!--<bean name="bcryptEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>-->
     <!--<bean id="userService" class="com.tsystems.tshop.services.impl.UserDetailsServiceImpl"/>-->
     <context:component-scan base-package="com.tsystems.tshop"/>
+
     <jpa:repositories base-package="com.tsystems.tshop.repositories"/>
 
-    <mvc:annotation-driven/>
-    <mvc:resources mapping="/resources/**" location="/resources/"/>
+    <!--<bean id="projectService" class="com.infiniteskills.data.services.ProjectService"></bean>-->
+    <!--<bean id="resourceService" class="com.infiniteskills.data.services.ResourceService"></bean>-->
+    <!--<repositories base-package="com.infiniteskills.data.repositories"/>-->
+    <!--<bean id="resourceRepository" class="com.infiniteskills.data.repositories.ResourceRepository" abstract="true"/>-->
+
+    <!--<mvc:annotation-driven/>-->
+    <!--<mvc:resources mapping="/resources/**" location="/resources/"/>-->
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
