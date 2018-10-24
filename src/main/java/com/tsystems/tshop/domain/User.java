@@ -1,10 +1,13 @@
 package com.tsystems.tshop.domain;
 
+import com.tsystems.tshop.domain.util.LocalDateConverter;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -54,7 +57,7 @@ public class User implements UserDetails {
     private String login;
 
 
-    @Column(name = "password")
+    @Column(name = "password", unique = true,nullable = false)
     private String password;
 
     @Column(name = "name",nullable = false)
@@ -64,8 +67,9 @@ public class User implements UserDetails {
     private String surname;
 
     @Column(name = "birth_date")
-    @Temporal(TemporalType.DATE)
-    private Date birthDate;
+    @Convert(converter = LocalDateConverter.class)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate birthDate;
 
     @Column(name = "email", nullable = false, unique = true,updatable = false)
     private String email;
@@ -169,11 +173,11 @@ public class User implements UserDetails {
         this.surname = surname;
     }
 
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 
