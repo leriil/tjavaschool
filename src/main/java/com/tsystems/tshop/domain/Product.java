@@ -5,6 +5,7 @@ import com.tsystems.tshop.enums.ProductCategory;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -121,6 +122,26 @@ public class Product {
 //
 //		sale.addProduct(this);
 //	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Product product = (Product) o;
+		return Objects.equals(productId, product.productId) &&
+				Objects.equals(name, product.name) &&
+				Objects.equals(price, product.price) &&
+				Objects.equals(weight, product.weight) &&
+				Objects.equals(inStock, product.inStock) &&
+				category == product.category &&
+				Objects.equals(volume, product.volume);
+	}
+
+	@Override
+	public int hashCode() {
+
+		return Objects.hash(productId, name, price, weight, inStock, category, volume);
+	}
 
 	@Override
 	public String toString() {
