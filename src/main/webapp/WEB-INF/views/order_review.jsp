@@ -11,7 +11,7 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 <link rel="stylesheet"
-	href="<spring:url value="/resources/css/home.css"/>" type="text/css" />
+	<%--href="<spring:url value="/resources/css/home.css"/>" type="text/css" />--%>
 <link rel="stylesheet"
 	href="<spring:url value="/resources/css/bootstrap-select.min.css"/>"
 	type="text/css" />
@@ -22,7 +22,7 @@
 <script
 	src="<spring:url value="/resources/js/bootstrap-select.min.js"/>"></script>
 	<script src="<c:url value="/resources/js/global.js"/>"></script>
-	<script src="<c:url value="/resources/js/cartNumber.js"/>"></script>
+	<script src="<c:url value="/resources/js/addToCart.js"/>"></script>
 
 </head>
 <body>
@@ -53,40 +53,40 @@
 			</c:forEach>
 			<h3>Shipping Address</h3>
 			<div class="form-group">
-				<label>Name</label> <span>${sale.user.name}</span>
+				<label>Name</label> <span>${order.user.name}</span>
 			</div>
 
 			<div class="form-group">
-				<label>Surname</label> <span>${sale.user.surname }</span>
+				<label>Surname</label> <span>${order.user.surname }</span>
 			</div>
 			<div class="form-group">
-				<label>Country</label> <span>${sale.address.country}</span>
-			</div>
-
-			<div class="form-group">
-				<label>City</label> <span>${sale.address.city }</span>
+				<label>Country</label> <span>${order.address.country}</span>
 			</div>
 
 			<div class="form-group">
-				<label>Zipcode</label> <span>${sale.address.zipCode}</span>
+				<label>City</label> <span>${order.address.city }</span>
 			</div>
 
 			<div class="form-group">
-				<label>Street</label> <span>${sale.address.street}</span>
+				<label>Zipcode</label> <span>${order.address.zipCode}</span>
+			</div>
+
+			<div class="form-group">
+				<label>Street</label> <span>${order.address.street}</span>
 			</div>
 			<div class="form-group">
-				<label>House</label> <span>${sale.address.house}</span>
+				<label>House</label> <span>${order.address.house}</span>
 			</div>
 			<div class="form-group">
-				<label>Flat</label> <span>${sale.address.flat}</span>
+				<label>Flat</label> <span>${order.address.flat}</span>
 			</div>
 			<h3>3.Payment and shipping</h3>
 			<div class="form-group">
-				<label>Payment Method</label> <span>${sale.paymentMethod}</span>
+				<label>Payment Method</label> <span>${order.paymentMethod}</span>
 			</div>
 
 			<div class="form-group">
-				<label>Delivery Method</label> <span>${sale.deliveryMethod }</span>
+				<label>Delivery Method</label> <span>${order.deliveryMethod }</span>
 			</div>
 
 
@@ -97,8 +97,12 @@
 				<%--</c:forEach>--%>
 			<%--</div>--%>
 
-			<a href="<spring:url value="/product/order/save"/>" class="btn btn-default">Edit</a>
-			<a href="<spring:url value="/product/order/confirm"/>" class="btn btn-default">Confirm</a>
+			<a href="<spring:url value="/order/place"/>" class="btn btn-default">Edit</a>
+			<a href="<spring:url value="/order/save"/>" class="btn btn-default">Confirm</a>
+			<p>
+
+
+			</p>
 		</div>
 	</div>
 </body>

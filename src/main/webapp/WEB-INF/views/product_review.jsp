@@ -23,7 +23,7 @@
 <script
 	src="<spring:url value="/resources/js/bootstrap-select.min.js"/>"></script>
 	<script src="<c:url value="/resources/js/global.js"/>"></script>
-	<script src="<c:url value="/resources/js/cartNumber.js"/>"></script>
+	<script src="<c:url value="/resources/js/addToCart.js"/>"></script>
 	<sec:csrfMetaTags/>
 </head>
 <body>
@@ -65,6 +65,10 @@
 
 			<a href="<spring:url value="/product/add"/>" class="btn btn-default">Edit</a>
 			<a href="<spring:url value="/product/save"/>" class="btn btn-default">Save</a>
+			<p>
+
+
+			</p>
 		</div>
 	</div>
 </body>

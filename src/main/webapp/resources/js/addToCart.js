@@ -9,23 +9,16 @@ $(document).ready(function () {
         var headers = {};
         headers[csrfHeader] = csrfToken;
         $.ajax({
-            url: ctx+"/product/addToCart",
+            url: ctx+"/order/cart/add",
             dataType: 'json',
             type:'post',
             headers:headers,
             contentType:'application/json',
             data:JSON.stringify(Number($("#productForCart").text())),
             processData:false
-        //     success: function () {
-        //         // $("#myModal").modal('toggle');
-        //         alert("perfect");
-        //     },
-        //     error: function () {
-        //         alert("problem with adding the product to the cart");
-        //     }
         }
         )
-            .done(function () { $("#myModal").modal('toggle'); })
-            .fail(function () { alert("problem"); });
+            .done(function () { $("#myModal").modal('toggle')})
+            .fail(function () { alert("the product wasn't added to your cart"); });
     })
 });

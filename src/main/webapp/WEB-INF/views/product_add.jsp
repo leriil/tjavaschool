@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Project Manager</title>
+<title>Product</title>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 <link rel="stylesheet" href="<spring:url value="/resources/css/bootstrap-select.min.css"/>" type="text/css" />
@@ -18,7 +18,7 @@
 <script src="<spring:url value="/resources/js/bootstrap-select.min.js"/>"></script>
     <script src="<spring:url value="/resources/js/resource.js"/>"></script>
 	<script src="<c:url value="/resources/js/global.js"/>"></script>
-	<script src="<c:url value="/resources/js/cartNumber.js"/>"></script>
+	<script src="<c:url value="/resources/js/addToCart.js"/>"></script>
 	<sec:csrfMetaTags/>
     <script>var ctx = "${pageContext.request.contextPath}"</script>
 
@@ -79,6 +79,10 @@
 			</div>
 		
 		</form:form>
+		<p>
+
+
+		</p>
 		
 	</div>
 </body>

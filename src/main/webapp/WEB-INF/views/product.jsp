@@ -4,14 +4,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Projects</title>
+    <title>Product</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" href="<spring:url value="/resources/css/home.css"/>" type="text/css">
     <%--<link rel="stylesheet" href="<spring:url value="/resources/css/bootstrap-select.min.css"/>" type="text/css">--%>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="<c:url value="/resources/js/global.js"/>"></script>
-    <script src="<c:url value="/resources/js/cartNumber.js"/>"></script>
+    <script src="<c:url value="/resources/js/addToCart.js"/>"></script>
     <script>var ctx = "${pageContext.request.contextPath}"</script>
     <sec:csrfMetaTags/>
 
@@ -72,7 +72,7 @@
 
                 <!-- Modal footer -->
                 <div class="modal-footer align-content-lg-center">
-                    <a href="<spring:url value="/product/order/confirm"/>" class="btn btn-dark" id="addToCart" > Check out</a>
+                    <a href="<spring:url value="/order/place"/>" class="btn btn-dark" id="addToCart" > Check out</a>
                     <a href="<spring:url value="/product/${product.productId}"/>" class="btn btn-dark" >Continue shopping</a>
                     <%--<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>--%>
                 </div>

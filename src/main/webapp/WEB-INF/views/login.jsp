@@ -13,7 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Spring Security</title>
+    <title>Tshop</title>
 
     <!-- Bootstrap core CSS -->
     <link href="<c:url value="/resources/css/bootstrap.css" />" rel="stylesheet">
@@ -54,7 +54,7 @@
                 <input class="form-check-input" type="checkbox"> Remember me
             </label>
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sing in</button>
+        <button class="btn btn-lg btn-secondary btn-block" type="submit">Sing in</button>
     </form>
 </div>
 
