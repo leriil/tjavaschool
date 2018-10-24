@@ -17,6 +17,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 @Controller
 @RequestMapping("/order")
@@ -70,9 +71,10 @@ public Sale getSale(){
     @RequestMapping(value = "/cart/remove",method = RequestMethod.POST)
     public Long removeFromCart(@RequestBody Long productId,
                           @ModelAttribute ("productsInCart") List <Product> productsInCart){
-        productsInCart.remove(this.productService.findOne(productId));
-        System.out.println("product with id: "+productId+" has been removed from cart");
-        System.out.println("products in cart : "+productsInCart);
+        Product productForRemoval=this.productService.findOne(productId);
+        productsInCart.removeIf(product -> product.equals(productForRemoval));
+            log.log(Level.WARNING," Products in cart after removal left : "
+                    +productsInCart);
         return productId;
     }
 
