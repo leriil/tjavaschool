@@ -60,22 +60,30 @@ public Sale getSale(){
 
     @ResponseBody
     @RequestMapping(value = "/cart/add",method = RequestMethod.POST)
-    public Long addToCart(@RequestBody Long productId,
+    public int addToCart(@RequestBody Long productId,
                           @ModelAttribute ("productsInCart") List <Product> productsInCart){
         productsInCart.add(this.productService.findOne(productId));
         System.out.println("product with id: "+productId+" has been added to cart");
         System.out.println("products in cart : "+productsInCart);
-        return productId;
+        return productsInCart.size();
     }
     @ResponseBody
     @RequestMapping(value = "/cart/remove",method = RequestMethod.POST)
-    public Long removeFromCart(@RequestBody Long productId,
+    public int removeFromCart(@RequestBody Long productId,
                           @ModelAttribute ("productsInCart") List <Product> productsInCart){
         Product productForRemoval=this.productService.findOne(productId);
         productsInCart.removeIf(product -> product.equals(productForRemoval));
             log.log(Level.WARNING," Products in cart after removal left : "
                     +productsInCart);
-        return productId;
+        return productsInCart.size();
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/cart/count",method = RequestMethod.GET)
+    public int countProducts(@ModelAttribute ("productsInCart") List <Product> productsInCart){
+        log.log(Level.WARNING," Products in cart : "
+                +productsInCart);
+        return productsInCart.size();
     }
 
 @RequestMapping("/history")
