@@ -103,7 +103,6 @@
 
 
 </form:form>
-</div>
 <div class="container">
     <h1>Products in your cart</h1>
     <table class="table table-hover">

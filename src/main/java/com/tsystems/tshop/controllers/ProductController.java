@@ -24,6 +24,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -55,15 +56,11 @@ public class ProductController {
     return new User();
 }
 
-
-
     @ModelAttribute("address")
      public Address getAddress(){
     return new Address();
 }
 //    List<Product> products=new ArrayList<>();
-
-
 
     //	@GetMapping("/{id}")
 //	public Product getProduct(@PathVariable Long id) {
@@ -105,9 +102,13 @@ public class ProductController {
         status.setComplete();
         return "redirect:/product/add";
     }
+    @ResponseBody
     @RequestMapping(value = "/find/top")
-    public String topProducts(){
-        return "product_top";
+    public List<Product> topProducts(Model model){
+        List<Product> topProducts=new ArrayList<>();
+        topProducts=this.productService.getTopProducts();
+        model.addAttribute("top",topProducts);
+        return topProducts;
     }
 
     @RequestMapping("/all")

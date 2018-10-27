@@ -18,11 +18,16 @@ public class AddressService {
     AddressRepository addressRepository;
 
     @Transactional
-public Address userCurrentAddress(User user){
+    public Address userCurrentAddress(User user){
     if(user.getAddresses().iterator().hasNext()){
         return user.getAddresses().iterator().next();
     }else return null;
 }
+
+    public void save(Address address){
+        this.addressRepository.save(address);
+    }
+
 
     public void saveAddress(Address oldAddress, Address newAddress) {
 

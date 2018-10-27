@@ -35,6 +35,10 @@ public class UserService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
+    public void saveUser(User user){
+        this.userRepository.save(user);
+    }
+
 
 
 

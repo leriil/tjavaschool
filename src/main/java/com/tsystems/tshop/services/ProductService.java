@@ -33,4 +33,8 @@ public class ProductService {
         {log.log(Level.WARNING,"There is no product with id: "+productId.toString());
             throw new RuntimeException();}
     }
+
+    public List<Product> getTopProducts(){
+        return this.repository.getTop();
+    }
 }

@@ -16,14 +16,10 @@ import java.util.logging.Logger;
 
 public class MainController {
 
-
-
     private static final Logger log=Logger.getLogger("Log");
 
     @Autowired
     UserService userService;
-
-
 
 
     @RequestMapping(value="/register",method = RequestMethod.POST)

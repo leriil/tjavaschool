@@ -8,5 +8,8 @@ import java.util.Set;
 
 @Repository
 public interface SaleRepository extends JpaRepository<Sale,Long> {
-    public Set<Sale>findAllByUser_Login(String login);
+
+    Set<Sale>findAllByUser_Login(String login);
+
+
 }

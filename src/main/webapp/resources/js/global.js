@@ -3,7 +3,7 @@ $(document).ready(function () {
     $("#logout").click(function (e) {
         e.preventDefault();
         $("#logout-form").submit();
-    })
+    });
     $.ajax({
             url: ctx+"/order/cart/count",
             dataType: 'json',

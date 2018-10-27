@@ -20,7 +20,7 @@ public class Sale {
 //        CascadeType.ALL
 //})
 //@ManyToMany(cascade = CascadeType.ALL)
-    @ManyToMany( fetch = FetchType.EAGER)
+    @ManyToMany( fetch = FetchType.LAZY)
 @JoinTable(name = "sale_product",
         joinColumns = @JoinColumn(name = "sale_id"),
         inverseJoinColumns = @JoinColumn(name = "product_id")
@@ -31,7 +31,7 @@ private List<Product> products = new ArrayList<>();
 //    @JoinColumn(name = "user_id")
 //    private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id")
     private Address address;
 
