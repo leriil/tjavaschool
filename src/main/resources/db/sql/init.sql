@@ -17,9 +17,8 @@ insert into product(name, category, in_stock, price, volume, weight) values ('eb
 
 insert into user_role(user_id,role_id)values (1,1);
 insert into user_role(user_id,role_id)values (2,1);
-insert into user_role(user_id,role_id)values (3,1);
-insert into user_role(user_id,role_id)values (4,2);
 insert into user_role(user_id,role_id)values (3,2);
+insert into user_role(user_id,role_id)values (4,2);
 
 insert into address(country, city, zip_code, street, house, flat) values ('US','Washington','20001','Bloomingdale' ,'3' ,'5B');
 insert into address(country, city, zip_code, street, house, flat) values ('Britain','London','20DF43','Circus' ,'45' ,'6');
