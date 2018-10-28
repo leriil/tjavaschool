@@ -16,7 +16,7 @@ function removeProduct (id) {
             processData:false
         }
     )
-        // .done(function (result) { $("#basket").html(result); })
+        .done(function () {location.reload(); })
         .fail(function () { alert("the product wasn't removed from your cart"); });
 }
 
