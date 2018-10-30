@@ -10,6 +10,17 @@ import java.util.Set;
 
 @Entity
 @Table(name = "product")
+@SqlResultSetMapping(
+        name="productTopMapping",
+        classes = @ConstructorResult(
+                        targetClass = ProductTop.class,
+                        columns = {
+                        @ColumnResult(name = "productId",type = Long.class),
+                        @ColumnResult(name = "name"),
+                        @ColumnResult(name = "category"),
+                        @ColumnResult(name = "inStock", type = Integer.class),
+                        @ColumnResult(name = "price", type = BigDecimal.class)
+}))
 public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,11 +1,11 @@
 package com.tsystems.tshop.repositories;
 
-import com.tsystems.tshop.domain.Product;
+import com.tsystems.tshop.domain.ProductTop;
 
 import java.util.List;
 
 public interface ProductRepositoryCustom {
 
-    public List<Product> getTopProducts();
+    public List<ProductTop> getTopProducts();
 
 }

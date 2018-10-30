@@ -10,6 +10,7 @@ package com.tsystems.tshop.controllers;//package com.tsystems.tshop.controllers;
 //
 
 import com.tsystems.tshop.domain.Product;
+import com.tsystems.tshop.domain.ProductTop;
 import com.tsystems.tshop.enums.ProductCategory;
 import com.tsystems.tshop.repositories.UserRepository;
 import com.tsystems.tshop.services.AddressService;
@@ -22,7 +23,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -80,9 +80,8 @@ public class ProductController {
 
     @ResponseBody
     @RequestMapping(value = "/find/top")
-    public List<Product> topProducts(Model model) {
-        List<Product> topProducts = new ArrayList<>();
-        topProducts = this.productService.getTopProducts();
+    public List<ProductTop> topProducts(Model model) {
+        List<ProductTop> topProducts =  this.productService.getTopProducts();
         model.addAttribute("top", topProducts);
         return topProducts;
     }
