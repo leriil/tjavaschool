@@ -23,34 +23,19 @@ public class User implements UserDetails {
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE,
-    },fetch = FetchType.EAGER)
+    })
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles = new HashSet<>();
 
-    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "user_address",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "address_id")
     )
     private Set<Address> addresses = new HashSet<>();
-
-//    @OneToMany(mappedBy = "user")
-//    private Set<Sale>sales=new HashSet<>();
-
-//    @OneToMany(cascade = CascadeType.ALL)
-//    @JoinColumn(name="user_id", nullable = false)
-//    private List<Sale> orders=new ArrayList<>();
-
-//    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "users")
-//    private List<Address>addresses=new ArrayList<>();
-
-//    @ManyToMany(cascade = CascadeType.ALL)
-//    @JoinTable(name="user_role", joinColumns=@JoinColumn(name="user_id"),
-//            inverseJoinColumns=@JoinColumn(name="role_id"))
-//    private List<User> roles=new ArrayList<>();
 
 
     @Column(name = "login",nullable = false, unique = true, updatable = false)
@@ -205,13 +190,6 @@ public class User implements UserDetails {
         this.addresses = addresses;
     }
 
-//    public Set<Sale> getSales() {
-//        return sales;
-//    }
-//
-//    public void setSales(Set<Sale> sales) {
-//        this.sales = sales;
-//    }
 
     @Override
     public String toString() {
@@ -219,7 +197,6 @@ public class User implements UserDetails {
                 "userId=" + userId +
                 ", roles=" + roles +
                 ", addresses=" + addresses +
-//                ", sales=" + sales +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
