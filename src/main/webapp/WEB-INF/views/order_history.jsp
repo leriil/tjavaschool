@@ -1,6 +1,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
 <html>
 <head>
     <title>History</title>
@@ -25,22 +26,15 @@
             <th>Order Id</th>
             <th>Order Status</th>
             <th>Payment Status</th>
-            <%--<th>Volume</th>--%>
-            <%--<th>inStock</th>--%>
-            <%--<th>Category</th>--%>
         </tr>
 
-<c:forEach items="${orders}" var="order">
-    <tr>
-        <td><a href="<spring:url value="/order/${order.saleId}"/>">${order.saleId}</a></td>
-        <td>${order.orderStatus}</td>
-        <td>${order.paymentStatus}</td>
-        <%--<td>${}</td>--%>
-        <%--<td>${}</td>--%>
-        <%--<td>${}</td>--%>
-
-    </tr>
-</c:forEach>
+        <c:forEach items="${orders}" var="order">
+            <tr>
+                <td><a href="<spring:url value="/order/${order.orderId}"/>">Order # ${order.orderId}</a></td>
+                <td>${order.orderStatus}</td>
+                <td>${order.paymentStatus}</td>
+            </tr>
+        </c:forEach>
 
         </tbody>
     </table>
