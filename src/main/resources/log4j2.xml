@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="INFO">
+<Configuration status="info">
+
     <Appenders>
         <Console name="console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t]%highlight{%level}{FATAL=bg_red, ERROR=red, WARN=yellow, INFO=green, DEBUG=blue} - %msg%n" >
             </PatternLayout>
         </Console>
+        <File name="MyFile" fileName="C:/Users/Leriil/IdeaProjects/ts-shop-backend — копия/logs/${date:yyyy-MM-dd HHmmss}/app.log">
+            <PatternLayout pattern="%d %p %c{1.} [%t] %m%n">
+            </PatternLayout>
+        </File>
+
     </Appenders>
     <Loggers>
-        <Root level="DEBUG" additivity="false">
+        <Root level="DEBUG">
             <AppenderRef ref="console" />
+            <AppenderRef ref="MyFile"/>
         </Root>
     </Loggers>
 </Configuration>
