@@ -1,13 +1,13 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
 <html>
 <head>
     <title>Order</title>
+    <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <link rel="stylesheet" href="<spring:url value="/resources/css/home.css"/>" type="text/css">
-    <%--<link rel="stylesheet" href="<spring:url value="/resources/css/bootstrap-select.min.css"/>" type="text/css">--%>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="<c:url value="/resources/js/global.js"/>"></script>
@@ -21,7 +21,16 @@
 <body>
 <jsp:include page="../views/fragments/header.jsp"></jsp:include>
 <div class="container">
-    <h2>Order # ${order.saleId}</h2>
+    <div class="row">
+        <div class="col-md-3">
+            <h2>Order # ${order.orderId}</h2>
+        </div>
+        <div class="col-md-3">
+            <div class="offset-md-5">
+                <a href="<spring:url value="/order/repeat/save"/>" class="btn btn-primary"> Repeat the order </a>
+            </div>
+        </div>
+    </div>
 
     <h3>User Details</h3>
     <div class="container">
@@ -66,29 +75,29 @@
     </table>
 
     <h3>Address</h3>
-   <div class="container">
-       <div class="row">
-           <div class="form-group">
-               <label>Country</label> <span>${order.address.country}</span>
-           </div>
-           <div class="form-group">
-               <label>City</label> <span>${order.address.city}</span>
-           </div>
-           <div class="form-group">
-               <label>ZipCode</label> <span>${order.address.zipCode}</span>
-           </div>
-           <div class="form-group">
-               <label>Street</label> <span>${order.address.street}</span>
-           </div>
-           <div class="form-group">
-               <label>House</label> <span>${order.address.house}</span>
-           </div>
-           <div class="form-group">
-               <label>Flat</label> <span>${order.address.flat}</span>
-           </div>
-       </div>
-   </div>
-    <h3>Other detais</h3>
+    <div class="container">
+        <div class="row">
+            <div class="form-group">
+                <label>Country</label> <span>${order.address.country}</span>
+            </div>
+            <div class="form-group">
+                <label>City</label> <span>${order.address.city}</span>
+            </div>
+            <div class="form-group">
+                <label>ZipCode</label> <span>${order.address.zipCode}</span>
+            </div>
+            <div class="form-group">
+                <label>Street</label> <span>${order.address.street}</span>
+            </div>
+            <div class="form-group">
+                <label>House</label> <span>${order.address.house}</span>
+            </div>
+            <div class="form-group">
+                <label>Flat</label> <span>${order.address.flat}</span>
+            </div>
+        </div>
+    </div>
+    <h3>Payment and Delivery details</h3>
     <div class="container">
         <div class="row">
             <div class="form-group">
@@ -104,19 +113,7 @@
                 <label>Order Status</label> <span>${order.orderStatus}</span>
             </div>
         </div>
-</div>
-
-    <a href="<spring:url value="/order/repeat/save"/>" class="btn btn-default"> Repeat the order </a>
-
-    <%--<a href="<spring:url value="/order/place"/>" class="btn btn-default" id="addToCart">buy</a>--%>
-    <%--<button id="addProductToCart" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">--%>
-        <%--<form id="cart-form" action="<spring:url value="/product/addToCart"/>" method="post"></form>--%>
-        <%--<sec:csrfInput/>--%>
-        <%--Add to cart--%>
-    <%--</button>--%>
-
-
-
+    </div>
 </div>
 </body>
 </html>
