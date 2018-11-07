@@ -20,13 +20,18 @@
     <!--here we configure various beans for our business logic: data access services, etc.
     If we have several dispatcher servlets, they would/could share these beans-->
     <!-- enable the configuration of transactional behavior based on annotations -->
-    <tx:annotation-driven/>
+    <!--it means we can configure our transactions using annotations-->
+    <!--the default value of a transation manager is "transactionManager" so we omit it here-->
+    <tx:annotation-driven />
     <!--<bean name="bcryptEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>-->
-
+    <!--TODO:look it up-->
+<!--<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"></bean>-->
    <!--beans not involved in our mvc project-->
     <context:component-scan base-package="com.tsystems.tshop.services"/>
 
+<!--this is for spring data-->
     <jpa:repositories base-package="com.tsystems.tshop.repositories"/>
+
 
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -36,20 +41,20 @@
         <property name="password" value="123" />
     </bean>
     <!--starts up jpa and hibernate inside application-->
+    <!--references persistence unit-->
     <bean id="entityManagerFactory"
           class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <property name="packagesToScan" value="com.tsystems.tshop.domain" />
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" >
-                <property name="showSql" value="true"/>
+                <!--<property name="showSql" value="true"/>-->
             </bean>
         </property>
         <property name="jpaProperties">
             <props>
-                <prop key="hibernate.show_sql">true</prop>
                 <!--create, create-drop, update, validate,none: when stable use update-->
-                <prop key="hibernate.hbm2ddl.auto">create-drop</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
                 <prop key="hibernate.hbm2ddl.import_files">db/sql/init.sql</prop>
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQL55Dialect</prop>
                 <prop key="hibernate.format_sql">true</prop>
@@ -59,6 +64,7 @@
         </property>
     </bean>
     <!--makes possible for transactions to happen-->
+    <!--it doesn't start or stop transactions-->
     <bean id="transactionManager"
           class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="entityManagerFactory" />
