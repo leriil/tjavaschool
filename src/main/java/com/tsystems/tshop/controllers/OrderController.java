@@ -127,6 +127,8 @@ public class OrderController {
     ) {
         List<String> paymentOptions=new ArrayList<>(Arrays.asList("cash","online"));
         model.addAttribute("paymentOptions",paymentOptions);
+        List<String>deliveryOptions=new ArrayList<>(Arrays.asList("pickup", "delivery"));
+        model.addAttribute("deliveryOptions", deliveryOptions);
         this.orderService.createNewOrder(order);
         return "order_place";
     }
