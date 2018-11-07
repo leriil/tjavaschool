@@ -28,7 +28,7 @@ public class Product {
 	private Long productId;
 
 	@ManyToMany(mappedBy = "products")
-	private Set<Sale> sales=new HashSet<>();
+	private Set<Order> orders =new HashSet<>();
 
 	@Column(name = "name")
 	private String name;
@@ -111,28 +111,14 @@ public class Product {
 		this.volume = volume;
 	}
 
-	public Set<Sale> getSales() {
-		return sales;
+	public Set<Order> getOrders() {
+		return orders;
 	}
 
-	public void setSales(Set<Sale> sales) {
-		this.sales = sales;
+	public void setOrders(Set<Order> orders) {
+		this.orders = orders;
 	}
-	//	public List<Sale> getSales() {
-//		return sales;
-//	}
-//
-//	public void setSales(List<Sale> sales) {
-//		this.sales = sales;
-//	}
 
-//	public void addSale(Sale sale){
-//		if(!sales.contains(sale)){
-//			sales.add(sale);
-//		}
-//
-//		sale.addProduct(this);
-//	}
 
 	@Override
 	public boolean equals(Object o) {
