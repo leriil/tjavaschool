@@ -14,6 +14,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -121,8 +122,11 @@ public class OrderController {
     @RequestMapping(value = "/place")
     public String orderPlace( @ModelAttribute("order")Order order,
                             @ModelAttribute("address")Address address,
-                            @ModelAttribute("user") User user
+                            @ModelAttribute("user") User user,
+                              Model model
     ) {
+        List<String> paymentOptions=new ArrayList<>(Arrays.asList("cash","online"));
+        model.addAttribute("paymentOptions",paymentOptions);
         this.orderService.createNewOrder(order);
         return "order_place";
     }
@@ -135,12 +139,13 @@ public class OrderController {
     }
 
     @RequestMapping("/save")
-    public String saveOrder(@ModelAttribute("order")Order order,
+    public String saveOrder(Model model,
+                            @ModelAttribute("order")Order order,
                             @ModelAttribute("productsInCart")List<Product> productsInCart,
                             SessionStatus sessionStatus,
                             @ModelAttribute("card")Card card){
         //make a list of options for the payment method
-        if(order.getPaymentMethod()=="cash"){
+        if(order.getPaymentMethod().equals("cash")){
             this.orderService.saveOrder(order,productsInCart);
             sessionStatus.setComplete();}
         else{
