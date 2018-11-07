@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -19,13 +21,29 @@ public class ProductService {
     @Autowired
     ProductRepository repository;
 
+    public BigDecimal getTotal(List<Product>products){
+
+        BigDecimal total=BigDecimal.valueOf(0);
+        List<BigDecimal> values=new ArrayList<>();
+
+        if(!products.isEmpty()){
+
+            products.forEach(product -> {values.add(product.getPrice());});
+             total = values.stream().reduce((x, y) -> x.add(y)).get();
+        }
+
+        return total;
+    }
+
 
     public void save(Product product) {
         this.repository.save(product);
     }
 
     public List<Product> findProducts() {
-        return this.repository.findAll();
+
+        return this.repository.findAllByOrderByNameAsc();
+
     }
 
     public Product findOne(Long productId) throws RuntimeException {
