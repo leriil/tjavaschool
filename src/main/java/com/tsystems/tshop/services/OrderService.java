@@ -68,7 +68,7 @@ public class OrderService {
            this.saveOrder(order,products);
        }
    }
-
+//TODO: change the inStock value before saving the order
     public void saveOrder(Order order, List<Product> products) {
         log.info("Transaction \"saveOrder\" should have started here");
         this.addressService.save(order.getAddress());
@@ -99,7 +99,7 @@ public class OrderService {
             throw new RuntimeException();
         }
     }
-
+//TODO: figure out if the return value is needed
     public Order createNewOrder(Order order) {
 
         User user = this.userService.getUser();
