@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "sale")
-public class Sale {
+@Table(name = "order_")
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "sale_id")
-    private Long saleId;
+    @Column(name = "order_id")
+    private Long orderId;
 
 //    @ManyToMany(cascade = CascadeType.ALL)
 //    @JoinTable(name="order_product", joinColumns=@JoinColumn(name="order_id"),
@@ -21,8 +21,8 @@ public class Sale {
 //})
 //@ManyToMany(cascade = CascadeType.ALL)
     @ManyToMany( fetch = FetchType.LAZY)
-@JoinTable(name = "sale_product",
-        joinColumns = @JoinColumn(name = "sale_id"),
+@JoinTable(name = "order_product",
+        joinColumns = @JoinColumn(name = "order_id"),
         inverseJoinColumns = @JoinColumn(name = "product_id")
 )
 private List<Product> products = new ArrayList<>();
@@ -31,7 +31,7 @@ private List<Product> products = new ArrayList<>();
 //    @JoinColumn(name = "user_id")
 //    private User user;
 
-    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
+    @ManyToOne( fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id")
     private Address address;
 
@@ -51,13 +51,6 @@ private List<Product> products = new ArrayList<>();
     @Column(name = "order_status")
     private String orderStatus;
 
-//    public Long getSaleId() {
-//        return saleId;
-//    }
-//
-//    public void setSaleId(Long saleId) {
-//        this.saleId = saleId;
-//    }
 
     public String getPaymentMethod() {
         return paymentMethod;
@@ -91,12 +84,12 @@ private List<Product> products = new ArrayList<>();
         this.orderStatus = orderStatus;
     }
 
-    public Long getSaleId() {
-        return saleId;
+    public Long getOrderId() {
+        return orderId;
     }
 
-    public void setSaleId(Long saleId) {
-        this.saleId = saleId;
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
     }
 
     public List<Product> getProducts() {
@@ -123,17 +116,11 @@ private List<Product> products = new ArrayList<>();
         this.user = user;
     }
 
-//    public void addProduct(Product product){
-//        if(!products.contains(product)){
-//            products.add(product);
-//        }
-//        product.addSale(this);
-//    }
 
     @Override
     public String toString() {
-        return "Sale{" +
-                "saleId=" + saleId +
+        return "Order{" +
+                "orderId=" + orderId +
                 ", products=" + products +
                 ", address=" + address +
                 ", user=" + user +
