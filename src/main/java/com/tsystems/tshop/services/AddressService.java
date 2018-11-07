@@ -33,18 +33,6 @@ public class AddressService {
 
     }
 }
-//        while (iterator.hasNext()) {
-//            Address a = iterator.next();
-//
-//            if (address.equals(a)) {
-//                log.log(Level.INFO, "this address: " + address.toString() + " is already in the database");
-//                break;
-//            } else this.addressRepository.save(address);
-//        }
-
-//    public List<Address> getUserAddresses(String login){
-//        return this.addressRepository.findByUsers_Login(login);
-//    }
 
 
 

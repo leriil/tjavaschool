@@ -2,7 +2,7 @@ insert into role(name) values ('CLIENT');
 insert into role(name) values ('SALESPERSON');
 
 insert into user(name, surname, login, password, birth_date, email) values ('Bill','Murrey','bill','b' ,'2000-01-12','bill@yandex.ru');
-insert into user(name, surname, login, password, birth_date, email) values ('Paul','Marley','paul','p' ,'1968-04-03','bob@yandex.ru');
+insert into user(name, surname, login, password, birth_date, email) values ('Paul','Marley','paul','p' ,'1968-04-03','paul@yandex.ru');
 insert into user(name, surname, login, password, birth_date, email) values ('Mary','Fisher','marry','m' ,'1856-06-20','mary@yandex.ru');
 insert into user(name, surname, login, password, birth_date, email) values ('Susan','Mayer','susy','s' ,'2002-12-29','suzy@yandex.ru');
 -- insert into user(name, surname, login, password, birth_date, email) values ('Bill','Murrey','bill','$2a$04$dBOzyg8ikiHaKWJJONbgquqb9.gK4w5mOhAEAJcovHFTGRTxqBhTO' ,'2000-01-12','bill@yandex.ru');
@@ -26,13 +26,13 @@ insert into address(country, city, zip_code, street, house, flat) values ('Brita
 insert into user_address(user_id,address_id) values(1,1);
 insert into user_address(user_id,address_id) values(2,1);
 
-insert into sale(sale_id, address_id, user_id, payment_method, delivery_method, payment_status, order_status)values (1,1,1,'cash','pickup','paid','delivered');
-insert into sale(sale_id, address_id, user_id, payment_method, delivery_method, payment_status, order_status)values (2,2,3,'cash','pickup','not paid','travel');
+insert into order_(order_id, address_id, user_id, payment_method, delivery_method, payment_status, order_status)values (1,1,1,'cash','pickup','paid','delivered');
+insert into order_(order_id, address_id, user_id, payment_method, delivery_method, payment_status, order_status)values (2,2,3,'cash','pickup','not paid','travel');
 
-insert into sale_product (sale_id,product_id)values (1,2);
-insert into sale_product (sale_id,product_id)values (1,2);
-insert into sale_product (sale_id,product_id)values (2,1);
-insert into sale_product (sale_id,product_id)values (2,2);
+insert into order_product (order_id,product_id)values (1,2);
+insert into order_product (order_id,product_id)values (1,2);
+insert into order_product (order_id,product_id)values (2,1);
+insert into order_product (order_id,product_id)values (2,2);
 
 
 
