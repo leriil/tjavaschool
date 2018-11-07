@@ -1,13 +1,5 @@
-package com.tsystems.tshop.controllers;//package com.tsystems.tshop.controllers;
-//
-//import org.springframework.web.bind.annotation.GetMapping;
-//import org.springframework.web.bind.annotation.PathVariable;
-//import org.springframework.web.bind.annotation.RequestMapping;
-//import org.springframework.web.bind.annotation.RestController;
-//
-//import com.tsystems.tshop.domain.Product;
-//import com.tsystems.tshop.services.ProductService;
-//
+package com.tsystems.tshop.controllers;
+
 
 import com.tsystems.tshop.domain.Product;
 import com.tsystems.tshop.domain.ProductTop;
