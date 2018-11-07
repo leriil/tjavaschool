@@ -13,14 +13,6 @@ public class Address {
     @Column(name = "address_id")
     private Long addressId;
 
-//    @OneToMany(mappedBy = "address")
-//    private Set<Sale> sales=new HashSet<>();
-
-//    @ManyToMany(cascade = CascadeType.ALL)
-//    @JoinTable(name="user_address", joinColumns=@JoinColumn(name="address_id"),
-//            inverseJoinColumns=@JoinColumn(name="user_id"))
-//    private List<User> users=new ArrayList<>();
-
     @ManyToMany(mappedBy = "addresses")
     private Set<User> users = new HashSet<>();
 
@@ -100,11 +92,9 @@ public class Address {
 
     @Override
     public boolean equals(Object o) {
-//        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Address address = (Address) o;
-        return Objects.equals(addressId, address.addressId) &&
-                Objects.equals(country, address.country) &&
+        return  Objects.equals(country, address.country) &&
                 Objects.equals(city, address.city) &&
                 Objects.equals(zipCode, address.zipCode) &&
                 Objects.equals(street, address.street) &&
