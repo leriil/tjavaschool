@@ -1,12 +1,9 @@
 package com.tsystems.tshop.controllers;
 
-import com.tsystems.tshop.domain.Address;
-import com.tsystems.tshop.domain.Product;
-import com.tsystems.tshop.domain.Sale;
-import com.tsystems.tshop.domain.User;
+import com.tsystems.tshop.domain.*;
 import com.tsystems.tshop.services.AddressService;
+import com.tsystems.tshop.services.OrderService;
 import com.tsystems.tshop.services.ProductService;
-import com.tsystems.tshop.services.SaleService;
 import com.tsystems.tshop.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -22,7 +20,7 @@ import java.util.logging.Logger;
 @Controller
 @RequestMapping("/order")
 @SessionAttributes({"order","productsInCart","address","user"})
-public class SaleController {
+public class OrderController {
 
     private static final Logger log=Logger.getLogger("Log");
 
@@ -33,9 +31,11 @@ public class SaleController {
     UserService userService;
 
     @Autowired
-    SaleService saleService;
+    OrderService orderService;
     @Autowired
     ProductService productService;
+
+
 
     @ModelAttribute("productsInCart")
     public List<Product> getProducts(){
@@ -53,17 +53,22 @@ public class SaleController {
     }
 
     @ModelAttribute("order")
-    public Sale getSale(){
-    return new Sale();
+    public Order getOrder(){
+    return new Order();
 }
+
+
+    private BigDecimal total;
 
     @ResponseBody
     @RequestMapping(value = "/cart/add",method = RequestMethod.POST)
     public int addToCart(@RequestBody Long productId,
                           @ModelAttribute ("productsInCart") List <Product> productsInCart){
+
         productsInCart.add(this.productService.findOne(productId));
-        log.log(Level.WARNING,"product with id: "+productId+
+        log.info("product with id: "+productId+
                 " has been added to cart. Products in cart : \"+productsInCart");
+
         return productsInCart.size();
     }
     @ResponseBody
@@ -71,81 +76,98 @@ public class SaleController {
     public int removeFromCart(@RequestBody Long productId,
                           @ModelAttribute ("productsInCart") List <Product> productsInCart){
         Product productForRemoval=this.productService.findOne(productId);
-        productsInCart.removeIf(product -> product.equals(productForRemoval));
-            log.log(Level.WARNING," Products in cart after removal left : "
+        //TODO: only one instance should be removed, not all of them
+//        productsInCart.removeIf(product -> product.equals(productForRemoval));
+            log.info(" Products in cart after removal left : "
                     +productsInCart);
+            productsInCart.remove(productForRemoval);
         return productsInCart.size();
     }
 
     @ResponseBody
     @RequestMapping(value = "/cart/count",method = RequestMethod.GET)
     public int countProducts(@ModelAttribute ("productsInCart") List <Product> productsInCart){
-        log.log(Level.WARNING," Products in cart : "
+        log.info(" Products in cart : "
                 +productsInCart);
         return productsInCart.size();
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/cart/total",method = RequestMethod.GET)
+    public BigDecimal getTotal(@ModelAttribute ("productsInCart") List <Product> productsInCart){
+
+        return this.productService.getTotal(productsInCart);
     }
 
     @RequestMapping("/history")
     public String repeatOrder(Model model){
     String login=SecurityContextHolder.getContext().getAuthentication().getName();
-    model.addAttribute("orders",this.saleService.findUserOrders(login));
-    log.log(Level.WARNING,"from /history   "+this.saleService.findUserOrders(login) );
+    model.addAttribute("orders",this.orderService.findUserOrders(login));
+    log.log(Level.WARNING,"from /history   "+this.orderService.findUserOrders(login) );
     return "order_history";
 }
 
-    @RequestMapping(value = "/{saleId}")
-    public String findSale(@ModelAttribute("order") Sale sale,
-                              Model model, @PathVariable Long saleId){
-        try{model.addAttribute("order",this.saleService.findSale(saleId));
-            log.log(Level.WARNING,"from /{saleId} "+this.saleService.findSale(saleId) );
+    @RequestMapping(value = "/{orderId}")
+    public String findOrder(@ModelAttribute("order") Order order,
+                              Model model, @PathVariable Long orderId){
+        try{model.addAttribute("order",this.orderService.findOrder(orderId));
+            log.log(Level.WARNING,"from /{orderId} "+this.orderService.findOrder(orderId) );
         }catch (RuntimeException e){
             return "order_not_found";
         }
         return "order";
     }
-
+//TODO: get rid of address and user, they are null after creating a new order
     @RequestMapping(value = "/place")
-    public String orderPlace( @ModelAttribute("order")Sale sale,
+    public String orderPlace( @ModelAttribute("order")Order order,
                             @ModelAttribute("address")Address address,
                             @ModelAttribute("user") User user
     ) {
-        user=this.userService.getUser();
-        sale.setUser(user);
-        Address currentAddress=this.addressService.userCurrentAddress(user);
-       if(currentAddress!=null){
-           sale.setAddress(currentAddress);
-       }
+        this.orderService.createNewOrder(order);
         return "order_place";
     }
 
     @RequestMapping(value = "/review",method = RequestMethod.POST)
-    public String reviewOrder(@ModelAttribute("order")Sale sale,
+    public String reviewOrder(@ModelAttribute("order")Order order,
                               @ModelAttribute("productsInCart")List<Product> productsInCart
     ) {
         return "order_review";
     }
 
     @RequestMapping("/save")
-    public String saveOrder(@ModelAttribute("order")Sale sale,
+    public String saveOrder(@ModelAttribute("order")Order order,
                             @ModelAttribute("productsInCart")List<Product> productsInCart,
-                            SessionStatus sessionStatus){
-        this.addressService.save(sale.getAddress());
-        sale.getUser().getAddresses().add(sale.getAddress());
-        this.userService.saveUser(sale.getUser());
-        sale.setProducts(productsInCart);
-        sale.setOrderStatus("waiting for approval");
-        sale.setPaymentStatus("not paid");
-        this.saleService.saveSale(sale);
+                            SessionStatus sessionStatus,
+                            @ModelAttribute("card")Card card){
+        //make a list of options for the payment method
+        if(order.getPaymentMethod()=="cash"){
+            this.orderService.saveOrder(order,productsInCart);
+            sessionStatus.setComplete();}
+        else{
+            //here we present a form for user card information
+            return "order_payment";
+        }
+
+        return "redirect:/product/all";
+    }
+    @RequestMapping(value = "/pay", method = RequestMethod.POST)
+    public String payWithCard(Model model,
+                              @ModelAttribute("card")Card card,
+                              @ModelAttribute("order")Order order,
+                              @ModelAttribute("productsInCart")List<Product> productsInCart,
+                              SessionStatus sessionStatus){
+        this.orderService.payWithCard(card,order,productsInCart);
         sessionStatus.setComplete();
         return "redirect:/product/all";
+
     }
 
     @RequestMapping(value = "/repeat/save")
-    public String saveSale(@ModelAttribute("order")Sale sale, SessionStatus status){
-        sale.setSaleId(null);
-        log.log(Level.WARNING,"from /repeat/save   "+sale);
-        this.saleService.saveSale(sale);
-        log.log(Level.WARNING,"after saving a sale "+sale);
+    public String saveOrder(@ModelAttribute("order")Order order, SessionStatus status){
+        order.setOrderId(null);
+        log.log(Level.WARNING,"from /repeat/save   "+ order);
+        this.orderService.saveOrder(order);
+        log.log(Level.WARNING,"after saving a order "+ order);
         status.setComplete();
         return "redirect:/product/all";
     }
