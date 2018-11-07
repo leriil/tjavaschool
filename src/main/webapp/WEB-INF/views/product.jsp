@@ -1,12 +1,12 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
 <html>
 <head>
     <title>Product</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <link rel="stylesheet" href="<spring:url value="/resources/css/home.css"/>" type="text/css">
     <%--<link rel="stylesheet" href="<spring:url value="/resources/css/bootstrap-select.min.css"/>" type="text/css">--%>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
@@ -48,9 +48,9 @@
     <%--<a href="<spring:url value="/product/addToCart"/>" class="btn btn-dark" id="addToCart" > Check out</a>--%>
     <%--<a href="<spring:url value="/order/place"/>" class="btn btn-default" id="addToCart">buy</a>--%>
     <%--<button id="addProductToCart" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">--%>
-        <%--<form id="cart-form" action="<spring:url value="/product/addToCart"/>" method="post"></form>--%>
-        <%--<sec:csrfInput/>--%>
-        <%--Add to cart--%>
+    <%--<form id="cart-form" action="<spring:url value="/product/addToCart"/>" method="post"></form>--%>
+    <%--<sec:csrfInput/>--%>
+    <%--Add to cart--%>
     <%--</button>--%>
 
     <!-- The Modal -->
@@ -60,20 +60,21 @@
 
                 <!-- Modal Header -->
                 <%--<div class="modal-header">--%>
-                    <%--&lt;%&ndash;<h4 class="modal-title"></h4>&ndash;%&gt;--%>
-                    <%--<button type="button" class="close" data-dismiss="modal">&times;</button>--%>
+                <%--&lt;%&ndash;<h4 class="modal-title"></h4>&ndash;%&gt;--%>
+                <%--<button type="button" class="close" data-dismiss="modal">&times;</button>--%>
                 <%--</div>--%>
 
                 <!-- Modal body -->
                 <div class="modal-body align-content-md-center">
-                     ${product.name} has been added to your cart
+                    ${product.name} has been added to your cart
 
                 </div>
 
                 <!-- Modal footer -->
                 <div class="modal-footer align-content-lg-center">
-                    <a href="<spring:url value="/order/place"/>" class="btn btn-dark" id="addToCart" > Check out</a>
-                    <a href="<spring:url value="/product/${product.productId}"/>" class="btn btn-dark" >Continue shopping</a>
+                    <a href="<spring:url value="/order/place"/>" class="btn btn-dark" id="addToCart"> Check out</a>
+                    <a href="<spring:url value="/product/all"/>" class="btn btn-dark">Continue
+                        shopping</a>
                     <%--<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>--%>
                 </div>
 
