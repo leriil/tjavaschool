@@ -2,7 +2,6 @@ package com.tsystems.tshop.services;
 
 import com.tsystems.tshop.domain.Role;
 import com.tsystems.tshop.domain.User;
-import com.tsystems.tshop.repositories.RoleRepository;
 import com.tsystems.tshop.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,14 +15,15 @@ import java.util.Set;
 @Service
 public class UserService {
 
-    @Autowired
     public UserRepository userRepository;
 
-    @Autowired
-    RoleRepository roleRepository;
+    RoleService roleService;
 
     @Autowired
-    RoleService roleService;
+    public UserService(UserRepository userRepository, RoleService roleService) {
+        this.userRepository = userRepository;
+        this.roleService = roleService;
+    }
 
     public void saveAndAuthenticateNewUser(User user){
         Set<Role> roles=new HashSet<>();

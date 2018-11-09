@@ -12,10 +12,14 @@ import java.util.logging.Logger;
 @Service
 public class AddressService {
 
-    private static final Logger log = Logger.getLogger("Log");
+    private static final Logger log = Logger.getLogger("LOGGER");
+
+    AddressRepository addressRepository;
 
     @Autowired
-    AddressRepository addressRepository;
+    public AddressService(AddressRepository addressRepository) {
+        this.addressRepository = addressRepository;
+    }
 
     @Transactional
     public Address userCurrentAddress(User user){

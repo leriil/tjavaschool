@@ -8,8 +8,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class RoleService {
 
-    @Autowired
     RoleRepository roleRepository;
+
+    @Autowired
+    public RoleService(RoleRepository roleRepository) {
+        this.roleRepository = roleRepository;
+    }
 
     public Role getRoleByName(String name){
         return this.roleRepository.getByName(name);

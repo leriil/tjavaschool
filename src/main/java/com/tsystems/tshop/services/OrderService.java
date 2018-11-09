@@ -18,19 +18,26 @@ import java.util.logging.Logger;
 @Service
 public class OrderService {
 
-    private static final java.util.logging.Logger log = Logger.getLogger("Log");
+    private static final java.util.logging.Logger log = Logger.getLogger("LOGGER");
 
-    @Autowired
     OrderRepository orderRepository;
 
-    @Autowired
     UserService userService;
 
-    @Autowired
     AddressService addressService;
 
-    @Autowired
     ProductService productService;
+
+    @Autowired
+    public OrderService(OrderRepository orderRepository,
+                        UserService userService,
+                        AddressService addressService,
+                        ProductService productService) {
+        this.orderRepository = orderRepository;
+        this.userService = userService;
+        this.addressService = addressService;
+        this.productService = productService;
+    }
 
     private final RestTemplate restTemplate=new RestTemplate();
 
@@ -46,8 +53,6 @@ public class OrderService {
     }
 
    public void payWithCard(Card card,Order order,List<Product>products){
-
-//       String fooResourceUrl = "http://localhost:8001/cards";
 
        HttpHeaders headers=new HttpHeaders();
        headers.setContentType(MediaType.MULTIPART_FORM_DATA);

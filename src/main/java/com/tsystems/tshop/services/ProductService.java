@@ -17,9 +17,14 @@ import java.util.logging.Logger;
 @Service
 public class ProductService {
 
-    private static final java.util.logging.Logger log = Logger.getLogger("Log");
-    @Autowired
+    private static final java.util.logging.Logger log = Logger.getLogger("LOGGER");
+
     ProductRepository repository;
+
+    @Autowired
+    public ProductService(ProductRepository repository) {
+        this.repository = repository;
+    }
 
     public BigDecimal getTotal(List<Product>products){
 
