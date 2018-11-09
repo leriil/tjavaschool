@@ -1,10 +1,8 @@
 package com.tsystems.tshop.controllers;
 
 import com.tsystems.tshop.domain.*;
-import com.tsystems.tshop.services.AddressService;
 import com.tsystems.tshop.services.OrderService;
 import com.tsystems.tshop.services.ProductService;
-import com.tsystems.tshop.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -16,6 +14,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 @Controller
@@ -23,20 +22,17 @@ import java.util.logging.Logger;
 @SessionAttributes({"order","productsInCart","address","user"})
 public class OrderController {
 
-    private static final Logger log=Logger.getLogger("Log");
+    private static final Logger log=Logger.getLogger("LOGGER");
 
-    @Autowired
-    AddressService addressService;
-
-    @Autowired
-    UserService userService;
-
-    @Autowired
     OrderService orderService;
-    @Autowired
+
     ProductService productService;
 
-
+    @Autowired
+    public OrderController(OrderService orderService, ProductService productService) {
+        this.orderService = orderService;
+        this.productService = productService;
+    }
 
     @ModelAttribute("productsInCart")
     public List<Product> getProducts(){
@@ -58,9 +54,6 @@ public class OrderController {
     return new Order();
 }
 
-
-    private BigDecimal total;
-
     @ResponseBody
     @RequestMapping(value = "/cart/add",method = RequestMethod.POST)
     public int addToCart(@RequestBody Long productId,
@@ -72,16 +65,21 @@ public class OrderController {
 
         return productsInCart.size();
     }
+    //TODO:it probably shouldn't return anything, or at least just a product
     @ResponseBody
     @RequestMapping(value = "/cart/remove",method = RequestMethod.POST)
     public int removeFromCart(@RequestBody Long productId,
                           @ModelAttribute ("productsInCart") List <Product> productsInCart){
-        Product productForRemoval=this.productService.findOne(productId);
+//        Product productForRemoval=this.productService.findOne(productId);
         //TODO: only one instance should be removed, not all of them
 //        productsInCart.removeIf(product -> product.equals(productForRemoval));
-            log.info(" Products in cart after removal left : "
-                    +productsInCart);
-            productsInCart.remove(productForRemoval);
+        Optional<Product> product=productsInCart.stream().filter(p -> p.getProductId()==productId).findAny();
+        if(product.isPresent()){
+            productsInCart.remove(product.get());
+        }
+//            log.info(" Products in cart after removal left : "
+//                    +productsInCart);
+//            productsInCart.remove(productForRemoval);
         return productsInCart.size();
     }
 
@@ -121,8 +119,6 @@ public class OrderController {
 //TODO: get rid of address and user, they are null after creating a new order
     @RequestMapping(value = "/place")
     public String orderPlace( @ModelAttribute("order")Order order,
-                            @ModelAttribute("address")Address address,
-                            @ModelAttribute("user") User user,
                               Model model
     ) {
         List<String> paymentOptions=new ArrayList<>(Arrays.asList("cash","online"));
@@ -146,12 +142,11 @@ public class OrderController {
                             @ModelAttribute("productsInCart")List<Product> productsInCart,
                             SessionStatus sessionStatus,
                             @ModelAttribute("card")Card card){
-        //make a list of options for the payment method
         if(order.getPaymentMethod().equals("cash")){
             this.orderService.saveOrder(order,productsInCart);
             sessionStatus.setComplete();}
         else{
-            //here we present a form for user card information
+
             return "order_payment";
         }
 
