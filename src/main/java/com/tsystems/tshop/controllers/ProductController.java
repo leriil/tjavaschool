@@ -4,11 +4,7 @@ package com.tsystems.tshop.controllers;
 import com.tsystems.tshop.domain.Product;
 import com.tsystems.tshop.domain.ProductTop;
 import com.tsystems.tshop.enums.ProductCategory;
-import com.tsystems.tshop.repositories.UserRepository;
-import com.tsystems.tshop.services.AddressService;
-import com.tsystems.tshop.services.OrderService;
 import com.tsystems.tshop.services.ProductService;
-import com.tsystems.tshop.services.UserService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,22 +22,15 @@ import java.util.logging.Logger;
 @RequestMapping("/product")
 @Api(value = "product",description = "managing products",tags = "products")
 public class ProductController {
-    @Autowired
+
+    private static final Logger log = Logger.getLogger("LOGGER");
+
     ProductService productService;
 
     @Autowired
-    OrderService orderService;
-
-    @Autowired
-    UserService userService;
-
-    @Autowired
-    AddressService addressService;
-
-    @Autowired
-    UserRepository userRepository;
-
-    private static final Logger log = Logger.getLogger("Log");
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
 
     @ModelAttribute("product")
     public Product getProduct() {
@@ -60,7 +49,6 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
-//    @ApiOperation(value = "formForNewProduct", notes = "adds a new product to the DB", nickname = "addProd")
     public String addProduct(Model model,
                              @ModelAttribute("product") Product product) {
         return "product_add";

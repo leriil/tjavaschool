@@ -13,9 +13,5 @@ public class LoginController {
     public String loginPage(Model model){
         return "login";
     }
-//    @RequestMapping(method = RequestMethod.POST)
-//    public String login(Model model){
-//        return "login";
-//    }
 
 }
