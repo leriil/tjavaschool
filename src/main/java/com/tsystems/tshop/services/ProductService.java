@@ -4,6 +4,7 @@ import com.tsystems.tshop.domain.Product;
 import com.tsystems.tshop.domain.ProductTop;
 import com.tsystems.tshop.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -24,6 +25,38 @@ public class ProductService {
     @Autowired
     public ProductService(ProductRepository repository) {
         this.repository = repository;
+    }
+
+    public List<Product> getSortedProducts(String option, String order){
+
+        if(option.equals("price")&&(order.contains("alt"))){
+            return this.repository.findAll(new Sort(Sort.Direction.ASC,"price"));
+        }
+
+        if(option.equals("price")&&!(order.contains("alt"))){
+            return this.repository.findAll(new Sort(Sort.Direction.DESC,"price"));
+        }
+        if(option.equals("popularity")&&(order.contains("alt"))){
+            List <ProductTop> tops = this.repository.getTopProductsDesc();
+            List <Product> products = new ArrayList<>();
+            for (ProductTop p:tops
+                 ) {
+                products.add(p.translateTopToProduct());
+            }
+            log.info("the most popular products are: "+products);
+            return products;
+        }
+        if(option.equals("popularity")&&!(order.contains("alt"))){
+            List <ProductTop> tops = this.repository.getTopProductsAsc();
+            List <Product> products = new ArrayList<>();
+            for (ProductTop p:tops
+                    ) {
+                products.add(p.translateTopToProduct());
+            }
+            log.info("the least popular products are: "+products);
+            return products;
+        }
+        else return this.repository.findAllByOrderByNameAsc();
     }
 
     public BigDecimal getTotal(List<Product>products){
@@ -63,7 +96,7 @@ public class ProductService {
     @Transactional
     public List<ProductTop> getTopProducts(){
 
-        return this.repository.getTopProducts();
+        return this.repository.getTopProductsDesc();
     }
 
 }
