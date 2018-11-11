@@ -57,14 +57,14 @@
                     </td>
                 </tr>
             </c:forEach>
-            <tr>
+            <tr class="info">
                 <td/>
                 <td/>
                 <td/>
                 <td/>
                 <td/>
-                <td bgcolor="#a9a9a9"><b>Total</b></td>
-                <td bgcolor="#a9a9a9"><span id="total"/></td>
+                <td ><b>Total</b></td>
+                <td ><span id="total"/></td>
             </tr>
             </tbody>
         </table>
