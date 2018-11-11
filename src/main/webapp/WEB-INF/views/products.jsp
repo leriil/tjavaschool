@@ -34,14 +34,14 @@
 
     <h2>All Products</h2>
 
-    <form class="form-inline" style="margin-bottom: 10px">
+    <form class="form-inline" style="margin-bottom: 5%">
 
         <div class="form-group mx-sm-3 mb-2">
-            <label for="sel1">Sort by:</label>
-            <select class="form-control mx-sm-3 mb-2" id="sel1">
+            <label for="selectSort">Sort by:</label>
+            <select class="form-control mx-sm-3 mb-2" id="selectSort">
                 <option>...</option>
-                <option>price</option>
-                <option>popularity</option>
+                <option id="priceOtion">price</option>
+                <option id="popularityOption">popularity</option>
             </select>
         </div>
         <button id="orderOfSort" type="submit" class="btn btn-primary mb-2">
