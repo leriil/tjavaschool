@@ -14,6 +14,22 @@ $(document).ready(function () {
             $("#sortIcon").addClass('glyphicon-sort-by-attributes-alt');
         }
     });
+    //TODO: what if we remove .open() and .close()?
+    $("#selectSort").change(function () {
+        $.get(
+            ctx + "/product/all",
+            {
+                sortingOption: $("#selectSort :selected").val(),
+                sortingOrder: $("#sortIcon").attr('class')
+            },
+            function (result) {
+                document.open();
+                document.write(result);
+                document.close();
+            }
+
+        );
+        });
 
     $.ajax({
             url: ctx + "/order/cart/count",
