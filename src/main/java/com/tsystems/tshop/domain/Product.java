@@ -4,9 +4,7 @@ import com.tsystems.tshop.enums.ProductCategory;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "product")
@@ -19,7 +17,10 @@ import java.util.Set;
                         @ColumnResult(name = "name"),
                         @ColumnResult(name = "category"),
                         @ColumnResult(name = "inStock", type = Integer.class),
-                        @ColumnResult(name = "price", type = BigDecimal.class)
+                        @ColumnResult(name = "price", type = BigDecimal.class),
+                                @ColumnResult(name = "volume", type = Double.class),
+                                @ColumnResult(name="weight",type = Double.class),
+                                @ColumnResult(name="top",type = Integer.class)
 }))
 public class Product {
 	@Id
@@ -50,21 +51,6 @@ public class Product {
 	private Double volume;
 	
 	public Product() {}
-	
-//	public Product(final String name,
-//			final Double price,
-//			final Double weight,
-//			final Integer inStock,
-//			final ProductCategory category,
-//			final Double volume) {
-//		super();
-//		this.name = name;
-//		this.price = price;
-//		this.weight = weight;
-//		this.inStock = inStock;
-//		this.category = category;
-//		this.volume = volume;
-//	}
 
 	public Long getProductId() {
 		return productId;
@@ -151,4 +137,5 @@ public class Product {
 				", volume=" + volume +
 				'}';
 	}
+
 }
