@@ -11,5 +11,13 @@ public interface ProductRepository extends JpaRepository<Product,Long>,ProductRe
 
     List<Product>findAllByOrderByNameAsc();
 
+//    @Query("select p from Product p order by p.price asc ")
+//    List<Product>findAll(new Sort(Sort.Direction.ASC,"price"));
+
+//    @Query("select p from Product p order by p.price desc ")
+//    List<Product>findAllOrderByPriceDesc();
+
+
+
 
 }
