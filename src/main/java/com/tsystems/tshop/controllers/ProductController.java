@@ -69,9 +69,16 @@ public class ProductController {
         return topProducts;
     }
 
+    //TODO: maybe return the List of sorted products in a separate method?
     @RequestMapping("/all")
-    public String findAll(Model model) {
-        model.addAttribute("products", this.productService.findProducts());
+    public String findAll(Model model,
+                          @RequestParam(value = "sortingOption", required = false) String sortingOption,
+                          @RequestParam(value = "sortingOrder", required = false) String sortingOrder) {
+        if((sortingOption!=null)&&(sortingOrder!=null)){
+//
+            model.addAttribute("products",this.productService.getSortedProducts(sortingOption,sortingOrder));
+        }
+        else {model.addAttribute("products", this.productService.findProducts());}
         return "products";
     }
 
