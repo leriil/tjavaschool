@@ -30,12 +30,9 @@ public class User implements UserDetails {
     )
     private Set<Role> roles = new HashSet<>();
 
-    @ManyToMany(cascade = CascadeType.MERGE)
-    @JoinTable(name = "user_address",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "address_id")
-    )
-    private Set<Address> addresses = new HashSet<>();
+   @ManyToOne
+   @JoinColumn(name="address_id")
+    private Address address = new Address();
 
 
     @Column(name = "login",nullable = false, unique = true, updatable = false)
@@ -182,21 +179,20 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-    public Set<Address> getAddresses() {
-        return addresses;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setAddresses(Set<Address> addresses) {
-        this.addresses = addresses;
+    public void setAddress(Address address) {
+        this.address = address;
     }
-
 
     @Override
     public String toString() {
         return "User{" +
                 "userId=" + userId +
                 ", roles=" + roles +
-                ", addresses=" + addresses +
+                ", address=" + address +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
