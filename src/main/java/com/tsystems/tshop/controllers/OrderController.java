@@ -3,6 +3,8 @@ package com.tsystems.tshop.controllers;
 import com.tsystems.tshop.domain.*;
 import com.tsystems.tshop.services.OrderService;
 import com.tsystems.tshop.services.ProductService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -15,18 +17,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+
 @Controller
 @RequestMapping("/order")
 @SessionAttributes({"order","productsInCart","address","user"})
 public class OrderController {
 
-    private static final Logger log=Logger.getLogger("LOGGER");
+    private Logger LOGGER = LogManager.getLogger(OrderController.class);
 
-    OrderService orderService;
+    private OrderService orderService;
 
-    ProductService productService;
+    private ProductService productService;
 
     @Autowired
     public OrderController(OrderService orderService, ProductService productService) {
@@ -60,7 +62,7 @@ public class OrderController {
                           @ModelAttribute ("productsInCart") List <Product> productsInCart){
 
         productsInCart.add(this.productService.findOne(productId));
-        log.info("product with id: "+productId+
+        LOGGER.info("product with id: "+productId+
                 " has been added to cart. Products in cart : \"+productsInCart");
 
         return productsInCart.size();
@@ -70,23 +72,19 @@ public class OrderController {
     @RequestMapping(value = "/cart/remove",method = RequestMethod.POST)
     public int removeFromCart(@RequestBody Long productId,
                           @ModelAttribute ("productsInCart") List <Product> productsInCart){
-//        Product productForRemoval=this.productService.findOne(productId);
-        //TODO: only one instance should be removed, not all of them
-//        productsInCart.removeIf(product -> product.equals(productForRemoval));
-        Optional<Product> product=productsInCart.stream().filter(p -> p.getProductId()==productId).findAny();
+
+        Optional<Product> product=productsInCart.stream().filter(p -> p.getProductId().equals(productId)).findAny();
         if(product.isPresent()){
             productsInCart.remove(product.get());
+            LOGGER.warn("product "+product+" has been removed from cart");
         }
-//            log.info(" Products in cart after removal left : "
-//                    +productsInCart);
-//            productsInCart.remove(productForRemoval);
         return productsInCart.size();
     }
 
     @ResponseBody
     @RequestMapping(value = "/cart/count",method = RequestMethod.GET)
     public int countProducts(@ModelAttribute ("productsInCart") List <Product> productsInCart){
-        log.info(" Products in cart : "
+        LOGGER.info(" Products in cart : "
                 +productsInCart);
         return productsInCart.size();
     }
@@ -95,6 +93,7 @@ public class OrderController {
     @RequestMapping(value = "/cart/total",method = RequestMethod.GET)
     public BigDecimal getTotal(@ModelAttribute ("productsInCart") List <Product> productsInCart){
 
+        LOGGER.info("total sum of products in cart = "+this.productService.getTotal(productsInCart));
         return this.productService.getTotal(productsInCart);
     }
 
@@ -102,7 +101,8 @@ public class OrderController {
     public String repeatOrder(Model model){
     String login=SecurityContextHolder.getContext().getAuthentication().getName();
     model.addAttribute("orders",this.orderService.findUserOrders(login));
-    log.log(Level.WARNING,"from /history   "+this.orderService.findUserOrders(login) );
+
+    LOGGER.info("users orders are: "+this.orderService.findUserOrders(login));
     return "order_history";
 }
 
@@ -110,22 +110,25 @@ public class OrderController {
     public String findOrder(@ModelAttribute("order") Order order,
                               Model model, @PathVariable Long orderId){
         try{model.addAttribute("order",this.orderService.findOrder(orderId));
-            log.log(Level.WARNING,"from /{orderId} "+this.orderService.findOrder(orderId) );
+            LOGGER.info("order: "+this.orderService.findOrder(orderId)+" was found with ID "+orderId );
         }catch (RuntimeException e){
             return "order_not_found";
         }
         return "order";
     }
-//TODO: get rid of address and user, they are null after creating a new order
+
     @RequestMapping(value = "/place")
     public String orderPlace( @ModelAttribute("order")Order order,
                               Model model
+
     ) {
         List<String> paymentOptions=new ArrayList<>(Arrays.asList("cash","online"));
         model.addAttribute("paymentOptions",paymentOptions);
         List<String>deliveryOptions=new ArrayList<>(Arrays.asList("pickup", "delivery"));
         model.addAttribute("deliveryOptions", deliveryOptions);
+
         this.orderService.createNewOrder(order);
+        LOGGER.info("order "+order+" was created");
         return "order_place";
     }
 
@@ -137,13 +140,13 @@ public class OrderController {
     }
 
     @RequestMapping("/save")
-    public String saveOrder(Model model,
+    public String saveOrder(SessionStatus sessionStatus,
                             @ModelAttribute("order")Order order,
                             @ModelAttribute("productsInCart")List<Product> productsInCart,
-                            SessionStatus sessionStatus,
                             @ModelAttribute("card")Card card){
         if(order.getPaymentMethod().equals("cash")){
             this.orderService.saveOrder(order,productsInCart);
+            LOGGER.info("order "+order+" was saved");
             sessionStatus.setComplete();}
         else{
 
@@ -158,18 +161,23 @@ public class OrderController {
                               @ModelAttribute("order")Order order,
                               @ModelAttribute("productsInCart")List<Product> productsInCart,
                               SessionStatus sessionStatus){
-        this.orderService.payWithCard(card,order,productsInCart);
-        sessionStatus.setComplete();
+        try{this.orderService.payWithCard(card,order,productsInCart);
+            sessionStatus.setComplete();}
+            catch (RuntimeException e){
+            return "redirect:/order/save?paymentProblem=true";
+            }
+
         return "redirect:/product/all";
 
     }
 
     @RequestMapping(value = "/repeat/save")
-    public String saveOrder(@ModelAttribute("order")Order order, SessionStatus status){
+    public String saveOrder(@ModelAttribute("order")Order order,
+                            SessionStatus status){
         order.setOrderId(null);
-        log.log(Level.WARNING,"from /repeat/save   "+ order);
+        LOGGER.info("from /repeat/save   "+ order);
         this.orderService.saveOrder(order);
-        log.log(Level.WARNING,"after saving a order "+ order);
+        LOGGER.info("after saving a order "+ order);
         status.setComplete();
         return "redirect:/product/all";
     }
