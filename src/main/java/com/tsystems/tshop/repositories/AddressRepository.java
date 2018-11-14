@@ -14,8 +14,8 @@ public interface AddressRepository extends JpaRepository<Address,Long> {
 
     List<Address> findByCountry(String country);
 
-    @Query("select u from User u join fetch u.addresses where u.login=:login")
-    List<Object[]> findAddressesByUserLogin(@Param("login") String login);
+    @Query("select u from User u join fetch u.address where u.login=:login")
+    List<Object[]> findAddressByUserLogin(@Param("login") String login);
 
 //    @Query("select a from Address a JOIN a.users u where u.login=:login" )
 //    public List<Address> queryOne(String login);
