@@ -21,15 +21,10 @@
 <body>
 <jsp:include page="../views/fragments/header.jsp"></jsp:include>
 <div class="container">
+
     <div class="row">
-        <div class="col-md-3">
-            <h2>Order # ${order.orderId}</h2>
-        </div>
-        <div class="col-md-3">
-            <div class="offset-md-5">
-                <a href="<spring:url value="/order/repeat/save"/>" class="btn btn-primary"> Repeat the order </a>
-            </div>
-        </div>
+        <h2>Order # ${order.orderId}</h2>
+        <a href="<spring:url value="/order/review"/>" class="btn btn-primary"> Repeat the order </a>
     </div>
 
     <h3>User Details</h3>
