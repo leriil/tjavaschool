@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,11 +14,19 @@
 
     <title>Tshop</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="<c:url value="/resources/css/bootstrap.css" />" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="<c:url value="/resources/css/signin.css" />" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <%--<link rel="stylesheet" href="<spring:url value="/resources/css/bootstrap-select.min.css"/>" type="text/css">--%>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <%--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">--%>
+    <%--<link rel="stylesheet" href="<spring:url value="/resources/css/bootstrap-select.min.css"/>" type="text/css">--%>
+    <%--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>--%>
+    <%--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>--%>
+    <script src="<c:url value="/resources/js/global.js"/>"></script>
+    <script src="<c:url value="/resources/js/addToCart.js"/>"></script>
+    <script src="<c:url value="/resources/js/order.js"/>"></script>
+    <script>var ctx = "${pageContext.request.contextPath}"</script>
+    <sec:csrfMetaTags/>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -40,6 +49,9 @@
         <sec:csrfInput/>
         <button class="btn btn-lg btn-secondary btn-block" type="submit">Sing in</button>
     </form>
+    <div>
+        <a href="<spring:url value="/register"/>" class="btn btn-primary btn-block" role="button">Create New Account</a>
+    </div>
 </div>
 
 </body>
