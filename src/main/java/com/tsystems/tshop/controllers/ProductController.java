@@ -43,6 +43,16 @@ public class ProductController {
         return new LinkedList<>(Arrays.asList(ProductCategory.values()));
     }
 
+    @ResponseBody
+    @RequestMapping("/sort")
+    public List<Product> sortProducts(
+            @RequestParam(value = "column", required = false) String column,
+            @RequestParam(value = "order", required = false) String order
+    )
+    {
+        return this.productService.sortProducts(column, order);
+    }
+
     @RequestMapping("/review")
     public String reviewProduct(@ModelAttribute Product product) {
         return "product_review";
