@@ -56,7 +56,7 @@ public class ProductService {
             log.info("the least popular products are: "+products);
             return products;
         }
-        else return this.repository.findAllByOrderByNameAsc();
+        else return this.repository.findAll();
     }
 
     public BigDecimal getTotal(List<Product>products){
@@ -80,7 +80,7 @@ public class ProductService {
 
     public List<Product> findProducts() {
 
-        return this.repository.findAllByOrderByNameAsc();
+        return this.repository.findAll();
 
     }
 
@@ -99,4 +99,55 @@ public class ProductService {
         return this.repository.getTopProductsDesc();
     }
 
+    public List<Product>sortProducts(){
+        return this.repository.findAllByOrderByNameAsc();
+    }
+
+    public List<Product> sortProducts(String columnName, String sortingOrder) {
+        if(columnName==null){
+            return this.repository.findAll();
+        }
+        else if (sortingOrder.equals("asc")) {
+            if (columnName.equals("Name")) {
+                return repository.findAll(new Sort(Sort.Direction.ASC,"name"));
+            }
+            if (columnName.equals("Price")) {
+                return repository.findAll(new Sort(Sort.Direction.ASC,"price"));
+            }
+            if (columnName.equals("Weight")) {
+                return repository.findAll(new Sort(Sort.Direction.ASC,"weight"));
+            }
+            if (columnName.equals("Volume")) {
+                return repository.findAll(new Sort(Sort.Direction.ASC,"volume"));
+            }
+            if (columnName.equals("in Stock")) {
+                return repository.findAll(new Sort(Sort.Direction.ASC,"inStock"));
+            }
+            if (columnName.equals("Category")) {
+                return repository.findAll(new Sort(Sort.Direction.ASC,"category"));
+            }
+
+        }
+        else if (sortingOrder.equals("desc")) {
+            if (columnName.equals("Name")) {
+                return repository.findAll(new Sort(Sort.Direction.DESC,"name"));
+            }
+            if (columnName.equals("Price")) {
+                return repository.findAll(new Sort(Sort.Direction.DESC,"price"));
+            }
+            if (columnName.equals("Weight")) {
+                return repository.findAll(new Sort(Sort.Direction.DESC,"weight"));
+            }
+            if (columnName.equals("Volume")) {
+                return repository.findAll(new Sort(Sort.Direction.DESC,"volume"));
+            }
+            if (columnName.equals("in Stock")) {
+                return repository.findAll(new Sort(Sort.Direction.DESC,"inStock"));
+            }
+            if (columnName.equals("Category")) {
+                return repository.findAll(new Sort(Sort.Direction.DESC,"category"));
+            }
+        }
+       return this.repository.findAll();
+    }
 }
