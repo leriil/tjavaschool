@@ -1,5 +1,8 @@
 package com.tsystems.tshop.domain;
 
+import com.tsystems.tshop.enums.OrderStatus;
+import com.tsystems.tshop.enums.PaymentStatus;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,10 +49,12 @@ private List<Product> products = new ArrayList<>();
     private String deliveryMethod;
 
     @Column(name = "payment_status")
-    private String paymentStatus;
+    @Enumerated (EnumType.STRING)
+    private PaymentStatus paymentStatus;
 
     @Column(name = "order_status")
-    private String orderStatus;
+    @Enumerated(EnumType.STRING)
+    private OrderStatus orderStatus;
 
 
     public String getPaymentMethod() {
@@ -68,19 +73,19 @@ private List<Product> products = new ArrayList<>();
         this.deliveryMethod = deliveryMethod;
     }
 
-    public String getPaymentStatus() {
+    public PaymentStatus getPaymentStatus() {
         return paymentStatus;
     }
 
-    public void setPaymentStatus(String paymentStatus) {
+    public void setPaymentStatus(PaymentStatus paymentStatus) {
         this.paymentStatus = paymentStatus;
     }
 
-    public String getOrderStatus() {
+    public OrderStatus getOrderStatus() {
         return orderStatus;
     }
 
-    public void setOrderStatus(String orderStatus) {
+    public void setOrderStatus(OrderStatus orderStatus) {
         this.orderStatus = orderStatus;
     }
 
