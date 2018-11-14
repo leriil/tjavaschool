@@ -15,20 +15,28 @@ import java.util.Set;
 @Service
 public class UserService {
 
-    public UserRepository userRepository;
+    UserRepository userRepository;
 
     RoleService roleService;
 
+    AddressService addressService;
+
     @Autowired
-    public UserService(UserRepository userRepository, RoleService roleService) {
+    public UserService(UserRepository userRepository,
+                       RoleService roleService,
+                       AddressService addressService) {
         this.userRepository = userRepository;
         this.roleService = roleService;
+        this.addressService=addressService;
     }
 
     public void saveAndAuthenticateNewUser(User user){
         Set<Role> roles=new HashSet<>();
         roles.add(this.roleService.getRoleByName("CLIENT"));
         user.setRoles(roles);
+//        Address a = user.getAddress();
+        user.setAddress(null);
+//        this.addressService.save(a);
         this.userRepository.save(user);
         //build an authentication object for the user
         Authentication authentication=new UsernamePasswordAuthenticationToken(user, user.getPassword(),user.getAuthorities());
@@ -39,8 +47,10 @@ public class UserService {
         this.userRepository.save(user);
     }
 
-
-
+    public void updateUserInfo(User user){
+        this.addressService.save(user.getAddress());
+        this.userRepository.save(user);
+    }
 
     public User getUser(){
         String login=SecurityContextHolder.getContext().getAuthentication().getName();
