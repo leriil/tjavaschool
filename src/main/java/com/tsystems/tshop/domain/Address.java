@@ -1,9 +1,7 @@
 package com.tsystems.tshop.domain;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "address")
@@ -13,8 +11,8 @@ public class Address {
     @Column(name = "address_id")
     private Long addressId;
 
-    @ManyToMany(mappedBy = "addresses")
-    private Set<User> users = new HashSet<>();
+//    @OneToMany(mappedBy = "address")
+//    private Set<User> users = new HashSet<>();
 
     @Column(name = "country")
     private String country;
