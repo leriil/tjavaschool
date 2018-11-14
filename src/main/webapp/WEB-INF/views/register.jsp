@@ -23,7 +23,7 @@
 <jsp:include page="../views/fragments/header.jsp"></jsp:include>
 <div class="container">
     <div class="row">
-        <h1>Register</h1>
+        <h1>New Account</h1>
     </div>
     <spring:url value="/register" var="loginVar"/>
     <form id="appointment-form" action="${loginVar}" method="POST">
@@ -54,7 +54,7 @@
         </div>
         <sec:csrfInput/>
 
-        <button type="submit" id="btn-save" class="btn btn-primary">Register</button>
+        <button type="submit" id="btn-save" class="btn btn-primary">Confirm</button>
     </form>
 </div>
 </body>
