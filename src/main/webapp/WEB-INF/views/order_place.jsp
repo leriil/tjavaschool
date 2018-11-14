@@ -32,6 +32,7 @@
 
     <div class="container">
         <h1>Products in your cart</h1>
+
         <table class="table table-hover">
             <tbody>
             <tr>
@@ -68,6 +69,7 @@
             </tr>
             </tbody>
         </table>
+
     </div>
 
     <form:form action="${formUrl}" method="POST" modelAttribute="order">
@@ -139,7 +141,9 @@
                          cssClass="selectpicker" id="order-payment-method"/>
         </div>
     </div>
+
     <button type="submit" class="btn btn-default">Submit</button>
+
 </div>
 
 

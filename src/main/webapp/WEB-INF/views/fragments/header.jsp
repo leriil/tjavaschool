@@ -4,6 +4,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <script>var ctx = "${pageContext.request.contextPath}"</script>
+
+
 <nav class="navbar navbar-default bg-light navbar-light fixed-top">
 
     <sec:authorize access="hasAuthority('CLIENT')" var="client"/>

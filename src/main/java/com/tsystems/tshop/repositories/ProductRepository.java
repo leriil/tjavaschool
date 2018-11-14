@@ -9,7 +9,11 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product,Long>,ProductRepositoryCustom {
 
-    List<Product>findAllByOrderByNameAsc();
+    List<Product> findAllByOrderByNameAsc();
+//    List<Product>findAllByOrderByNameDesc();
+//    List<Product>findAllByOrderByPriceAsc();
+//    List<Product>findAllByOrderByPriceDesc();
+
 
 //    @Query("select p from Product p order by p.price asc ")
 //    List<Product>findAll(new Sort(Sort.Direction.ASC,"price"));
