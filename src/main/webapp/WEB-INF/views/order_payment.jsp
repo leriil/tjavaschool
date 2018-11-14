@@ -27,6 +27,15 @@
 <jsp:include page="../views/fragments/header.jsp"></jsp:include>
 
 <div class="container">
+    <c:if test="${param.paymentProblem!=null}">
+        <h4 class="">
+        There has been a problem with the transaction.
+        Either there are not enough sufficient funds or the information you entered isn't correct.
+        </h4>
+        <h5>
+            Try again or contact your bank for further details.
+        </h5>
+    </c:if>
 
     <div class="row">
         <h1>Card</h1>
