@@ -26,7 +26,7 @@
         <h1>New Account</h1>
     </div>
     <spring:url value="/register" var="loginVar"/>
-    <form id="appointment-form" action="${loginVar}" method="POST">
+    <form id="registration-form" action="${loginVar}" method="POST">
         <div class="form-group">
             <label>Login</label>
             <input name="login" class="form-control"/>
