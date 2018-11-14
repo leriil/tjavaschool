@@ -1,10 +1,13 @@
 package com.tsystems.tshop.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tsystems.tshop.enums.ProductCategory;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "product")
@@ -28,6 +31,10 @@ public class Product {
 	@Column(name = "product_id")
 	private Long productId;
 
+	//means that the property may only be written (set) for deserialization,
+	// but will not be read (get) on serialization, that is, the value of the
+	// property is not included in serialization.
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	@ManyToMany(mappedBy = "products")
 	private Set<Order> orders =new HashSet<>();
 
