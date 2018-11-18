@@ -61,9 +61,9 @@ public class OrderController {
     public int addToCart(@RequestBody Long productId,
                           @ModelAttribute ("productsInCart") List <Product> productsInCart){
 
-        productsInCart.add(this.productService.findOne(productId));
+        productsInCart.add(this.productService.findProductById(productId));
         LOGGER.info("product with id: "+productId+
-                " has been added to cart. Products in cart : \"+productsInCart");
+                " has been added to cart. Products in cart :" +productsInCart);
 
         return productsInCart.size();
     }
@@ -120,7 +120,7 @@ public class OrderController {
     @RequestMapping(value = "/place")
     public String orderPlace( @ModelAttribute("order")Order order,
                               Model model
-
+//                              @ModelAttribute("productsInCart")List <Product> productsInCart
     ) {
         List<String> paymentOptions=new ArrayList<>(Arrays.asList("cash","online"));
         model.addAttribute("paymentOptions",paymentOptions);
@@ -153,7 +153,7 @@ public class OrderController {
             return "order_payment";
         }
 
-        return "redirect:/product/all";
+        return "redirect:/product/all?placementProblem=false";
     }
     @RequestMapping(value = "/pay", method = RequestMethod.POST)
     public String payWithCard(Model model,
@@ -167,7 +167,7 @@ public class OrderController {
             return "redirect:/order/save?paymentProblem=true";
             }
 
-        return "redirect:/product/all";
+        return "redirect:/product/all?paymentProblem=false";
 
     }
 
@@ -180,6 +180,14 @@ public class OrderController {
         LOGGER.info("after saving a order "+ order);
         status.setComplete();
         return "redirect:/product/all";
+    }
+
+    @ResponseBody
+    @RequestMapping(value="/products",method = RequestMethod.POST)
+    public List<Product> getProductsByOrder(@RequestBody Long orderId){
+
+        LOGGER.info("products for order with id: "+orderId+ this.orderService.getProductsByOrderId(orderId)+ "have been sent to browser");
+        return this.orderService.getProductsByOrderId(orderId);
     }
 
 }
