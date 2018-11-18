@@ -43,10 +43,22 @@
             <span id="sortIcon" class="glyphicon glyphicon-sort-by-attributes-alt"></span>
         </button>
     </form>
+    <c:if test="${param.paymentProblem==false}" >
+        <div class="alert alert-success alert-dismissable">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        You've successfully made your purchase! You can follow the status and the location of your order in your "History".
+        </div>
+    </c:if>
+    <c:if test="${param.placementProblem==false}" >
+        <div class="alert alert-success alert-dismissable">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            You've successfully placed your order! You can follow the status and the location of your order in your "History".
+        </div>
+    </c:if>
 
     <table id="allProductsTable" class="table table-hover table-striped">
         <tbody>
-        <tr class="sortTable">
+        <tr class="sortTable" data-toggle="tooltip" title="click the column name to sort the products">
             <th id="columnName">Name</th>
             <th id="columnPrice">Price</th>
             <th>Weight</th>
