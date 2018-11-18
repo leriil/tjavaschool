@@ -13,6 +13,7 @@ public interface ProductRepository extends JpaRepository<Product,Long>,ProductRe
 //    List<Product>findAllByOrderByNameDesc();
 //    List<Product>findAllByOrderByPriceAsc();
 //    List<Product>findAllByOrderByPriceDesc();
+    List<Product> findProductsByNameContains(String name);
 
 
 //    @Query("select p from Product p order by p.price asc ")
