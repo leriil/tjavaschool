@@ -2,12 +2,14 @@ $(document).ready(function () {
 
     var sortOrder="asc";
 
+    $('[data-toggle="tooltip"]').tooltip();
+
     $(".logout").click(function (e) {
         e.preventDefault();
         $(".logout-form").submit();
     });
 
-    $("#allProductsTable th").click(function(e){
+    $("#allProductsTable th").click(function(){
         var column = $(this).text();
         if($(this).attr('class')=="highlight"){
             if(sortOrder=="asc"){
@@ -127,5 +129,46 @@ function drawRowData(rowData){
     row.append($("<td>" + rowData.volume + "</td>"));
     row.append($("<td>" + rowData.inStock + "</td>"));
     row.append($("<td>" + rowData.category + "</td>"));
+}
+
+function repeatOrder(id){
+    var csrfParameter = $("meta[name='_csrf_parameter']").attr("content");
+    var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+    var csrfToken = $("meta[name='_csrf']").attr("content");
+    var headers = {};
+    headers[csrfHeader] = csrfToken;
+    $.ajax({
+            url: ctx + "/order/products",
+            dataType: 'json',
+            type: 'post',
+            headers: headers,
+            contentType: 'application/json',
+            data: JSON.stringify(Number(id)),
+            processData: false
+        }
+    )
+        .done(function (data) {
+
+            for (var i = 0; i <data.length ; i++) {
+
+                var productId=data[i].productId;
+
+                $.ajax({
+                        url: ctx + "/order/cart/add",
+                        dataType: 'json',
+                        type: 'post',
+                        headers: headers,
+                        contentType: 'application/json',
+                        data: JSON.stringify(productId),
+                        processData: false
+                    }
+                )
+
+            }
+            window.location=ctx+"/order/place";
+        })
+        .fail(function () {
+            alert("no luck");
+        });
 }
 
