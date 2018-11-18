@@ -7,6 +7,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -36,6 +37,8 @@ public class User implements UserDetails {
 
 
     @Column(name = "login",nullable = false, unique = true, updatable = false)
+//    @Pattern(regexp = "^[a-zA-Z]{5,15}$", message = "Your username contains invalid characters or is too short")
+    @NotBlank(message="login should have at least 2 letters")
     private String login;
 
 
