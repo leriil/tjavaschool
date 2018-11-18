@@ -32,6 +32,7 @@
     <sec:intercept-url pattern="/order/*" access="hasAuthority('CLIENT')"/>
     <!--<sec:intercept-url pattern="/**" access="hasAuthority('ANONYMOUS')"/>-->
     <sec:intercept-url pattern="/**" access="permitAll()"/>
+    <sec:remember-me key="Unique"/>
     <!--<sec:csrf disabled="true"/>-->
 </sec:http>
 
