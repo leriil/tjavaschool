@@ -33,6 +33,7 @@
     <jpa:repositories base-package="com.tsystems.tshop.repositories"/>
 
 
+
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
@@ -69,5 +70,9 @@
           class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="entityManagerFactory" />
     </bean>
+
+    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+
+ </bean>
 
 </beans>
