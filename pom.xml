@@ -1,3 +1,4 @@
+
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
@@ -10,14 +11,22 @@
 	<url>http://maven.apache.org</url>
 
 	<properties>
+		<java.version>1.8</java.version>
 		<junit.version>5.1.0</junit.version>
 		<spring.version>5.0.8.RELEASE</spring.version>
 		<jcl.slf4j.version>1.7.25</jcl.slf4j.version>
 		<logback.version>1.2.3</logback.version>
+		<log4j>2.11.1</log4j>
 		<jackson.version>2.9.6</jackson.version>
 		<h2.version>1.4.197</h2.version>
 		<jstl.version>1.2</jstl.version>
 		<spring.security>4.0.0.RELEASE</spring.security>
+		<hiber.validator>6.0.13.Final</hiber.validator>
+		<hiber.entity.manager>5.3.6.Final</hiber.entity.manager>
+		<mysql.connector>8.0.12</mysql.connector>
+		<spring.data>2.1.0.RELEASE</spring.data>
+		<swagger>2.4.0</swagger>
+		<servlet.api>3.0-alpha-1</servlet.api>
 	</properties>
 
 	<repositories>
@@ -41,17 +50,17 @@
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger2</artifactId>
-			<version>2.4.0</version>
+			<version>${swagger}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger-ui</artifactId>
-			<version>2.4.0</version>
+			<version>${swagger}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-jpa</artifactId>
-			<version>2.1.0.RELEASE</version>
+			<version>${spring.data}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.slf4j</groupId>
@@ -62,7 +71,12 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
-			<version>5.3.6.Final</version>
+			<version>${hiber.entity.manager}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate.validator</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>${hiber.validator}</version>
 		</dependency>
 
 		<dependency>
@@ -120,30 +134,30 @@
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>
-			<version>2.11.1</version>
+			<version>${log4j}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
-			<version>2.11.1</version>
+			<version>${log4j}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j-impl -->
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-slf4j-impl</artifactId>
-			<version>2.11.1</version>
+			<version>${log4j}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-1.2-api</artifactId>
-			<version>2.11.1</version>
+			<version>${log4j}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>jstl</groupId>
 			<artifactId>jstl</artifactId>
-			<version>1.2</version>
+			<version>${jstl.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12 -->
 		<!--<dependency>-->
@@ -156,13 +170,13 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.12</version>
+			<version>${mysql.connector}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
-			<version>3.0-alpha-1</version>
+			<version>${servlet.api}</version>
 		</dependency>
 
 		<dependency>
@@ -184,8 +198,8 @@
 							<arg>-verbose</arg>
 							<arg>-parameters</arg>
 						</compilerArgs>
-					<source>8</source>
-					<target>8</target>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
 				</configuration>
 			</plugin>
 		</plugins>
