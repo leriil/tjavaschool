@@ -6,7 +6,7 @@
 <script>var ctx = "${pageContext.request.contextPath}"</script>
 
 
-<nav class="navbar navbar-default bg-light navbar-light fixed-top">
+<nav class="navbar navbar-default bg-light navbar-inverse fixed-top">
 
     <sec:authorize access="hasAuthority('CLIENT')" var="client"/>
     <sec:authorize access="hasAuthority('SALESPERSON')" var="salesperson"/>
