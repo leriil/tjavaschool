@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tsystems.tshop.enums.ProductCategory;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Objects;
@@ -38,6 +39,7 @@ public class Product {
 	@ManyToMany(mappedBy = "products")
 	private Set<Order> orders =new HashSet<>();
 
+	@NotBlank(message = "product should have a name")
 	@Column(name = "name")
 	private String name;
 
