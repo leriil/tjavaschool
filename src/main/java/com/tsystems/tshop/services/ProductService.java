@@ -84,13 +84,18 @@ public class ProductService {
 
     }
 
-    public Product findOne(Long productId) throws RuntimeException {
+    public Product findProductById(Long productId) throws RuntimeException {
         Optional<Product> product = this.repository.findById(productId);
         if (product.isPresent()) {
             return product.get();
         } else
         {log.log(Level.WARNING,"There is no product with id: "+productId.toString());
             throw new RuntimeException();}
+    }
+
+    public List<Product> findProductByName(String name) {
+       return repository.findProductsByNameContains(name);
+
     }
 
     @Transactional
@@ -150,4 +155,5 @@ public class ProductService {
         }
        return this.repository.findAll();
     }
+
 }
