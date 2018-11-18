@@ -9,9 +9,11 @@ import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
+import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -54,8 +56,12 @@ public class ProductController {
     }
 
     @RequestMapping("/review")
-    public String reviewProduct(@ModelAttribute Product product) {
-        return "product_review";
+    public String reviewProduct(@Valid @ModelAttribute Product product,
+                                Errors errors) {
+        if(!errors.hasErrors())
+        {return "product_review";}
+
+        return "product_add";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
@@ -71,6 +77,7 @@ public class ProductController {
         return "redirect:/product/add";
     }
 
+    //TODO: make a view for this method
     @ResponseBody
     @RequestMapping(value = "/find/top")
     public List<ProductTop> topProducts(Model model) {
@@ -96,13 +103,18 @@ public class ProductController {
     public String findProduct(Model model,
                               @PathVariable Long productId) {
         try {
-            model.addAttribute("product", this.productService.findOne(productId));
+            model.addAttribute("product", this.productService.findProductById(productId));
         } catch (RuntimeException e) {
             return "product_not_found";
         }
         return "product";
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/{name}")
+    public List<Product> findProductsByName(@PathVariable String name){
+        return this.productService.findProductByName(name);
+    }
 
 //    @ExceptionHandler(NullPointerException.class)
 //    public String handleError(){
