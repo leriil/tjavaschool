@@ -7,9 +7,12 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/")
@@ -30,15 +33,23 @@ public class MainController {
 
 
     @RequestMapping(value="/register",method = RequestMethod.POST)
-    public String register(@ModelAttribute User user){
-        this.userService.saveAndAuthenticateNewUser(user);
-        LOGGER.warn("new user has been registered"+user);
-        return "redirect:/product/all";
+    public String register(@Valid @ModelAttribute User user,
+                           Errors errors){
+
+        if(!errors.hasErrors()) {
+
+            this.userService.saveAndAuthenticateNewUser(user);
+            LOGGER.warn("new user has been registered" + user);
+            return "redirect:/product/all";
+
+        }
+
+        return "register";
     }
 
 
     @RequestMapping(value="/register",method = RequestMethod.GET)
-    public String goRegister(){
+    public String goRegister(@ModelAttribute User user){
         return "register";
     }
 
