@@ -15,7 +15,8 @@
     <title>Tshop</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <%--<link rel="stylesheet" href="<spring:url value="/resources/css/bootstrap-select.min.css"/>" type="text/css">--%>
+    <link rel="stylesheet" href="<spring:url value="/resources/css/bootstrap-select.min.css"/>" type="text/css"/>
+    <link rel="stylesheet" href="<spring:url value="/resources/css/global.css"/>" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <%--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">--%>
@@ -41,16 +42,21 @@
     <c:url value="/login" var="loginUrl"/>
     <form action="${loginUrl}" method="post">
         <h2 class="form-signin-heading">Please sign in</h2>
-        <input type="text" class="form-control" name="custom_username" placeholder="login">
-        <input type="password" class="form-control" name="custom_password" placeholder="Password">
+        <input type="text" class="form-control login" name="custom_username" placeholder="login">
+        <input type="password" class="form-control login" name="custom_password" placeholder="Password">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="remember-me"> Remember me
+            </label>
+        </div>
         <c:if test="${param.error!=null}">
             <p>Invalid Username or Password</p>
         </c:if>
         <sec:csrfInput/>
-        <button class="btn btn-lg btn-secondary btn-block" type="submit">Sing in</button>
+        <button class="btn btn-lg btn-secondary btn-block login"  type="submit">Sing in</button>
     </form>
     <div>
-        <a href="<spring:url value="/register"/>" class="btn btn-primary btn-block" role="button">Create New Account</a>
+        <a href="<spring:url value="/register"/>" class="btn btn-primary btn-block login"  role="button">Create a New Account</a>
     </div>
 </div>
 
