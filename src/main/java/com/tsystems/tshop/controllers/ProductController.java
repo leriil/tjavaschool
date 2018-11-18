@@ -110,6 +110,7 @@ public class ProductController {
         return "product";
     }
 
+    //TODO: this method will be used by sales stuff to search for a particular product
     @ResponseBody
     @RequestMapping(value = "/{name}")
     public List<Product> findProductsByName(@PathVariable String name){
