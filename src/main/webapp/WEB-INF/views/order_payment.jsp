@@ -27,14 +27,16 @@
 <jsp:include page="../views/fragments/header.jsp"></jsp:include>
 
 <div class="container">
-    <c:if test="${param.paymentProblem!=null}">
-        <h4 class="">
+    <c:if test="${param.paymentProblem==true}">
+        <div class="alert alert-danger alert-dismissable">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         There has been a problem with the transaction.
-        Either there are not enough sufficient funds or the information you entered isn't correct.
-        </h4>
-        <h5>
+        Either there are not enough sufficient funds on your account or the information you entered isn't correct.
+        </div>
+        <div class="alert alert-info alert-dismissable">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             Try again or contact your bank for further details.
-        </h5>
+        </div>
     </c:if>
 
     <div class="row">
