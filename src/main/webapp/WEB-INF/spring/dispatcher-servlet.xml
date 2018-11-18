@@ -7,7 +7,7 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
-<!--beans which map requests to controller methods, support databinding, custom validation,
+<!--beans which map requests to controller methods, support data binding, custom validation,
 custom converters, jsr303 validation support, conversion factory-->
     <mvc:annotation-driven/>
 <!--mvc configuration-->
@@ -15,15 +15,19 @@ custom converters, jsr303 validation support, conversion factory-->
     <context:component-scan base-package="com.tsystems.tshop.resolvers"/>
 
     <bean class="com.tsystems.tshop.config.SwaggerConfig"></bean>
-    <!--<bean id="swagger2Config"-->
-          <!--class="springfox.documentation.swagger2.configuration.Swagger2DocumentationConfiguration">-->
-    <!--</bean>-->
-    <!--<bean class="springfox.documentation.spring.web.plugins.Docket">-->
-        <!--<constructor-arg value="SWAGGER_2"></constructor-arg>-->
-    <!--</bean>-->
 
+    <!--<beans profile="test">-->
+        <!--&lt;!&ndash; allows for ${} replacement in the spring xml configuration from the-->
+          <!--application-default.properties, application-test files on the classpath &ndash;&gt;-->
+        <!--<context:property-placeholder -->
+                <!--location="classpath:properties/application-default.properties, -->
+                          <!--classpath:properties/application-test.properties" -->
+                <!--ignore-unresolvable="true"/>-->
+        <!--<context:component-scan base-package="com.tsystems.tshop.services"></context:component-scan>-->
+    <!--</beans>-->
+    <context:property-placeholder location="classpath:properties/application-default.properties"/>
 
-    <mvc:default-servlet-handler />
+    <!--<mvc:default-servlet-handler />-->
 
     <mvc:resources mapping="/resources/**" location="/resources/"/>
     <mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/"/>
