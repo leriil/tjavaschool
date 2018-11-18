@@ -8,6 +8,7 @@
 <head>
     <title>Tshop</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" src="<c:url value="/resources/css/global.css"/>">
     <%--<link rel="stylesheet" href="<spring:url value="/resources/css/bootstrap-select.min.css"/>" type="text/css">--%>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
@@ -25,11 +26,12 @@
     <div class="row">
         <h1>New Account</h1>
     </div>
-    <spring:url value="/register" var="loginVar"/>
-    <form id="registration-form" action="${loginVar}" method="POST">
+    <spring:url value="/register" var="registerVar"/>
+    <form id="registration-form" action="${registerVar}" method="POST">
         <div class="form-group">
             <label>Login</label>
             <input name="login" class="form-control"/>
+            <form:errors path="login" cssClass="errors"></form:errors>
         </div>
         <div class="form-group">
             <label>First Name</label>
