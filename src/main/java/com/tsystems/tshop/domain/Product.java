@@ -1,7 +1,6 @@
 package com.tsystems.tshop.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.tsystems.tshop.enums.ProductCategory;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -17,11 +16,12 @@ import java.util.Set;
         classes = @ConstructorResult(
                         targetClass = ProductTop.class,
                         columns = {
-                        @ColumnResult(name = "productId",type = Long.class),
-                        @ColumnResult(name = "name"),
-                        @ColumnResult(name = "category"),
-                        @ColumnResult(name = "inStock", type = Integer.class),
-                        @ColumnResult(name = "price", type = BigDecimal.class),
+                        		@ColumnResult(name = "productId",type = Long.class),
+								@ColumnResult(name = "name"),
+								@ColumnResult(name = "categoryId", type = Long.class),
+								@ColumnResult(name = "categoryName"),
+								@ColumnResult(name = "inStock", type = Integer.class),
+								@ColumnResult(name = "price", type = BigDecimal.class),
                                 @ColumnResult(name = "volume", type = Double.class),
                                 @ColumnResult(name="weight",type = Double.class),
                                 @ColumnResult(name="top",type = Integer.class)
@@ -52,8 +52,12 @@ public class Product {
 	@Column(name = "in_stock")
 	private Integer inStock;
 
-	@Column(name = "category")
-	@Enumerated(EnumType.STRING)
+//	@Column(name = "category")
+//	@Enumerated(EnumType.STRING)
+//	private ProductCategory category;
+
+	@ManyToOne
+	@JoinColumn(name = "category_id")
 	private ProductCategory category;
 
 	@Column(name = "volume")
@@ -115,6 +119,20 @@ public class Product {
 	}
 
 
+//	@Override
+//	public boolean equals(Object o) {
+//		if (o == null || getClass() != o.getClass()) return false;
+//		Product product = (Product) o;
+//		return Objects.equals(productId, product.productId) &&
+//				Objects.equals(name, product.name) &&
+//				Objects.equals(price, product.price) &&
+//				Objects.equals(weight, product.weight) &&
+//				Objects.equals(inStock, product.inStock) &&
+//				category == product.category &&
+//				Objects.equals(volume, product.volume);
+//	}
+
+
 	@Override
 	public boolean equals(Object o) {
 		if (o == null || getClass() != o.getClass()) return false;
@@ -124,7 +142,7 @@ public class Product {
 				Objects.equals(price, product.price) &&
 				Objects.equals(weight, product.weight) &&
 				Objects.equals(inStock, product.inStock) &&
-				category == product.category &&
+				Objects.equals(category, product.category) &&
 				Objects.equals(volume, product.volume);
 	}
 
@@ -146,5 +164,4 @@ public class Product {
 				", volume=" + volume +
 				'}';
 	}
-
 }

@@ -12,16 +12,24 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
     @PersistenceContext
     EntityManager em;
 
-    private static final String topProducts="select product_id as productId, name, category, in_stock as inStock, price, volume, weight, top " +
-            "from(select * from product left join " +
+//    select product_id, name, product.category_id, category_name, in_stock, price,
+//    volume, weight, top from product left join
+//            (select product.product_id as pid, count(order_product.product_id) as top
+//    from product join order_product
+//    on product.product_id=order_product.product_id
+//    group by pid) as s on product.product_id=s.pid
+//    left join category on product.category_id=category.category_id;
+
+    private static final String topProducts="select product_id as productId, name, product.category_id as categoryId, category_name as categoryName, in_stock as inStock, price, volume, weight, top " +
+            "from product left join " +
             "(select product.product_id as pid, count(order_product.product_id) as top " +
             "from product join order_product " +
             "on product.product_id=order_product.product_id " +
-            "group by pid) as s on product.product_id=s.pid) as p ";
+            "group by pid) as s on product.product_id=s.pid) left join category on product.category_id=category.category_id ";
 
-    private static final String orderAsc="order by p.top asc";
+    private static final String orderAsc="order by top asc";
 
-    private static final String orderDesc="order by p.top desc";
+    private static final String orderDesc="order by top desc";
 
     @Override
     @SuppressWarnings("unchecked")

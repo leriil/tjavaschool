@@ -1,7 +1,9 @@
 package com.tsystems.tshop.repositories;
 
 import com.tsystems.tshop.domain.Product;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,11 +18,11 @@ public interface ProductRepository extends JpaRepository<Product,Long>,ProductRe
     List<Product> findProductsByNameContains(String name);
 
 
-//    @Query("select p from Product p order by p.price asc ")
-//    List<Product>findAll(new Sort(Sort.Direction.ASC,"price"));
+    @Query("select p from Product p left join p.category c ")
+    List<Product>findAllProductsOrderByNameAsc(Sort sort);
 
-//    @Query("select p from Product p order by p.price desc ")
-//    List<Product>findAllOrderByPriceDesc();
+    @Query("select p from Product p left join p.category c where p.name =:name ")
+    List<Product>findAllOrderByPriceDesc(String name);
 
 
 

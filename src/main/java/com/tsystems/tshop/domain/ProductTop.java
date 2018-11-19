@@ -1,7 +1,5 @@
 package com.tsystems.tshop.domain;
 
-import com.tsystems.tshop.enums.ProductCategory;
-
 import java.math.BigDecimal;
 
 public class ProductTop {
@@ -10,7 +8,9 @@ public class ProductTop {
 
     private String name;
 
-    private String category;
+    private Long categoryId;
+
+    private String categoryName;
 
     private Integer inStock;
 
@@ -25,7 +25,8 @@ public class ProductTop {
 
     public ProductTop(Long productId,
                       String name,
-                      String category,
+                      Long categoryId,
+                      String categoryName,
                       Integer inStock,
                       BigDecimal price,
                       Double volume,
@@ -34,7 +35,8 @@ public class ProductTop {
     {
         this.productId = productId;
         this.name = name;
-        this.category = category;
+        this.categoryId = categoryId;
+        this.categoryName=categoryName;
         this.inStock = inStock;
         this.price = price;
         this.volume = volume;
@@ -74,12 +76,20 @@ public class ProductTop {
         this.inStock = inStock;
     }
 
-    public String getCategory() {
-        return category;
+    public Long getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public Double getVolume() {
@@ -113,7 +123,12 @@ public class ProductTop {
         product.setName(this.getName());
         product.setProductId(this.getProductId());
         product.setInStock(this.getInStock());
-        product.setCategory(ProductCategory.valueOf(this.getCategory()));
+
+        ProductCategory category=new ProductCategory();
+        category.setCategoryId(this.getCategoryId());
+        category.setCategoryName(this.getCategoryName());
+        product.setCategory(category);
+
         product.setPrice(this.getPrice());
         product.setWeight(this.getWeight());
         product.setVolume(this.getVolume());
