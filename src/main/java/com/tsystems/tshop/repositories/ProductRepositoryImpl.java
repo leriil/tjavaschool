@@ -1,6 +1,5 @@
 package com.tsystems.tshop.repositories;
 
-import com.tsystems.tshop.domain.Product;
 import com.tsystems.tshop.domain.ProductTop;
 
 import javax.persistence.EntityManager;
@@ -12,20 +11,13 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
     @PersistenceContext
     EntityManager em;
 
-//    select product_id, name, product.category_id, category_name, in_stock, price,
-//    volume, weight, top from product left join
-//            (select product.product_id as pid, count(order_product.product_id) as top
-//    from product join order_product
-//    on product.product_id=order_product.product_id
-//    group by pid) as s on product.product_id=s.pid
-//    left join category on product.category_id=category.category_id;
-
-    private static final String topProducts="select product_id as productId, name, product.category_id as categoryId, category_name as categoryName, in_stock as inStock, price, volume, weight, top " +
-            "from product left join " +
+    private static final String topProducts="select product_id as productId, name, product.category_id as categoryId, category_name as categoryName, in_stock as inStock, price, " +
+            "volume, weight, top from product left join " +
             "(select product.product_id as pid, count(order_product.product_id) as top " +
             "from product join order_product " +
             "on product.product_id=order_product.product_id " +
-            "group by pid) as s on product.product_id=s.pid) left join category on product.category_id=category.category_id ";
+            "group by pid) as s on product.product_id=s.pid " +
+            "left join category on product.category_id=category.category_id ";
 
     private static final String orderAsc="order by top asc";
 
@@ -51,13 +43,4 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                         .getResultList();
     }
 
-    //TODO: why doesn't this work??
-    @SuppressWarnings("unchecked")
-    public List<Product> getTop(){
-
-        return (List<Product>)
-                em.createNativeQuery(topProducts+orderDesc,
-                        Product.class)
-                        .getResultList();
-    }
 }
