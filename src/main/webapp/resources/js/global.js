@@ -96,8 +96,8 @@ function drawRowData(rowData){
     var link=ctx+"/product/"+rowData.productId;
     row.append($("<td/>").html('<a href="'+ctx+'/product/' + rowData.productId + '">'+rowData.name+'</a>'));
     row.append($("<td>" + rowData.price + "</td>"));
-    row.append($("<td>" + rowData.weight + "</td>"));
-    row.append($("<td>" + rowData.volume + "</td>"));
+    row.append($("<td>" + getValue(rowData.weight) + "</td>"));
+    row.append($("<td>" + getValue(rowData.volume) + "</td>"));
     row.append($("<td>" + rowData.inStock + "</td>"));
     row.append($("<td>" + rowData.category.categoryName + "</td>"));
 }
