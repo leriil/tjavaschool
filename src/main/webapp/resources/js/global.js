@@ -36,36 +36,6 @@ $(document).ready(function () {
         );
     });
 
-    $("#orderOfSort").click(function (e) {
-        e.preventDefault();
-        if($("#sortIcon").hasClass('glyphicon glyphicon-sort-by-attributes-alt')){
-            $("#sortIcon").removeClass('glyphicon-sort-by-attributes-alt');
-            $("#sortIcon").addClass('glyphicon-sort-by-attributes');
-        }
-        else{
-            $("#sortIcon").removeClass('glyphicon-sort-by-attributes');
-            $("#sortIcon").addClass('glyphicon-sort-by-attributes-alt');
-        }
-        });
-
-    //TODO: what if we remove .open() and .close()?
-    $("#selectSort").change(function () {
-        $.get(
-            ctx + "/product/all",
-            {
-                sortingOption: $("#selectSort :selected").val(),
-                sortingOrder: $("#sortIcon").attr('class')
-            },
-            function (result) {
-                document.open();
-                document.write(result);
-                document.close();
-            }
-
-        );
-        });
-
-
     $.ajax({
         url: ctx+"/product/sort",
         dataType:'json',
@@ -123,12 +93,13 @@ function drawTable(data) {
 function drawRowData(rowData){
     var row = $("<tr />");
     $("#allProductsTable").append(row);
-    row.append($("<td>" + rowData.name + "</td>"));
+    var link=ctx+"/product/"+rowData.productId;
+    row.append($("<td/>").html('<a href="'+ctx+'/product/' + rowData.productId + '">'+rowData.name+'</a>'));
     row.append($("<td>" + rowData.price + "</td>"));
     row.append($("<td>" + rowData.weight + "</td>"));
     row.append($("<td>" + rowData.volume + "</td>"));
     row.append($("<td>" + rowData.inStock + "</td>"));
-    row.append($("<td>" + rowData.category + "</td>"));
+    row.append($("<td>" + rowData.category.categoryName + "</td>"));
 }
 
 function repeatOrder(id){
@@ -170,5 +141,10 @@ function repeatOrder(id){
         .fail(function () {
             alert("no luck");
         });
+}
+
+function getValue(val){
+    if(val!=null) return val;
+    else return '';
 }
 
