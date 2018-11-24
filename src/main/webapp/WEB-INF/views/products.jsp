@@ -29,20 +29,6 @@
 
     <h2>All Products</h2>
 
-    <form class="form-inline" style="margin-bottom: 5%">
-
-        <div class="form-group mx-sm-3 mb-2">
-            <label for="selectSort">Sort by:</label>
-            <select class="form-control mx-sm-3 mb-2" id="selectSort">
-                <option>...</option>
-                <option id="priceOtion">price</option>
-                <option id="popularityOption">popularity</option>
-            </select>
-        </div>
-        <button id="orderOfSort" type="submit" class="btn btn-primary mb-2">
-            <span id="sortIcon" class="glyphicon glyphicon-sort-by-attributes-alt"></span>
-        </button>
-    </form>
     <c:if test="${param.paymentProblem==false}" >
         <div class="alert alert-success alert-dismissable">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
