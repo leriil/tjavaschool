@@ -16,6 +16,8 @@ public interface ProductRepository extends JpaRepository<Product,Long>,ProductRe
 //    List<Product>findAllByOrderByPriceAsc();
 //    List<Product>findAllByOrderByPriceDesc();
     List<Product> findProductsByNameContains(String name);
+    List<Product>findAllByOrderByCategoryCategoryNameAsc();
+    List<Product>findAllByOrderByCategoryCategoryNameDesc();
 
 
     @Query("select p from Product p left join p.category c ")
