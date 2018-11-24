@@ -7,10 +7,10 @@ insert into category(category_name) values ('SERVICE');
 insert into address(country, city, zip_code, street, house, flat) values ('US','Washington','20001','Bloomingdale' ,'3' ,'5B');
 insert into address(country, city, zip_code, street, house, flat) values ('Britain','London','20DF43','Circus' ,'45' ,'6');
 
-insert into user(name, surname, login, password, birth_date, email, address_id) values ('Bill','Murrey','bill','b' ,'2000-01-12','bill@yandex.ru',1);
-insert into user(name, surname, login, password, birth_date, email, address_id) values ('Paul','Marley','paul','p' ,'1968-04-03','paul@yandex.ru',1);
-insert into user(name, surname, login, password, birth_date, email, address_id) values ('Mary','Fisher','marry','m' ,'1856-06-20','mary@yandex.ru',2);
-insert into user(name, surname, login, password, birth_date, email, address_id) values ('Susan','Mayer','susy','s' ,'2002-12-29','suzy@yandex.ru',2);
+insert into user(name, surname, login, password, confirm_password, birth_date, email, address_id) values ('Bill','Murrey','bill','b','b','2000-01-12','bill@yandex.ru',1);
+insert into user(name, surname, login, password, confirm_password, birth_date, email, address_id) values ('Paul','Marley','paul','p','p','1968-04-03','paul@yandex.ru',1);
+insert into user(name, surname, login, password, confirm_password, birth_date, email, address_id) values ('Mary','Fisher','marry','m','m','1856-06-20','mary@yandex.ru',2);
+insert into user(name, surname, login, password, confirm_password, birth_date, email, address_id) values ('Susan','Mayer','susy','s','s','2002-12-29','suzy@yandex.ru',2);
 -- insert into user(name, surname, login, password, birth_date, email) values ('Bill','Murrey','bill','$2a$04$dBOzyg8ikiHaKWJJONbgquqb9.gK4w5mOhAEAJcovHFTGRTxqBhTO' ,'2000-01-12','bill@yandex.ru');
 -- insert into user(name, surname, login, password, birth_date, email) values ('Bob','Marley','bob','$2a$04$Tv6i5jzZ7OzQ50gMm9FhC.CmoOZh1OtSZlbktGSz31FEjV2oDu8Im' ,'04-10-1968','bob@yandex.ru');
 -- insert into user(name, surname, login, password, birth_date, email) values ('Mary','Fisher','marry','$2a$04$LGSvlBTOvbQsdEszhhZItu4NToZQT3AzTH82d6vwEaPrXeyLmGaZW' ,'10-05-1856','mary@yandex.ru');
