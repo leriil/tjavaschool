@@ -31,6 +31,18 @@
     <div class="row">
         <h1>Product</h1>
     </div>
+    <c:if test="${param.addProductProblem==false}" >
+        <div class="alert alert-success alert-dismissable">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            You've successfully added a new product!
+        </div>
+    </c:if>
+    <c:if test="${param.addProductProblem==true}" >
+        <div class="alert alert-danger alert-dismissable">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            There has been a problem with adding a new product to the database, please contact your supervisor for more details.
+        </div>
+    </c:if>
 
     <spring:url value="/product/review" var="formUrl"/>
     <form:form action="${formUrl}" method="POST" modelAttribute="product">
@@ -70,10 +82,13 @@
                 <label id="category">Category</label>
                 <%--<form:select path="category" items="${categoryOptions}" cssClass="selectpicker"--%>
                              <%--id="product-category"></form:select>--%>
+                <select class="selectpicker" id="selectCategoryOption">
+
+                </select>
 
             </div>
 
-            <button type="submit" class="btn btn-default">Submit</button>
+            <button id="addProductForReview" type="submit" class="btn btn-default">Submit</button>
 
         </div>
 
