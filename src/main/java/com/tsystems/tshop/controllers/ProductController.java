@@ -3,7 +3,7 @@ package com.tsystems.tshop.controllers;
 
 import com.tsystems.tshop.domain.Product;
 import com.tsystems.tshop.domain.ProductTop;
-import com.tsystems.tshop.enums.ProductCategory;
+import com.tsystems.tshop.services.CategoryService;
 import com.tsystems.tshop.services.ProductService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
 import javax.validation.Valid;
-import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -28,10 +26,13 @@ public class ProductController {
     private static final Logger log = Logger.getLogger("LOGGER");
 
     ProductService productService;
+    CategoryService categoryService;
 
     @Autowired
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService,
+                             CategoryService categoryService) {
         this.productService = productService;
+        this.categoryService = categoryService;
     }
 
     @ModelAttribute("product")
@@ -40,9 +41,23 @@ public class ProductController {
         return new Product();
     }
 
-    @ModelAttribute("categoryOptions")
-    public List<ProductCategory> getCategories() {
-        return new LinkedList<>(Arrays.asList(ProductCategory.values()));
+    @ResponseBody
+    @RequestMapping(value = "/category/add", method = RequestMethod.POST)
+    public void setProductCategory(@RequestBody String categoryName,
+                                   @ModelAttribute Product product){
+        product.setCategory(categoryService.getCategoryByName(categoryName));
+
+    }
+
+//    @ModelAttribute("categoryOptions")
+//    public List<ProductCategory> getCategories() {
+//        return new LinkedList<>(Arrays.asList(ProductCategory.values()));
+//    }
+
+    @ResponseBody
+    @RequestMapping("/categories")
+    public List<com.tsystems.tshop.domain.ProductCategory> getCategories(){
+        return categoryService.getCategories();
     }
 
     @ResponseBody
@@ -72,18 +87,23 @@ public class ProductController {
 
     @RequestMapping(value = "/save")
     public String saveProduct(@ModelAttribute Product product, SessionStatus status) {
-        this.productService.save(product);
-        status.setComplete();
-        return "redirect:/product/add";
+        try {
+            this.productService.save(product);
+            status.setComplete();
+            return "redirect:/product/add?addProductProblem=false";
+        } catch (RuntimeException e) {
+            return "redirect:/product/add?addProductProblem=true";
+        }
     }
 
     //TODO: make a view for this method
     @ResponseBody
     @RequestMapping(value = "/find/top")
-    public List<ProductTop> topProducts(Model model) {
-        List<ProductTop> topProducts =  this.productService.getTopProducts();
-        model.addAttribute("top", topProducts);
-        return topProducts;
+    public List<ProductTop> topProducts(
+            @RequestParam(value = "order", required = false) String order
+    ) {
+        return productService.getTopProducts(order);
+
     }
 
     //TODO: maybe return the List of sorted products in a separate method?
@@ -112,9 +132,14 @@ public class ProductController {
 
     //TODO: this method will be used by sales stuff to search for a particular product
     @ResponseBody
-    @RequestMapping(value = "/{name}")
+    @RequestMapping(value = "/find/{name}")
     public List<Product> findProductsByName(@PathVariable String name){
         return this.productService.findProductByName(name);
+    }
+
+    @RequestMapping("/stats")
+    public String getStats(){
+        return "statistics";
     }
 
 //    @ExceptionHandler(NullPointerException.class)
