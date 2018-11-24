@@ -48,7 +48,7 @@
                     <td>${product.weight}</td>
                     <td>${product.volume}</td>
                     <td>${product.inStock}</td>
-                    <td>${product.category}</td>
+                    <td>${product.category.categoryName}</td>
 
                 </tr>
             </c:forEach>

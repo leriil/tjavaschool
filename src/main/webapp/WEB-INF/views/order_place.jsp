@@ -51,7 +51,7 @@
                     <td>${p.price}</td>
                     <td>${p.weight}</td>
                     <td>${p.volume}</td>
-                    <td>${p.category}</td>
+                    <td>${p.category.categoryName}</td>
                     <td>
                         <button id="removeFromCart-${loop.index}" onclick="removeProduct(${p.productId})">
                             <span class="glyphicon glyphicon-trash"></span></button>
