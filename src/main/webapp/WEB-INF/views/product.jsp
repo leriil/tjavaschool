@@ -44,6 +44,7 @@
         <%--<sec:csrfInput/>--%>
         </tbody>
     </table>
+    <%--TODO:hide this button from salesperson--%>
     <button id="addToCart">Add to Cart</button>
     <%--<a href="<spring:url value="/product/addToCart"/>" class="btn btn-dark" id="addToCart" > Check out</a>--%>
     <%--<a href="<spring:url value="/order/place"/>" class="btn btn-default" id="addToCart">buy</a>--%>

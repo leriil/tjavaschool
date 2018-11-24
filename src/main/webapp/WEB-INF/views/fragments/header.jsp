@@ -133,7 +133,7 @@
             </div>
         </form>
         <ul class="nav navbar-nav navbar-right">
-
+<%--TODO:hide cart from salesperson--%>
             <li style="margin-top: 7px; margin-right: 7px">
                 <button type="button" class="btn btn-primary"
                         onclick="window.location.href='<spring:url value="/order/place"/>'">
