@@ -8,12 +8,25 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
 @Table(name="user")
+@SqlResultSetMapping(
+        name="userTopMapping",
+        classes = @ConstructorResult(
+                targetClass = UserTop.class,
+                columns = {
+                        @ColumnResult(name = "userId",type = Long.class),
+                        @ColumnResult(name = "name"),
+                        @ColumnResult(name = "surname"),
+                        @ColumnResult(name = "email"),
+                        @ColumnResult(name = "moneySpent", type = BigDecimal.class)
+                }))
 public class User implements UserDetails {
 
     @Id
@@ -37,25 +50,32 @@ public class User implements UserDetails {
 
 
     @Column(name = "login",nullable = false, unique = true, updatable = false)
-//    @Pattern(regexp = "^[a-zA-Z]{5,15}$", message = "Your username contains invalid characters or is too short")
-    @NotBlank(message="login should have at least 2 letters")
+    @Pattern(regexp = "^[a-zA-Z0-9]{5,15}$", message = "Your username contains invalid characters or is too short")
+//    @NotBlank(message="login should have at least 2 letters")
     private String login;
 
 
     @Column(name = "password", unique = true,nullable = false)
     private String password;
 
+    @Column(name="confirm_password", nullable = false)
+    private String confirmPassword;
+
+    @NotBlank(message = "your first name")
     @Column(name = "name",nullable = false)
     private String name;
 
+    @NotBlank(message = "your last name")
     @Column(name = "surname",nullable = false)
     private String surname;
 
+//    @NotBlank(message = "example: 1990-12-25")
     @Column(name = "birth_date")
     @Convert(converter = LocalDateConverter.class)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
 
+    @NotBlank(message = "example: hello@yandex.ru")
     @Column(name = "email", nullable = false, unique = true,updatable = false)
     private String email;
 
@@ -132,6 +152,14 @@ public class User implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 
     public Long getUserId() {
