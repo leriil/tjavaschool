@@ -2,6 +2,7 @@ package com.tsystems.tshop.services;
 
 import com.tsystems.tshop.domain.Role;
 import com.tsystems.tshop.domain.User;
+import com.tsystems.tshop.domain.UserTop;
 import com.tsystems.tshop.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -10,6 +11,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -61,4 +64,17 @@ public User getUser(String login){
 }
 
 
+    public List<UserTop> getTopUsers(String order) {
+        if(!order.contains("alt")){
+            return userRepository.getTopUsersAsc();
+        }
+        else return userRepository.getTopUsersDesc();
+    }
+
+    public User getUserById(Long userId) {
+        Optional<User> user = userRepository.findById(userId);
+        if(user.isPresent()){
+            return user.get();
+        }else throw new RuntimeException();
+    }
 }
