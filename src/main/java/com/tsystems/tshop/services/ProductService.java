@@ -2,6 +2,7 @@ package com.tsystems.tshop.services;
 
 import com.tsystems.tshop.domain.Product;
 import com.tsystems.tshop.domain.ProductTop;
+import com.tsystems.tshop.repositories.CategoryRepository;
 import com.tsystems.tshop.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -21,9 +22,12 @@ public class ProductService {
     private static final java.util.logging.Logger log = Logger.getLogger("LOGGER");
 
     ProductRepository repository;
+    CategoryRepository categoryRepository;
 
     @Autowired
-    public ProductService(ProductRepository repository) {
+    public ProductService(ProductRepository repository,
+                          CategoryRepository categoryRepository) {
+        this.categoryRepository=categoryRepository;
         this.repository = repository;
     }
 
@@ -75,12 +79,13 @@ public class ProductService {
 
 
     public void save(Product product) {
-        this.repository.save(product);
+        categoryRepository.save(product.getCategory());
+        repository.save(product);
     }
 
     public List<Product> findProducts() {
 
-        return this.repository.findAll();
+        return repository.findAll();
 
     }
 
@@ -99,9 +104,11 @@ public class ProductService {
     }
 
     @Transactional
-    public List<ProductTop> getTopProducts(){
+    public List<ProductTop> getTopProducts(String order){
 
-        return this.repository.getTopProductsDesc();
+        if(!order.contains("alt")){
+            return repository.getTopProductsAsc();
+        }else return this.repository.getTopProductsDesc();
     }
 
     public List<Product>sortProducts(){
@@ -129,7 +136,8 @@ public class ProductService {
                 return repository.findAll(new Sort(Sort.Direction.ASC,"inStock"));
             }
             if (columnName.equals("Category")) {
-                return repository.findAll(new Sort(Sort.Direction.ASC,"category"));
+//
+                return repository.findAllByOrderByCategoryCategoryNameAsc();
             }
 
         }
@@ -150,7 +158,8 @@ public class ProductService {
                 return repository.findAll(new Sort(Sort.Direction.DESC,"inStock"));
             }
             if (columnName.equals("Category")) {
-                return repository.findAll(new Sort(Sort.Direction.DESC,"category"));
+
+                return repository.findAllByOrderByCategoryCategoryNameDesc();
             }
         }
        return this.repository.findAll();
