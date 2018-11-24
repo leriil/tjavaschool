@@ -11,8 +11,7 @@
 
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <link rel="stylesheet"
-          href="<spring:url value="/resources/css/home.css"/>" type="text/css"/>
+
     <link rel="stylesheet"
           href="<spring:url value="/resources/css/bootstrap-select.min.css"/>"
           type="text/css"/>
@@ -52,7 +51,7 @@
             <label>inStock</label> <span>${product.inStock}</span>
         </div>
         <div class="form-group">
-            <label>Category</label> <span>${product.category}</span>
+            <label>Category</label> <span>${product.category.categoryName}</span>
         </div>
 
 
