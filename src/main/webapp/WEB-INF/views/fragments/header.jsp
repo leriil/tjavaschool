@@ -65,10 +65,11 @@
                            aria-expanded="false">Statistics <span class="caret"></span></a>
 
                         <ul class="dropdown-menu" role="menu">
+                            <li><a href="<spring:url value="/product/stats"/>">Products and Clients</a></li>
                             <li><a href="<spring:url value="/user/find/top"/>">Top 10 clients</a></li>
                             <li><a href="<spring:url value="/product/find/top"/>">Top 10 products</a></li>
-                            <li><a href="<spring:url value="/profit/month/"/>">Month profit</a></li>
-                            <li><a href="<spring:url value="/profit/week"/>">Week profit</a></li>
+                            <li><a href="<spring:url value="/profit/month/"/>">Monthly profit</a></li>
+                            <li><a href="<spring:url value="/profit/week"/>">Weekly profit</a></li>
                         </ul>
 
                     </li>
@@ -82,7 +83,6 @@
                         <ul class="dropdown-menu" role="menu">
 
                             <li><a href="<spring:url value="/product/add"/>">Add product</a></li>
-                            <li><a href="<spring:url value="/product/category/add"/>">Add category</a></li>
                             <li><a href="<spring:url value="/product/fileImport"/>">Import from file</a></li>
 
                         </ul>
