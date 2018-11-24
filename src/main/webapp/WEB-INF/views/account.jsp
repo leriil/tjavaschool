@@ -10,6 +10,7 @@
     <title>Account</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" href="<spring:url value="/resources/css/bootstrap-select.min.css"/>" type="text/css"/>
+    <link rel="stylesheet" href="<spring:url value="/resources/css/global.css"/>" type="text/css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="<spring:url value="/resources/js/bootstrap-select.min.js"/>"></script>
@@ -96,8 +97,15 @@
 
         <div class="form-group">
             <label for="user-password">Password</label>
-            <form:input path="password" cssClass="form-control" id="user-password" />
-
+            <form:password path="password" cssClass="form-control" id="user-password"  />
+            <form:errors path="password" cssClass="errors"/>
+            <%--showPassword="true"--%>
+        </div>
+        <div class="form-group">
+            <label for="user-password">Confirm Password</label>
+            <form:password path="confirmPassword" cssClass="form-control" id="user-password"  />
+            <%--<form:errors path="confirmPassword" cssClass="errors"/>--%>
+                <%--showPassword="true"--%>
         </div>
 
 
