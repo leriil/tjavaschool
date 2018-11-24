@@ -37,6 +37,7 @@
 </head>
 
 <body>
+<jsp:include page="../views/fragments/header.jsp"></jsp:include>
 
 <div class="container" style="width: 300px;">
     <c:url value="/login" var="loginUrl"/>
@@ -44,14 +45,15 @@
         <h2 class="form-signin-heading">Please sign in</h2>
         <input type="text" class="form-control login" name="custom_username" placeholder="login">
         <input type="password" class="form-control login" name="custom_password" placeholder="Password">
+        <c:if test="${param.error!=null}">
+            <p class="errors">Invalid Username or Password </p>
+        </c:if>
         <div class="checkbox">
             <label>
                 <input type="checkbox" name="remember-me"> Remember me
             </label>
         </div>
-        <c:if test="${param.error!=null}">
-            <p>Invalid Username or Password</p>
-        </c:if>
+
         <sec:csrfInput/>
         <button class="btn btn-lg btn-secondary btn-block login"  type="submit">Sing in</button>
     </form>
