@@ -10,10 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -22,11 +19,11 @@ import javax.validation.Valid;
 
 public class MainController {
 
-//    private static final Logger log=Logger.getLogger("LOGGER");
-    Logger LOGGER = LogManager.getLogger(MainController.class);
+
+    private static final Logger LOGGER = LogManager.getLogger(MainController.class);
 
 
-    UserService userService;
+    private final UserService userService;
 
     @Autowired
     public MainController(UserService userService) {
@@ -34,8 +31,7 @@ public class MainController {
     }
 
 
-
-    @RequestMapping(value="/register",method = RequestMethod.POST)
+    @PostMapping("/register")
     public String register(@Valid @ModelAttribute User user,
                            Errors errors){
 
@@ -51,7 +47,7 @@ public class MainController {
     }
 
 
-    @RequestMapping(value="/register",method = RequestMethod.GET)
+    @GetMapping(value = "/register")
     public String goRegister(Model model, @ModelAttribute User user){
 
         model.addAttribute("user",user);
@@ -59,7 +55,7 @@ public class MainController {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping()
     public String start(){
         return "redirect:/product/all";
     }
