@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -51,7 +52,6 @@ public class User implements UserDetails {
 
     @Column(name = "login",nullable = false, unique = true, updatable = false)
     @Pattern(regexp = "^[a-zA-Z0-9]{5,15}$", message = "Your username contains invalid characters or is too short")
-//    @NotBlank(message="login should have at least 2 letters")
     private String login;
 
 
@@ -61,15 +61,15 @@ public class User implements UserDetails {
     @Column(name="confirm_password", nullable = false)
     private String confirmPassword;
 
-    @NotBlank(message = "your first name")
+    @Pattern(regexp = "^[A-Z][a-z]+$", message = "Invalid characters")
     @Column(name = "name",nullable = false)
     private String name;
 
-    @NotBlank(message = "your last name")
+    @Pattern(regexp = "^[A-Z][a-z]+$", message = "Invalid characters")
     @Column(name = "surname",nullable = false)
     private String surname;
 
-//    @NotBlank(message = "example: 1990-12-25")
+    @Past
     @Column(name = "birth_date")
     @Convert(converter = LocalDateConverter.class)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -114,11 +114,9 @@ public class User implements UserDetails {
         List<String>privileges=new ArrayList<>();
         for (Role role:roles) {
             privileges.add(role.getName());
-//            System.out.println(privileges);
         }
-        final List<GrantedAuthority> authorities = privileges.stream()
+        return privileges.stream()
                 .map(SimpleGrantedAuthority::new).collect(Collectors.toList());
-        return authorities;
     }
 
     @Override
