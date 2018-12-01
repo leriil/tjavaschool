@@ -14,12 +14,6 @@ public class Role {
     @Column(name = "name", nullable = false)
     private String name;
 
-//    @ManyToMany(mappedBy = "roles")
-//    private Set<User> users = new HashSet<>();
-
-//    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "roles")
-//    private List<User> users=new ArrayList<>();
-
 
     public Long getRoleId() {
         return roleId;
