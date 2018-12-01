@@ -70,6 +70,10 @@ public class ProductService {
         else return this.repository.findAll();
     }
 
+    /**
+     * @param products from a shopping cart
+     * @return sum of products from a shopping cart
+     */
     public BigDecimal getTotal(List<Product>products){
 
         BigDecimal total=BigDecimal.valueOf(0);
@@ -79,12 +83,16 @@ public class ProductService {
 
             products.forEach(product -> values.add(product.getPrice()));
             total = values.stream().reduce(BigDecimal::add).get();
+            LOGGER.info("The total for products in the shopping cart is: {}", total);
         }
 
         return total;
     }
 
 
+    /**
+     * @param product
+     */
     public void save(Product product) {
         categoryRepository.save(product.getCategory());
         repository.save(product);
