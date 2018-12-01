@@ -21,48 +21,50 @@ import java.util.List;
 @SessionAttributes({"user"})
 public class UserController {
 
-//    private static final Logger log=Logger.getLogger("LOGGER");
+    private final UserService userService;
     Logger LOGGER = LogManager.getLogger(UserController.class);
-
-    private UserService userService;
 
 
     @Autowired
-    public UserController(UserService userService
-                          ) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
     @ModelAttribute("user")
-    User getUser(){return new User();}
+    User getUser() {
+        return new User();
+    }
 
-    @RequestMapping("/account")
+    @GetMapping("/account")
     public String getAccount(Model model,
-                             @ModelAttribute("user") User user){
+                             @ModelAttribute("user") User user) {
 
-        model.addAttribute("user",this.userService.getUser() );
+        model.addAttribute("user", userService.getUser());
 
         return "account";
     }
 
-    @RequestMapping(value = "/account/update", method = RequestMethod.POST)
-    public String updateAccount(@Valid @ModelAttribute("user") User user,
-                                Errors errors){
-        if(!errors.hasErrors()){
-        this.userService.updateUserInfo(user);
-        return "redirect:/product/all";}
+    @PostMapping("/account/update")
+    public String updateAccount(Model model,
+                                @Valid @ModelAttribute("user") User user,
+                                Errors errors) {
+        if (!errors.hasErrors()) {
+            user = userService.updateUserInfo(user);
+            model.addAttribute("user", user);
+            return "redirect:/user/account?updated=true";
+        }
         return "account";
     }
 
     @ResponseBody
-    @RequestMapping("/find/top")
+    @GetMapping("/find/top")
     public List<UserTop> getTopUsers(
             @RequestParam(value = "order", required = false) String order
-    ){
+    ) {
         return userService.getTopUsers(order);
     }
 
-    @RequestMapping(value = "/{userId}")
+    @GetMapping(value = "/{userId}")
     public String findProduct(Model model,
                               @PathVariable Long userId) {
         try {
@@ -72,8 +74,9 @@ public class UserController {
         }
         return "user";
     }
+
     @InitBinder
-    public void initBinder(WebDataBinder binder){
-binder.addValidators(new PasswordValidator());
+    public void initBinder(WebDataBinder binder) {
+        binder.addValidators(new PasswordValidator());
     }
 }
