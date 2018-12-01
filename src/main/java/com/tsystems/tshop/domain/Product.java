@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Objects;
@@ -26,6 +28,8 @@ import java.util.Set;
                                 @ColumnResult(name="weight",type = Double.class),
                                 @ColumnResult(name="top",type = Integer.class)
 }))
+//@JsonIgnoreProperties(ignoreUnknown = true)
+@XmlRootElement
 public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,7 +43,7 @@ public class Product {
 	@ManyToMany(mappedBy = "products")
 	private Set<Order> orders =new HashSet<>();
 
-	@NotBlank(message = "product should have a name")
+    @NotBlank(message = "A product should have a name")
 	@Column(name = "name")
 	private String name;
 
@@ -52,9 +56,6 @@ public class Product {
 	@Column(name = "in_stock")
 	private Integer inStock;
 
-//	@Column(name = "category")
-//	@Enumerated(EnumType.STRING)
-//	private ProductCategory category;
 
 	@ManyToOne
 	@JoinColumn(name = "category_id")
@@ -69,6 +70,7 @@ public class Product {
 		return productId;
 	}
 
+    @XmlElement
 	public void setProductId(Long productId) {
 		this.productId = productId;
 	}
@@ -76,37 +78,49 @@ public class Product {
 	public String getName() {
 		return name;
 	}
-	public void setName(String name) {
-		this.name = name;
-	}
+
+    @XmlElement
+    public void setName(String name) {
+        this.name = name;
+    }
 	public BigDecimal getPrice() {
 		return price;
 	}
-	public void setPrice(BigDecimal price) {
-		this.price = price;
-	}
+
+    @XmlElement
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
 	public Double getWeight() {
 		return weight;
 	}
-	public void setWeight(Double weight) {
-		this.weight = weight;
-	}
+
+    @XmlElement
+    public void setWeight(Double weight) {
+        this.weight = weight;
+    }
 	public Integer getInStock() {
 		return inStock;
 	}
-	public void setInStock(Integer inStock) {
-		this.inStock = inStock;
-	}
+
+    @XmlElement
+    public void setInStock(Integer inStock) {
+        this.inStock = inStock;
+    }
+
 	public ProductCategory getCategory() {
 		return category;
 	}
-	public void setCategory(ProductCategory category) {
-		this.category = category;
-	}
+
+    @XmlElement
+    public void setCategory(ProductCategory category) {
+        this.category = category;
+    }
 	public Double getVolume() {
 		return volume;
 	}
-	public void setVolume(Double volume) {
+
+    public void setVolume(Double volume) {
 		this.volume = volume;
 	}
 
