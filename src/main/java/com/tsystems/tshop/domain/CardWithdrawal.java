@@ -8,6 +8,9 @@ public class CardWithdrawal {
 
     private BigDecimal total;
 
+    public CardWithdrawal() {
+    }
+
     public CardWithdrawal(Card card, BigDecimal total) {
         this.card = card;
         this.total = total;
