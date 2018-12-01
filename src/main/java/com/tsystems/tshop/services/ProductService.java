@@ -4,25 +4,32 @@ import com.tsystems.tshop.domain.Product;
 import com.tsystems.tshop.domain.ProductTop;
 import com.tsystems.tshop.repositories.CategoryRepository;
 import com.tsystems.tshop.repositories.ProductRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @Service
 public class ProductService {
 
-    private static final java.util.logging.Logger log = Logger.getLogger("LOGGER");
+    private static final Logger LOGGER = LogManager.getLogger(ProductService.class);
 
-    ProductRepository repository;
-    CategoryRepository categoryRepository;
+    private final ProductRepository repository;
+    private final CategoryRepository categoryRepository;
 
     @Autowired
     public ProductService(ProductRepository repository,
@@ -47,7 +54,7 @@ public class ProductService {
                  ) {
                 products.add(p.translateTopToProduct());
             }
-            log.info("the most popular products are: "+products);
+            LOGGER.info("the most popular products are: " + products);
             return products;
         }
         if(option.equals("popularity")&&!(order.contains("alt"))){
@@ -57,7 +64,7 @@ public class ProductService {
                     ) {
                 products.add(p.translateTopToProduct());
             }
-            log.info("the least popular products are: "+products);
+            LOGGER.info("the least popular products are: " + products);
             return products;
         }
         else return this.repository.findAll();
@@ -70,8 +77,8 @@ public class ProductService {
 
         if(!products.isEmpty()){
 
-            products.forEach(product -> {values.add(product.getPrice());});
-             total = values.stream().reduce((x, y) -> x.add(y)).get();
+            products.forEach(product -> values.add(product.getPrice()));
+            total = values.stream().reduce(BigDecimal::add).get();
         }
 
         return total;
@@ -93,8 +100,8 @@ public class ProductService {
         Optional<Product> product = this.repository.findById(productId);
         if (product.isPresent()) {
             return product.get();
-        } else
-        {log.log(Level.WARNING,"There is no product with id: "+productId.toString());
+        } else {
+            LOGGER.info("There is no product with id: " + productId.toString());
             throw new RuntimeException();}
     }
 
@@ -106,9 +113,15 @@ public class ProductService {
     @Transactional
     public List<ProductTop> getTopProducts(String order){
 
+        List<ProductTop> products;
         if(!order.contains("alt")){
-            return repository.getTopProductsAsc();
-        }else return this.repository.getTopProductsDesc();
+            products = repository.getTopProductsAsc();
+            LOGGER.info("products in asc order: ");
+            return products;
+        } else
+            products = repository.getTopProductsDesc();
+        LOGGER.info("products in desc order: ");
+        return products;
     }
 
     public List<Product>sortProducts(){
@@ -116,7 +129,7 @@ public class ProductService {
     }
 
     public List<Product> sortProducts(String columnName, String sortingOrder) {
-        if(columnName==null){
+        if (Objects.isNull(columnName)) {
             return this.repository.findAll();
         }
         else if (sortingOrder.equals("asc")) {
@@ -164,5 +177,25 @@ public class ProductService {
         }
        return this.repository.findAll();
     }
+
+    public void parseFile(MultipartFile file) throws Exception {
+        file.getContentType();
+        LOGGER.info("file content type: " + file.getContentType());
+        try {
+            JAXBContext jaxbContext = JAXBContext.newInstance(Product.class);
+            if (Objects.nonNull(file.getOriginalFilename())) {
+                File f = new File("C:\\Users\\Leriil\\Desktop", file.getOriginalFilename());
+                file.transferTo(f);
+                Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+                Product product = (Product) jaxbUnmarshaller.unmarshal(f);
+                repository.save(product);
+                LOGGER.info("product from file is: " + product);
+            }
+        } catch (JAXBException | IOException | NullPointerException e) {
+            e.printStackTrace();
+            throw new Exception();
+        }
+    }
+
 
 }
