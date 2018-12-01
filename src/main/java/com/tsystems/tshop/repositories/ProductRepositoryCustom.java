@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface ProductRepositoryCustom {
 
-    public List<ProductTop> getTopProductsDesc();
+    List<ProductTop> getTopProductsDesc();
 
-    public  List<ProductTop> getTopProductsAsc();
+    List<ProductTop> getTopProductsAsc();
 
 }

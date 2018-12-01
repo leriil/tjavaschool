@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface UserRepositoryCustom {
 
-    public List<UserTop> getTopUsersAsc();
+    List<UserTop> getTopUsersAsc();
 
-    public List<UserTop> getTopUsersDesc();
+    List<UserTop> getTopUsersDesc();
 }
