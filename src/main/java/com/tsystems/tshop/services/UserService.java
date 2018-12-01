@@ -18,11 +18,11 @@ import java.util.Set;
 @Service
 public class UserService {
 
-    UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    RoleService roleService;
+    private final RoleService roleService;
 
-    AddressService addressService;
+    private final AddressService addressService;
 
     @Autowired
     public UserService(UserRepository userRepository,
@@ -50,9 +50,10 @@ public class UserService {
         this.userRepository.save(user);
     }
 
-    public void updateUserInfo(User user){
+    public User updateUserInfo(User user) {
         this.addressService.save(user.getAddress());
         this.userRepository.save(user);
+        return this.getUser();
     }
 
     public User getUser(){
