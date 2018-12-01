@@ -14,7 +14,6 @@
 .dropdown-menu {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
-    -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
@@ -48,13 +47,16 @@
 
 .addnewicon {
     position: relative;
-    padding: 4px;
-    margin: -8px;
-    padding-right: 50px;
-    margin-right: -50px;
+    padding: 4px 50px 4px 4px;
+    margin: -8px -50px -8px -8px;
     color: #aaa;
 }
 
 .addnewicon:hover {
     color: #222;
+}
+
+.button-spacing {
+    padding-bottom: 20px;
+    padding-top: 20px;
 }
