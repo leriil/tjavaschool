@@ -51,7 +51,7 @@ public class User implements UserDetails {
 
 
     @Column(name = "login",nullable = false, unique = true, updatable = false)
-    @Pattern(regexp = "^[a-zA-Z0-9]{5,15}$", message = "Your username contains invalid characters or is too short")
+    @Pattern(regexp = "^[a-zA-Z0-9]{5,15}$", message = "Your username contains invalid characters or is too short.")
     private String login;
 
 
@@ -61,15 +61,15 @@ public class User implements UserDetails {
     @Column(name="confirm_password", nullable = false)
     private String confirmPassword;
 
-    @Pattern(regexp = "^[A-Z][a-z]+$", message = "Invalid characters")
+    @Pattern(regexp = "^[A-Z][a-z]+$", message = "Your name contains invalid characters.")
     @Column(name = "name",nullable = false)
     private String name;
 
-    @Pattern(regexp = "^[A-Z][a-z]+$", message = "Invalid characters")
+    @Pattern(regexp = "^[A-Z][a-z]+$", message = "Your surname contains invalid characters.")
     @Column(name = "surname",nullable = false)
     private String surname;
 
-    @Past
+    @Past(message = "It has to be a past date.")
     @Column(name = "birth_date")
     @Convert(converter = LocalDateConverter.class)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -97,7 +97,6 @@ public class User implements UserDetails {
     }
 
     public User(String login, String password, List<GrantedAuthority> roles) {
-
     }
 
     public String getLogin() {
