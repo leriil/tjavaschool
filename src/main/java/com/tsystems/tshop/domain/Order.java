@@ -1,21 +1,36 @@
 package com.tsystems.tshop.domain;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.tsystems.tshop.domain.util.LocalDateConverter;
 import com.tsystems.tshop.enums.OrderStatus;
 import com.tsystems.tshop.enums.PaymentStatus;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@JsonAutoDetect
 @Entity
 @Table(name = "order_")
+@SqlResultSetMapping(
+        name = "profitMapping",
+        classes = @ConstructorResult(
+                targetClass = Profit.class,
+                columns = {
+                        @ColumnResult(name = "date", type = LocalDate.class),
+                        @ColumnResult(name = "profit", type = BigDecimal.class),
+                        @ColumnResult(name = "itemsSold", type = Integer.class)
+                }))
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
     private Long orderId;
 
-//    @ManyToMany(cascade = CascadeType.ALL)
+    //    @ManyToMany(cascade = CascadeType.ALL)
 //    @JoinTable(name="order_product", joinColumns=@JoinColumn(name="order_id"),
 //            inverseJoinColumns=@JoinColumn(name="product_id"))
 //    private List<User> products=new ArrayList<>();
@@ -30,14 +45,12 @@ public class Order {
 )
 private List<Product> products = new ArrayList<>();
 
-//    @ManyToOne
-//    @JoinColumn(name = "user_id")
-//    private User user;
 
+    //    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne( fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id")
     private Address address;
-
+    //    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -55,6 +68,12 @@ private List<Product> products = new ArrayList<>();
     @Column(name = "order_status")
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
+
+
+    @Column(name = "order_date")
+    @Convert(converter = LocalDateConverter.class)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate orderDate;
 
 
     public String getPaymentMethod() {
@@ -121,6 +140,13 @@ private List<Product> products = new ArrayList<>();
         this.user = user;
     }
 
+    public LocalDate getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(LocalDate orderDate) {
+        this.orderDate = orderDate;
+    }
 
     @Override
     public String toString() {
@@ -131,8 +157,9 @@ private List<Product> products = new ArrayList<>();
                 ", user=" + user +
                 ", paymentMethod='" + paymentMethod + '\'' +
                 ", deliveryMethod='" + deliveryMethod + '\'' +
-                ", paymentStatus='" + paymentStatus + '\'' +
-                ", orderStatus='" + orderStatus + '\'' +
+                ", paymentStatus=" + paymentStatus +
+                ", orderStatus=" + orderStatus +
+                ", orderDate=" + orderDate +
                 '}';
     }
 }
