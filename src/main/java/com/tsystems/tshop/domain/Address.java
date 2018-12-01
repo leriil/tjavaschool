@@ -1,6 +1,7 @@
 package com.tsystems.tshop.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.util.Objects;
 
 @Entity
@@ -14,21 +15,27 @@ public class Address {
 //    @OneToMany(mappedBy = "address")
 //    private Set<User> users = new HashSet<>();
 
+    @Pattern(regexp = "^[A-Z][a-z]+$", message = "Invalid characters")
     @Column(name = "country")
     private String country;
 
+    @Pattern(regexp = "^[A-Z][a-z]+$", message = "Invalid characters")
     @Column(name = "city")
     private String city;
 
+    @Pattern(regexp = "^[A-Z0-9]+$", message = "Invalid characters")
     @Column(name = "zip_code")
     private String zipCode;
 
+    @Pattern(regexp = "^[A-Z0-9][a-z0-9]+$", message = "Invalid characters")
     @Column(name = "street")
     private String street;
 
+    @Pattern(regexp = "^[A-Z0-9]+$", message = "Invalid characters")
     @Column(name = "house")
     private String house;
 
+    @Pattern(regexp = "^[A-Z0-9]+$", message = "Invalid characters")
     @Column(name = "flat")
     private String flat;
 
