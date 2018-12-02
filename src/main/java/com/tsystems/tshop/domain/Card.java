@@ -10,7 +10,6 @@ public class Card {
     private String userName;
 
 
-
     public Long getCardNumber() {
         return cardNumber;
     }

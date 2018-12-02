@@ -16,21 +16,15 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class PaymentRepositoryImpl implements PaymentRepository {
 
     private static final Logger LOGGER = LogManager.getLogger(PaymentRepositoryImpl.class);
-
     private final RestTemplate restTemplate;
-
     @Value("${payment.protocol}")
     private String protocol;
-
     @Value("${payment.host}")
     private String host;
-
     @Value("${payment.port}")
     private String port;
-
     @Value("${payment.path}")
     private String path;
-
     private String paymentServiceUrl;
 
     @Autowired

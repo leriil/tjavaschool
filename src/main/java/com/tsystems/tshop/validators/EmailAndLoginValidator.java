@@ -14,24 +14,25 @@ public class EmailAndLoginValidator implements Validator {
 
     @Autowired
     public EmailAndLoginValidator(UserService userService) {
+
         this.userService = userService;
     }
 
     @Override
     public boolean supports(Class<?> clazz) {
+
         return User.class.equals(clazz);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
+
         User user = (User) target;
-        if(Objects.nonNull(userService.getUserByEmail(user.getEmail()))){
-            errors.rejectValue("email","user.email","The email you provided is already in use.");
+        if (Objects.nonNull(userService.getUserByEmail(user.getEmail()))) {
+            errors.rejectValue("email", "user.email", "The email you provided is already in use.");
         }
-        if(Objects.nonNull(userService.getUser(user.getLogin()))){
-            errors.rejectValue("login","user.login","The username is already in use.");
+        if (Objects.nonNull(userService.getUser(user.getLogin()))) {
+            errors.rejectValue("login", "user.login", "The username is already in use.");
         }
-
-
     }
 }

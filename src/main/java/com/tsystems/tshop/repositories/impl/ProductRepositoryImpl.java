@@ -33,7 +33,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
     }
 
     @SuppressWarnings("unchecked")
-    public List<ProductTop> getTopProductsAsc(){
+    public List<ProductTop> getTopProductsAsc() {
 
         return
                 em.createNativeQuery(TOP_PRODUCTS + ORDER_ASC,

@@ -1,7 +1,6 @@
 package com.tsystems.tshop.enums;
 
 public enum OrderStatus {
-
     PENDING_APPROVAL,
     SHIPPED,
     IN_TRANSIT,
@@ -9,5 +8,4 @@ public enum OrderStatus {
     DELIVERED,
     EXPIRED,
     DENIED
-
 }

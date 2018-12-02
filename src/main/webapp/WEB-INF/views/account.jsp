@@ -135,21 +135,21 @@
             <label for="account-password">Password</label>
             <form:password path="password" cssClass="form-control" id="account-password"/>
             <form:errors path="password" cssClass="errors"/>
-            <%--showPassword="true"--%>
+                <%--showPassword="true"--%>
         </div>
         <div class="form-group">
             <label for="account-password">Confirm Password</label>
             <form:password path="confirmPassword" cssClass="form-control" id="account-password"/>
-            <%--<form:errors path="confirmPassword" cssClass="errors"/>--%>
+                <%--<form:errors path="confirmPassword" cssClass="errors"/>--%>
                 <%--showPassword="true"--%>
         </div>
         <div class="row button-spacing">
             <button type="submit" class="btn btn-primary button-spacing">Confirm</button>
         </div>
-</div>
+    </div>
 
 
-</form:form>
+    </form:form>
 
 
 </body>

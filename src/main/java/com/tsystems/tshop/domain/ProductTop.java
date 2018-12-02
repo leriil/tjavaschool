@@ -31,17 +31,16 @@ public class ProductTop {
                       BigDecimal price,
                       Double volume,
                       Double weight,
-                      Integer top)
-    {
+                      Integer top) {
         this.productId = productId;
         this.name = name;
         this.categoryId = categoryId;
-        this.categoryName=categoryName;
+        this.categoryName = categoryName;
         this.inStock = inStock;
         this.price = price;
         this.volume = volume;
         this.weight = weight;
-        this.top=top;
+        this.top = top;
     }
 
     public Long getProductId() {
@@ -117,14 +116,14 @@ public class ProductTop {
     }
 
     //TODO:delete this if not used
-    public Product translateTopToProduct(){
+    public Product translateTopToProduct() {
 
         Product product = new Product();
         product.setName(this.getName());
         product.setProductId(this.getProductId());
         product.setInStock(this.getInStock());
 
-        ProductCategory category=new ProductCategory();
+        ProductCategory category = new ProductCategory();
         category.setCategoryId(this.getCategoryId());
         category.setCategoryName(this.getCategoryName());
         product.setCategory(category);

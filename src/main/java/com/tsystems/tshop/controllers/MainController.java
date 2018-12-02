@@ -34,9 +34,9 @@ public class MainController {
 
     @PostMapping("/register")
     public String register(@Valid @ModelAttribute User user,
-                           Errors errors){
+                           Errors errors) {
 
-        if(!errors.hasErrors()) {
+        if (!errors.hasErrors()) {
 
             this.userService.saveAndAuthenticateNewUser(user);
             LOGGER.warn("new user has been registered" + user);
@@ -49,20 +49,20 @@ public class MainController {
 
 
     @GetMapping(value = "/register")
-    public String goRegister(Model model, @ModelAttribute User user){
+    public String goRegister(Model model, @ModelAttribute User user) {
 
-        model.addAttribute("user",user);
+        model.addAttribute("user", user);
         return "register";
     }
 
 
     @GetMapping()
-    public String start(){
+    public String start() {
         return "redirect:/product/all";
     }
 
     @InitBinder
-    public void initBinder(WebDataBinder binder){
+    public void initBinder(WebDataBinder binder) {
         binder.addValidators(new PasswordValidator(), new EmailAndLoginValidator(userService));
     }
 

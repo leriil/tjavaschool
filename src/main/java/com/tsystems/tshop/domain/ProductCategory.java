@@ -3,12 +3,12 @@ package com.tsystems.tshop.domain;
 import javax.persistence.*;
 
 @Entity
-@Table(name="category")
+@Table(name = "category")
 public class ProductCategory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="category_id")
+    @Column(name = "category_id")
     private Long categoryId;
 
     @Column(name = "category_name")

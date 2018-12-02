@@ -23,14 +23,14 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
     EntityManager em;
 
     @SuppressWarnings("unchecked")
-    public List<UserTop> getTopUsersAsc(){
+    public List<UserTop> getTopUsersAsc() {
         return
                 em.createNativeQuery(BEST_CLIENTS + ORDER_ASC, "userTopMapping")
-                .getResultList();
+                        .getResultList();
     }
 
     @SuppressWarnings("unchecked")
-    public List<UserTop> getTopUsersDesc(){
+    public List<UserTop> getTopUsersDesc() {
         return
                 em.createNativeQuery(BEST_CLIENTS + ORDER_DESC, "userTopMapping")
                         .getResultList();

@@ -1,5 +1,3 @@
-// $(document).ready(removeProduct);
-
 function removeProduct(id) {
     var csrfParameter = $("meta[name='_csrf_parameter']").attr("content");
     var csrfHeader = $("meta[name='_csrf_header']").attr("content");

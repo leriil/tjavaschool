@@ -22,7 +22,7 @@ import java.util.List;
 @Controller
 @SessionAttributes({"product"})
 @RequestMapping("/product")
-@Api(value = "product",description = "managing products",tags = "products")
+@Api(value = "product", description = "managing products", tags = "products")
 public class ProductController {
 
     private static final Logger LOGGER = LogManager.getLogger(ProductController.class);
@@ -46,14 +46,14 @@ public class ProductController {
     @ResponseBody
     @RequestMapping(value = "/category/add", method = RequestMethod.POST)
     public void setProductCategory(@RequestBody String categoryName,
-                                   @ModelAttribute Product product){
+                                   @ModelAttribute Product product) {
         product.setCategory(categoryService.getCategoryByName(categoryName));
 
     }
 
     @ResponseBody
     @RequestMapping("/categories")
-    public List<com.tsystems.tshop.domain.ProductCategory> getCategories(){
+    public List<com.tsystems.tshop.domain.ProductCategory> getCategories() {
         return categoryService.getCategories();
     }
 
@@ -62,8 +62,7 @@ public class ProductController {
     public List<Product> sortProducts(
             @RequestParam(value = "column", required = false) String column,
             @RequestParam(value = "order", required = false) String order
-    )
-    {
+    ) {
         return this.productService.sortProducts(column, order);
     }
 
@@ -111,11 +110,12 @@ public class ProductController {
     public String findAll(Model model,
                           @RequestParam(value = "sortingOption", required = false) String sortingOption,
                           @RequestParam(value = "sortingOrder", required = false) String sortingOrder) {
-        if((sortingOption!=null)&&(sortingOrder!=null)){
+        if ((sortingOption != null) && (sortingOrder != null)) {
 //
-            model.addAttribute("products",this.productService.getSortedProducts(sortingOption,sortingOrder));
+            model.addAttribute("products", this.productService.getSortedProducts(sortingOption, sortingOrder));
+        } else {
+            model.addAttribute("products", this.productService.findProducts());
         }
-        else {model.addAttribute("products", this.productService.findProducts());}
         return "products";
     }
 
@@ -124,7 +124,7 @@ public class ProductController {
                               @PathVariable Long productId,
                               SessionStatus status) {
 
-            model.addAttribute("product", this.productService.findProductById(productId));
+        model.addAttribute("product", this.productService.findProductById(productId));
         status.setComplete();
         return "product";
     }
@@ -154,7 +154,7 @@ public class ProductController {
     }
 
     @RequestMapping("/stats")
-    public String getStats(){
+    public String getStats() {
         return "statistics";
     }
 

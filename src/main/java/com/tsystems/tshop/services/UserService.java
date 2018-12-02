@@ -4,6 +4,7 @@ import com.tsystems.tshop.domain.Role;
 import com.tsystems.tshop.domain.User;
 import com.tsystems.tshop.domain.UserTop;
 import com.tsystems.tshop.repositories.UserRepository;
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,21 +21,18 @@ import java.util.Set;
 @Service
 public class UserService {
 
-
+    private static final Logger LOGGER = LogManager.getLogger(UserService.class);
     private final UserRepository userRepository;
-
     private final RoleService roleService;
-
     private final AddressService addressService;
-
     private final BCryptPasswordEncoder passwordEncoder;
-
 
     @Autowired
     public UserService(UserRepository userRepository,
                        RoleService roleService,
                        AddressService addressService,
                        BCryptPasswordEncoder passwordEncoder) {
+
         this.userRepository = userRepository;
         this.roleService = roleService;
         this.addressService = addressService;
@@ -42,6 +40,7 @@ public class UserService {
     }
 
     public void saveAndAuthenticateNewUser(User user) {
+
         Set<Role> roles = new HashSet<>();
         roles.add(this.roleService.getRoleByName("CLIENT"));
         user.setRoles(roles);
@@ -56,40 +55,48 @@ public class UserService {
     }
 
     public void saveUser(User user) {
+
         this.userRepository.save(user);
     }
 
     public User updateUserInfo(User user) {
+
         this.addressService.save(user.getAddress());
         this.userRepository.save(user);
         return this.getUser();
     }
 
     public User getUser() {
+
         String login = SecurityContextHolder.getContext().getAuthentication().getName();
         return this.userRepository.findByLogin(login);
     }
 
     public User getUser(String login) {
+
         return this.userRepository.findByLogin(login);
     }
 
 
     public List<UserTop> getTopUsers(String order) {
+
         if (!order.contains("alt")) {
             return userRepository.getTopUsersAsc();
         } else return userRepository.getTopUsersDesc();
     }
 
     public User getUserById(Long userId) {
+
         Optional<User> user = userRepository.findById(userId);
         if (user.isPresent()) {
             return user.get();
         } else throw new RuntimeException();
     }
 
-    public User getUserByEmail(String email){
+    public User getUserByEmail(String email) {
+
         User user = userRepository.findByEmail(email);
+        LOGGER.info("The user with email {} is: {}", email, user);
         return user;
     }
 }

@@ -25,15 +25,10 @@ import java.util.*;
 public class OrderService {
 
     private static final Logger LOGGER = LogManager.getLogger(OrderService.class);
-
     private final OrderRepository orderRepository;
-
     private final UserService userService;
-
     private final AddressService addressService;
-
     private final ProductService productService;
-
     private final PaymentRepository paymentRepository;
 
     @Autowired
@@ -42,6 +37,7 @@ public class OrderService {
                         AddressService addressService,
                         ProductService productService,
                         PaymentRepository paymentRepository) {
+
         this.orderRepository = orderRepository;
         this.userService = userService;
         this.addressService = addressService;
@@ -58,9 +54,9 @@ public class OrderService {
      *
      * @param card     used to create a CardWithdrawal object
      * @param order    saved to the database if payment process is successful
-     * @param products  a total for this list is estimated and used to create a CardWithrawal object
+     * @param products a total for this list is estimated and used to create a CardWithrawal object
      * @throws RuntimeException if the statusCode() of the return value of the RestTemplate object
-     *                   is not HttpStatus.OK.
+     *                          is not HttpStatus.OK.
      */
     public void payWithCard(Card card, Order order, List<Product> products) throws RuntimeException {
 
@@ -132,6 +128,7 @@ public class OrderService {
      * @param order is saved to the database
      */
     public void updateOrder(Order order) {
+
         orderRepository.save(order);
     }
 
@@ -172,6 +169,7 @@ public class OrderService {
      * @return a list of products in the order
      */
     public List<Product> getProductsByOrderId(Long orderId) {
+
         List<Product> products = new ArrayList<>();
         Optional<Order> order = this.orderRepository.findById(orderId);
         if (order.isPresent()) {
@@ -205,6 +203,7 @@ public class OrderService {
      * @return a list of all orders from the database
      */
     public List<Order> getOrders() {
+
         return orderRepository.findAll();
     }
 
@@ -220,6 +219,7 @@ public class OrderService {
      * @return a List of Profit objects for a particular period of time
      */
     public List<Profit> getProfit(LocalDate firstDay, LocalDate lastDay, String period) {
+
         if ("".equals(period)) {
             return orderRepository.getProfit(firstDay, lastDay);
         } else {
@@ -245,6 +245,7 @@ public class OrderService {
      * @return returns a List of products (a shopping cart) with a new product
      */
     public List<Product> addProductToCart(List<Product> cart, Long productId) {
+
         Product product = productService.findProductById(productId);
         product.setInStock(product.getInStock() - 1);
         cart.stream()
@@ -265,6 +266,7 @@ public class OrderService {
      * @return
      */
     public List<Product> removeProductFromCart(List<Product> productsInCart, Long productId) {
+
         final Optional<Product> product = productsInCart.stream()
                 .filter(p -> p.getProductId().equals(productId)).findAny();
         if (product.isPresent()) {

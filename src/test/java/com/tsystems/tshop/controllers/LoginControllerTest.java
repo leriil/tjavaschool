@@ -21,6 +21,7 @@ class LoginControllerTest {
 
     @BeforeEach
     public void init() {
+
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
         viewResolver.setPrefix("/WEB-INF/views/");
         viewResolver.setSuffix(".jsp");

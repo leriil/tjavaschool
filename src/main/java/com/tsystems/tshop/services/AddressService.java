@@ -16,10 +16,12 @@ public class AddressService {
 
     @Autowired
     public AddressService(AddressRepository addressRepository) {
+
         this.addressRepository = addressRepository;
     }
 
-    public void save(Address address){
+    public void save(Address address) {
+
         this.addressRepository.save(address);
     }
 

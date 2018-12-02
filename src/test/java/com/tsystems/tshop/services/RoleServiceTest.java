@@ -22,13 +22,13 @@ class RoleServiceTest {
     private RoleService roleService;
     @Mock
     private RoleRepository roleRepository;
-
     private Role role;
     private String name;
 
 
     @BeforeEach
     void init() {
+
         MockitoAnnotations.initMocks(roleRepository);
 
         roleService = new RoleService(roleRepository);

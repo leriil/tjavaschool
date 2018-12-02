@@ -10,15 +10,12 @@ $(document).ready(function () {
             drawProfitTable(result);
         }
     );
-
     $("#profitSelect").change(function () {
         var period = $('#profitSelect :selected').val();
         var firstDay = null;
         var lastDay = null;
         getProfitByPeriod(period, firstDay, lastDay);
     });
-
-
     $("#profitButton").click(function () {
         var period = null;
         var firstDay = $("#profit-first-day").val();
@@ -29,7 +26,6 @@ $(document).ready(function () {
         else {
             $("#validDate").text("Incorrect date format. Try using the calendar.");
         }
-
     });
 });
 
@@ -52,8 +48,6 @@ function drawRowDataProfit(rowData) {
     row.append($("<td>" + makeDate(rowData.date) + "</td>"));
     row.append($("<td>" + accounting.formatMoney(rowData.profit, "") + "</td>"));
     row.append($("<td>" + rowData.itemsSold + "</td>"));
-
-
 }
 
 function makeDate(date) {

@@ -38,16 +38,16 @@ public class Order {
 //        CascadeType.ALL
 //})
 //@ManyToMany(cascade = CascadeType.ALL)
-    @ManyToMany( fetch = FetchType.LAZY)
-@JoinTable(name = "order_product",
-        joinColumns = @JoinColumn(name = "order_id"),
-        inverseJoinColumns = @JoinColumn(name = "product_id")
-)
-private List<Product> products = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "order_product",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
+    private List<Product> products = new ArrayList<>();
 
 
     //    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @ManyToOne( fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id")
     private Address address;
     //    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
@@ -62,7 +62,7 @@ private List<Product> products = new ArrayList<>();
     private String deliveryMethod;
 
     @Column(name = "payment_status")
-    @Enumerated (EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
 
     @Column(name = "order_status")

@@ -11,7 +11,7 @@ import java.util.Set;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long>, OrderRepositoryCustom {
 
-    Set<Order>findAllByUser_Login(String login);
+    Set<Order> findAllByUser_Login(String login);
 
     List<Order> findAllByOrderDateBetween(LocalDate first, LocalDate last);
 

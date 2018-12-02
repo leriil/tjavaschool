@@ -52,6 +52,7 @@ class OrderServiceTest {
 
     @BeforeEach
     public void init() {
+
         MockitoAnnotations.initMocks(this);
         orderService = new OrderService(orderRepository, userService, addressService, productService, paymentRepository);
         card = new Card();
@@ -105,14 +106,17 @@ class OrderServiceTest {
 
     @Test
     void saveOrder() {
+
     }
 
     @Test
     void findUserOrders() {
+
     }
 
     @Test
     void findOrder_givenValidId_thenReturnOrder() throws Exception {
+
         Long orderId = 10L;
         Order order = new Order();
         order.setOrderId(10L);
@@ -123,6 +127,7 @@ class OrderServiceTest {
 
     @Test()
     void findOrder_givenInvalidId_thenThrowException() {
+
         Long orderId = 100L;
         Order order = new Order();
         when(orderRepository.findById(orderId)).thenReturn(Optional.empty());
@@ -132,6 +137,7 @@ class OrderServiceTest {
 
     @Test
     void updateOrder() {
+
         Order order = new Order();
         order.setOrderId(1L);
         when(orderRepository.save(order)).thenReturn(order);
@@ -173,6 +179,7 @@ class OrderServiceTest {
 
     @Test
     void getProductsByOrderId_whenOrderExists_thenReturnProducts() {
+
         order.setProducts(products);
         lenient().when(orderRepository.findById(order.getOrderId())).thenReturn(Optional.of(order));
         assertEquals(products, orderService.getProductsByOrderId(order.getOrderId()));
@@ -180,6 +187,7 @@ class OrderServiceTest {
 
     @Test
     void getProductsByOrderId_whenOrderDoesNotExist_thenReturnEmptyList() {
+
         List<Product> products = new ArrayList<>();
         lenient().when(orderRepository.findById(order.getOrderId())).thenReturn(Optional.empty());
         List<Product> actualProducts = orderService.getProductsByOrderId(order.getOrderId());
@@ -229,6 +237,7 @@ class OrderServiceTest {
 
     @Test
     void getOrders() {
+
     }
 
     //    public List<Profit> getProfit(LocalDate firstDay, LocalDate lastDay, String period) {
@@ -249,13 +258,16 @@ class OrderServiceTest {
 //    }
     @Test
     void getProfit() {
+
     }
 
     @Test
     void addProductToCart() {
+
     }
 
     @Test
     void removeProductFromCart() {
+
     }
 }

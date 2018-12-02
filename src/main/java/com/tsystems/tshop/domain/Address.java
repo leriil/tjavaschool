@@ -99,7 +99,7 @@ public class Address {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Address address = (Address) o;
-        return  Objects.equals(country, address.country) &&
+        return Objects.equals(country, address.country) &&
                 Objects.equals(city, address.city) &&
                 Objects.equals(zipCode, address.zipCode) &&
                 Objects.equals(street, address.street) &&

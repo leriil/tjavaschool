@@ -21,11 +21,11 @@ class ProductServiceTest {
     private ProductRepository repository;
     @Mock
     private CategoryRepository categoryRepository;
-
     private Product product;
 
     @BeforeEach
     void setUp() {
+
         MockitoAnnotations.initMocks(this);
         productService = new ProductService(repository, categoryRepository);
         product = new Product();
@@ -34,10 +34,12 @@ class ProductServiceTest {
 
     @Test
     void getSortedProducts() {
+
     }
 
     @Test
     void getTotal_whenProductListEmpty_thenReturnZero() {
+
         List<Product> products = new ArrayList<>();
         BigDecimal total = BigDecimal.valueOf(0);
         assertEquals(total, productService.getTotal(products));
@@ -45,6 +47,7 @@ class ProductServiceTest {
 
     @Test
     void getTotal_whenProductListNotEmpty_thenReturnTotal() {
+
         List<Product> products = new ArrayList<>();
         products.add(product);
         BigDecimal total = BigDecimal.valueOf(100);
@@ -53,33 +56,41 @@ class ProductServiceTest {
 
     @Test
     void save() {
+
     }
 
     @Test
     void findProducts() {
+
     }
 
     @Test
     void findProductById() {
+
     }
 
     @Test
     void findProductByName() {
+
     }
 
     @Test
     void getTopProducts() {
+
     }
 
     @Test
     void sortProducts() {
+
     }
 
     @Test
     void sortProducts1() {
+
     }
 
     @Test
     void parseFile() {
+
     }
 }

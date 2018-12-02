@@ -1,7 +1,6 @@
 package com.tsystems.tshop.domain;
 
 import com.tsystems.tshop.domain.util.LocalDateConverter;
-import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,13 +16,13 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name="user")
+@Table(name = "user")
 @SqlResultSetMapping(
-        name="userTopMapping",
+        name = "userTopMapping",
         classes = @ConstructorResult(
                 targetClass = UserTop.class,
                 columns = {
-                        @ColumnResult(name = "userId",type = Long.class),
+                        @ColumnResult(name = "userId", type = Long.class),
                         @ColumnResult(name = "name"),
                         @ColumnResult(name = "surname"),
                         @ColumnResult(name = "email"),
@@ -46,28 +45,28 @@ public class User implements UserDetails {
     )
     private Set<Role> roles = new HashSet<>();
 
-   @ManyToOne
-   @JoinColumn(name="address_id")
+    @ManyToOne
+    @JoinColumn(name = "address_id")
     private Address address = new Address();
 
 
-    @Column(name = "login",nullable = false, unique = true, updatable = false)
+    @Column(name = "login", nullable = false, unique = true, updatable = false)
     @Pattern(regexp = "^[a-zA-Z0-9]{5,15}$", message = "Your username contains invalid characters or is too short.")
     private String login;
 
 
-    @Column(name = "password", unique = true,nullable = false)
+    @Column(name = "password", unique = true, nullable = false)
     private String password;
 
-    @Column(name="confirm_password", nullable = false)
+    @Column(name = "confirm_password", nullable = false)
     private String confirmPassword;
 
     @Pattern(regexp = "^[A-Z][a-z]+$", message = "Your name contains invalid characters.")
-    @Column(name = "name",nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Pattern(regexp = "^[A-Z][a-z]+$", message = "Your surname contains invalid characters.")
-    @Column(name = "surname",nullable = false)
+    @Column(name = "surname", nullable = false)
     private String surname;
 
     @Past(message = "It has to be a past date.")
@@ -77,10 +76,10 @@ public class User implements UserDetails {
     private LocalDate birthDate;
 
     @NotBlank(message = "example: hello@yandex.ru")
-    @Column(name = "email", nullable = false, unique = true,updatable = false)
+    @Column(name = "email", nullable = false, unique = true, updatable = false)
     private String email;
 
-    public User(){
+    public User() {
     }
 
     public User(String login, String password) {
@@ -110,9 +109,9 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Set<Role> roles=this.getRoles();
-        List<String>privileges=new ArrayList<>();
-        for (Role role:roles) {
+        Set<Role> roles = this.getRoles();
+        List<String> privileges = new ArrayList<>();
+        for (Role role : roles) {
             privileges.add(role.getName());
         }
         return privileges.stream()

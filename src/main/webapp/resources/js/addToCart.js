@@ -1,12 +1,7 @@
 $(document).ready(function () {
 
-    // var products=[];
-
     $("#addToCart").click(function (e) {
         addProductToCart(e);
-        // .fail(function () {
-        //     alert("the product wasn't added to your cart");
-        // });
     });
 });
 
@@ -29,7 +24,5 @@ function addProductToCart(e) {
     )
         .done(function (result) {
             $("#myModal").modal('toggle');
-            // products.push(result);
-            // localStorage.setItem("products", products);
         });
 }

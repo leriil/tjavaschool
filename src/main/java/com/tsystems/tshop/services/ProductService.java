@@ -27,59 +27,58 @@ import java.util.Optional;
 public class ProductService {
 
     private static final Logger LOGGER = LogManager.getLogger(ProductService.class);
-
     private final ProductRepository repository;
     private final CategoryRepository categoryRepository;
 
     @Autowired
     public ProductService(ProductRepository repository,
                           CategoryRepository categoryRepository) {
-        this.categoryRepository=categoryRepository;
+
+        this.categoryRepository = categoryRepository;
         this.repository = repository;
     }
 
-    public List<Product> getSortedProducts(String option, String order){
+    public List<Product> getSortedProducts(String option, String order) {
 
-        if(option.equals("price")&&(order.contains("alt"))){
-            return this.repository.findAll(new Sort(Sort.Direction.ASC,"price"));
+        if (option.equals("price") && (order.contains("alt"))) {
+            return this.repository.findAll(new Sort(Sort.Direction.ASC, "price"));
         }
 
-        if(option.equals("price")&&!(order.contains("alt"))){
-            return this.repository.findAll(new Sort(Sort.Direction.DESC,"price"));
+        if (option.equals("price") && !(order.contains("alt"))) {
+            return this.repository.findAll(new Sort(Sort.Direction.DESC, "price"));
         }
-        if(option.equals("popularity")&&(order.contains("alt"))){
-            List <ProductTop> tops = this.repository.getTopProductsDesc();
-            List <Product> products = new ArrayList<>();
-            for (ProductTop p:tops
-                 ) {
+        if (option.equals("popularity") && (order.contains("alt"))) {
+            List<ProductTop> tops = this.repository.getTopProductsDesc();
+            List<Product> products = new ArrayList<>();
+            for (ProductTop p : tops
+                    ) {
                 products.add(p.translateTopToProduct());
             }
             LOGGER.info("the most popular products are: " + products);
             return products;
         }
-        if(option.equals("popularity")&&!(order.contains("alt"))){
-            List <ProductTop> tops = this.repository.getTopProductsAsc();
-            List <Product> products = new ArrayList<>();
-            for (ProductTop p:tops
+        if (option.equals("popularity") && !(order.contains("alt"))) {
+            List<ProductTop> tops = this.repository.getTopProductsAsc();
+            List<Product> products = new ArrayList<>();
+            for (ProductTop p : tops
                     ) {
                 products.add(p.translateTopToProduct());
             }
             LOGGER.info("the least popular products are: " + products);
             return products;
-        }
-        else return this.repository.findAll();
+        } else return this.repository.findAll();
     }
 
     /**
      * @param products from a shopping cart
      * @return sum of products from a shopping cart
      */
-    public BigDecimal getTotal(List<Product>products){
+    public BigDecimal getTotal(List<Product> products) {
 
-        BigDecimal total=BigDecimal.valueOf(0);
-        List<BigDecimal> values=new ArrayList<>();
+        BigDecimal total = BigDecimal.valueOf(0);
+        List<BigDecimal> values = new ArrayList<>();
 
-        if(!products.isEmpty()){
+        if (!products.isEmpty()) {
 
             products.forEach(product -> values.add(product.getPrice()));
             total = values.stream().reduce(BigDecimal::add).get();
@@ -94,6 +93,7 @@ public class ProductService {
      * @param product
      */
     public void save(Product product) {
+
         categoryRepository.save(product.getCategory());
         repository.save(product);
     }
@@ -105,24 +105,27 @@ public class ProductService {
     }
 
     public Product findProductById(Long productId) throws RuntimeException {
+
         Optional<Product> product = this.repository.findById(productId);
         if (product.isPresent()) {
             return product.get();
         } else {
             LOGGER.info("There is no product with id: " + productId.toString());
-            throw new RuntimeException();}
+            throw new RuntimeException();
+        }
     }
 
     public List<Product> findProductByName(String name) {
-       return repository.findProductsByNameContains(name);
+
+        return repository.findProductsByNameContains(name);
 
     }
 
     @Transactional
-    public List<ProductTop> getTopProducts(String order){
+    public List<ProductTop> getTopProducts(String order) {
 
         List<ProductTop> products;
-        if(!order.contains("alt")){
+        if (!order.contains("alt")) {
             products = repository.getTopProductsAsc();
             LOGGER.info("products in asc order: ");
             return products;
@@ -132,61 +135,62 @@ public class ProductService {
         return products;
     }
 
-    public List<Product>sortProducts(){
+    public List<Product> sortProducts() {
+
         return this.repository.findAllByOrderByNameAsc();
     }
 
     public List<Product> sortProducts(String columnName, String sortingOrder) {
+
         if (Objects.isNull(columnName)) {
             return this.repository.findAll();
-        }
-        else if (sortingOrder.equals("asc")) {
+        } else if (sortingOrder.equals("asc")) {
             if (columnName.equals("Name")) {
-                return repository.findAll(new Sort(Sort.Direction.ASC,"name"));
+                return repository.findAll(new Sort(Sort.Direction.ASC, "name"));
             }
             if (columnName.equals("Price")) {
-                return repository.findAll(new Sort(Sort.Direction.ASC,"price"));
+                return repository.findAll(new Sort(Sort.Direction.ASC, "price"));
             }
             if (columnName.equals("Weight")) {
-                return repository.findAll(new Sort(Sort.Direction.ASC,"weight"));
+                return repository.findAll(new Sort(Sort.Direction.ASC, "weight"));
             }
             if (columnName.equals("Volume")) {
-                return repository.findAll(new Sort(Sort.Direction.ASC,"volume"));
+                return repository.findAll(new Sort(Sort.Direction.ASC, "volume"));
             }
             if (columnName.equals("in Stock")) {
-                return repository.findAll(new Sort(Sort.Direction.ASC,"inStock"));
+                return repository.findAll(new Sort(Sort.Direction.ASC, "inStock"));
             }
             if (columnName.equals("Category")) {
 //
                 return repository.findAllByOrderByCategoryCategoryNameAsc();
             }
 
-        }
-        else if (sortingOrder.equals("desc")) {
+        } else if (sortingOrder.equals("desc")) {
             if (columnName.equals("Name")) {
-                return repository.findAll(new Sort(Sort.Direction.DESC,"name"));
+                return repository.findAll(new Sort(Sort.Direction.DESC, "name"));
             }
             if (columnName.equals("Price")) {
-                return repository.findAll(new Sort(Sort.Direction.DESC,"price"));
+                return repository.findAll(new Sort(Sort.Direction.DESC, "price"));
             }
             if (columnName.equals("Weight")) {
-                return repository.findAll(new Sort(Sort.Direction.DESC,"weight"));
+                return repository.findAll(new Sort(Sort.Direction.DESC, "weight"));
             }
             if (columnName.equals("Volume")) {
-                return repository.findAll(new Sort(Sort.Direction.DESC,"volume"));
+                return repository.findAll(new Sort(Sort.Direction.DESC, "volume"));
             }
             if (columnName.equals("in Stock")) {
-                return repository.findAll(new Sort(Sort.Direction.DESC,"inStock"));
+                return repository.findAll(new Sort(Sort.Direction.DESC, "inStock"));
             }
             if (columnName.equals("Category")) {
 
                 return repository.findAllByOrderByCategoryCategoryNameDesc();
             }
         }
-       return this.repository.findAll();
+        return this.repository.findAll();
     }
 
     public void parseFile(MultipartFile file) throws Exception {
+
         file.getContentType();
         LOGGER.info("file content type: " + file.getContentType());
         try {

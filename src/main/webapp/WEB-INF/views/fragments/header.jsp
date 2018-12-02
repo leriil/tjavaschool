@@ -122,7 +122,7 @@
                 </c:otherwise>
             </c:choose>
         </ul>
-<%--TODO:change this copied code to search for  a particular product--%>
+        <%--TODO:change this copied code to search for  a particular product--%>
         <form class="navbar-form navbar-left" action="${pageContext.request.contextPath}/product/find">
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Enter a product name" name="search"

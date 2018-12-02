@@ -5,8 +5,10 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 public class PasswordValidator implements Validator {
+
     @Override
     public boolean supports(Class<?> clazz) {
+
         return User.class.isAssignableFrom(clazz);
     }
 
@@ -19,12 +21,11 @@ public class PasswordValidator implements Validator {
 //                .{8,}             # anything, at least eight places though
 //        $                 # end-of-string
         String pattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{4,}$";
-
-        User user =(User) target;
-        if(!user.getPassword().matches(pattern)){
+        User user = (User) target;
+        if (!user.getPassword().matches(pattern)) {
             errors.rejectValue("password", "user.password", "the password is too weak");
         }
-        if(!user.getPassword().equals(user.getConfirmPassword())){
+        if (!user.getPassword().equals(user.getConfirmPassword())) {
             errors.rejectValue("confirmPassword", "user.confirm.password", "password confirmation failed");
         }
     }

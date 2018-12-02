@@ -6,7 +6,6 @@ $(document).ready(function () {
             drawOrdersTable(result);
         }
     );
-
     $("#getOrders").click(function () {
 
         var firstDay = $("#first-day").val();

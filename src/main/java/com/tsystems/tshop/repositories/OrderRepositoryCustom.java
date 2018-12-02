@@ -6,5 +6,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface OrderRepositoryCustom {
+
     List<Profit> getProfit(LocalDate first, LocalDate last);
 }

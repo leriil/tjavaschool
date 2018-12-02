@@ -10,13 +10,13 @@ import javax.servlet.http.HttpServletResponse;
 
 @Component
 public class GlobalHandlerExceptionResolver implements HandlerExceptionResolver {
+
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object o, Exception e) {
+
         ModelAndView mav = new ModelAndView();
-        mav.addObject("requestUri",request.getRequestURI());
-        mav.addObject("exception",e);
+        mav.addObject("requestUri", request.getRequestURI());
+        mav.addObject("exception", e);
         mav.setViewName("global_error");
-
-
         return mav;
     }
 }

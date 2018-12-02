@@ -12,10 +12,12 @@ public class RoleService {
 
     @Autowired
     public RoleService(RoleRepository roleRepository) {
+
         this.roleRepository = roleRepository;
     }
 
-    public Role getRoleByName(String name){
+    public Role getRoleByName(String name) {
+
         return this.roleRepository.getByName(name);
     }
 }

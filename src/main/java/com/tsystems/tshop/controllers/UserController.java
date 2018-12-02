@@ -22,9 +22,8 @@ import java.util.List;
 @SessionAttributes({"user"})
 public class UserController {
 
-    Logger LOGGER = LogManager.getLogger(UserController.class);
-
     private final UserService userService;
+    Logger LOGGER = LogManager.getLogger(UserController.class);
 
 
     @Autowired
