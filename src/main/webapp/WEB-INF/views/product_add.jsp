@@ -58,12 +58,12 @@
             <div class="form-group">
                 <label for="product-price">Price</label>
                 <form:input path="price" cssClass="form-control" id="product-price"/>
-                    <%--<input type="text" id="resource-name" class="form-control" name="name" />--%>
+                <form:errors path="price" cssClass="errors"></form:errors>
             </div>
             <div class="form-group">
                 <label for="product-weight">Weight</label>
                 <form:input path="weight" cssClass="form-control" id="product-weight"/>
-                    <%--<input type="text" id="resource-name" class="form-control" name="name" />--%>
+                <form:errors path="weight" cssClass="errors"></form:errors>
             </div>
 
             <div class="form-group">
@@ -75,7 +75,7 @@
             <div class="form-group">
                 <label for="product-inStock">inStock</label>
                 <form:input path="inStock" cssClass="form-control" id="product-inStock"/>
-                    <%--<input type="text" id="resource-name" class="form-control" name="name" />--%>
+
             </div>
 
             <div class="form-group">
@@ -87,16 +87,15 @@
                 </select>
 
             </div>
+            <div class="row button-spacing">
+                <button id="addProductForReview" type="submit" class="btn btn-primary">Submit</button>
+            </div>
 
-            <button id="addProductForReview" type="submit" class="btn btn-default">Submit</button>
 
         </div>
 
     </form:form>
-    <p>
 
-
-    </p>
 
 </div>
 </body>

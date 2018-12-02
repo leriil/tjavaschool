@@ -4,21 +4,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>No order</title>
+    <title>No user</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="<c:url value="/resources/js/global.js"/>"></script>
-
 </head>
 <body>
 <jsp:include page="../views/fragments/header.jsp"></jsp:include>
 <div class="container">
-    <h2>Order # ${orderId}</h2>
+    <h2>User # ${user.userId}</h2>
     <table class="table table-hover">
         <tbody>
         <tr>
-            <h2>Sorry, the order you are asking for doesn't seem to be present in our database</h2>
+            <h2>Sorry, the user you are asking for doesn't seem to be present in our database</h2>
         </tr>
         </tbody>
     </table>

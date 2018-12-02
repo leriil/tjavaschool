@@ -20,6 +20,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="<c:url value="/resources/js/global.js"/>"></script>
     <script src="<c:url value="/resources/js/addToCart.js"/>"></script>
+    <script src="<c:url value="/resources/js/accounting.js"/>"></script>
     <script>var ctx = "${pageContext.request.contextPath}"</script>
     <%--<sec:csrfMetaTags/>--%>
 </head>

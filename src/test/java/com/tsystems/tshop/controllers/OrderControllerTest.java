@@ -1,7 +1,7 @@
 //package com.tsystems.tshop.controllers;
 //
 //import com.tsystems.tshop.domain.Product;
-//import com.tsystems.tshop.enums.ProductCategory;
+
 //import com.tsystems.tshop.repositories.OrderRepository;
 //import com.tsystems.tshop.services.OrderService;
 //import com.tsystems.tshop.services.ProductService;
@@ -28,12 +28,12 @@
 //
 //        one=new Product();
 //        one.setProductId(1L);
-//        one.setCategory(ProductCategory.DEVICE);
+//
 //        one.setName("phone");
 //
 //        two=new Product();
 //        two.setProductId(2L);
-//        two.setCategory(ProductCategory.DEVICE);
+//
 //        two.setName("ebook");
 //
 //    }

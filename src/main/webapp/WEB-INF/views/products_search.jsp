@@ -9,7 +9,8 @@
     <title>Products</title>
 
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script>
@@ -20,8 +21,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="<c:url value="/resources/js/global.js"/>"></script>
     <script src="<c:url value="/resources/js/addToCart.js"/>"></script>
-    <script src="<c:url value="/resources/js/getStatistics.js"/>"></script>
-    <script src="<c:url value="/resources/js/accounting.js"/>"></script>
     <script>var ctx = "${pageContext.request.contextPath}"</script>
     <%--<sec:csrfMetaTags/>--%>
 </head>
@@ -29,27 +28,36 @@
 <jsp:include page="../views/fragments/header.jsp"></jsp:include>
 <div class="container">
 
-    <h2>Statistics</h2>
+    <h2>Products found</h2>
+    <c:if test="${itemsNotFound==true}">
+        No items found for your request.
+    </c:if>
+    <c:if test="${itemsNotFound==false}">
+        <table id="productSearchTable" class="table table-hover table-striped">
+            <tbody>
+            <tr>
+                <th id="columnName">Name</th>
+                <th id="columnPrice">Price</th>
+                <th>Weight</th>
+                <th>Volume</th>
+                <th>in Stock</th>
+                <th>Category</th>
+            </tr>
 
-    <form class="form-inline" style="margin-bottom: 5%">
+            <c:forEach items="${productSearch}" var="product">
+                <tr>
+                    <td><a href="<spring:url value="/product/${product.productId}"/>">${product.name}</a></td>
+                    <td>${product.price}</td>
+                    <td>${product.weight}</td>
+                    <td>${product.volume}</td>
+                    <td>${product.inStock}</td>
+                    <td>${product.category.categoryName}</td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+    </c:if>
 
-        <div class="form-group mx-sm-3 mb-2">
-            <label for="selectSort">Get:</label>
-            <select class="form-control mx-sm-3 mb-2" id="selectSort">
-                <option>10 products</option>
-                <option>10 clients</option>
-            </select>
-        </div>
-        <button id="orderOfSort" type="submit" class="btn btn-primary mb-2">
-            <span id="sortIcon" class="glyphicon glyphicon-sort-by-attributes-alt"></span>
-        </button>
-
-    </form>
-
-    <table id="statisticsTable" class="table table-hover table-striped">
-        <tbody>
-        </tbody>
-    </table>
 </div>
 </body>
 </html>
