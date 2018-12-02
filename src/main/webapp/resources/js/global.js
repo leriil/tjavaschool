@@ -1,13 +1,17 @@
 $(document).ready(function () {
 
+
     var sortOrder="asc";
+
 
     $('[data-toggle="tooltip"]').tooltip();
 
     $(".logout").click(function (e) {
         e.preventDefault();
+        clearCart();
         $(".logout-form").submit();
     });
+
 
     $("#allProductsTable th").click(function(){
         var column = $(this).text();
@@ -64,10 +68,8 @@ $(document).ready(function () {
             if(result==0){
                 $("#emp").attr("value","true");
             }else{$("#emp").attr("value","false")}
-        })
-        .fail(function () {
-            alert("the product wasn't removed from your cart");
         });
+
 
     $.ajax({
             url: ctx + "/order/cart/total",
@@ -79,12 +81,21 @@ $(document).ready(function () {
     )
         .done(function (result) {
             $("#total").html(result);
-        })
-        .fail(function () {
-            alert("total wasn't estimated");
         });
-
+    $("#user-birthdate").on('change',
+        function () {
+            if (!moment($("#user-birthdate").val(), 'YYYY-MM-DD', true).isValid()) {
+                $("#valid-user-birthday").text("Invalid date format. Try using a calendar.");
+                $("#btn-save").attr("disabled", "disabled");
+            }
+            else if (moment($("#user-birthdate").val(), 'YYYY-MM-DD', true).isValid()) {
+                $("#valid-user-birthday").text("");
+                $("#btn-save").removeAttr("disabled");
+            }
+        }
+    );
 });
+
 function drawTable(data) {
     for (var i = 0; i <data.length ; i++) {
         drawRowData(data[i]);
@@ -95,7 +106,7 @@ function drawRowData(rowData){
     $("#allProductsTable").append(row);
     var link=ctx+"/product/"+rowData.productId;
     row.append($("<td/>").html('<a href="'+ctx+'/product/' + rowData.productId + '">'+rowData.name+'</a>'));
-    row.append($("<td>" + rowData.price + "</td>"));
+    row.append($("<td>" + accounting.formatMoney(rowData.price, "") + "</td>"));
     row.append($("<td>" + getValue(rowData.weight) + "</td>"));
     row.append($("<td>" + getValue(rowData.volume) + "</td>"));
     row.append($("<td>" + rowData.inStock + "</td>"));
@@ -145,6 +156,19 @@ function repeatOrder(id){
 
 function getValue(val){
     if(val!=null) return val;
-    else return '';
+    else return 0;
 }
+
+function clearCart() {
+    $.get(ctx + "/order/cart/clear");
+}
+
+function supportsHtml5Storage() {
+    try {
+        return 'localStorage' in window && window['localStorage'] != null;
+    } catch (e) {
+        return false;
+    }
+}
+
 

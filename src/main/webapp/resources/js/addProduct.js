@@ -42,7 +42,7 @@ function addDeviderAndUserOption(){
 
 
     var addoption = $('<option/>', {class: 'addItem'})
-        .data('content', content)
+        .data('content', content);
 
     $('.selectpicker')
         .append(divider)
@@ -63,7 +63,7 @@ function addSelectItem(t,ev)
 {
     ev.stopPropagation();
 
-    var bs = $(t).closest('.bootstrap-select')
+    var bs = $(t).closest('.bootstrap-select');
     // var txt=bs.find('.bss-input').val().replace(/[|]/g,"").toUpperCase();
     var txt=$(t).prev().val().replace(/[|]/g,"").toUpperCase();
     if ($.trim(txt)=='') return;

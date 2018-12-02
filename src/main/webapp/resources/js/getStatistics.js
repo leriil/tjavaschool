@@ -1,15 +1,17 @@
 $(function() {
     getStatistics();
+    var topLength = 10;
 
     $("#orderOfSort").click(function (e) {
         e.preventDefault();
-        if ($("#sortIcon").hasClass('glyphicon glyphicon-sort-by-attributes-alt')) {
-            $("#sortIcon").removeClass('glyphicon-sort-by-attributes-alt');
-            $("#sortIcon").addClass('glyphicon-sort-by-attributes');
+        var $icon = $("#sortIcon");
+        if ($icon.hasClass('glyphicon glyphicon-sort-by-attributes-alt')) {
+            $icon.removeClass('glyphicon-sort-by-attributes-alt');
+            $icon.addClass('glyphicon-sort-by-attributes');
         }
         else {
-            $("#sortIcon").removeClass('glyphicon-sort-by-attributes');
-            $("#sortIcon").addClass('glyphicon-sort-by-attributes-alt');
+            $icon.removeClass('glyphicon-sort-by-attributes');
+            $icon.addClass('glyphicon-sort-by-attributes-alt');
         }
         getStatistics();
     });
@@ -46,14 +48,15 @@ $(function() {
 
             drawRowDataProductHeader();
 
-            for (var i = 0; i <data.length ; i++) {
+            var i = 0;
+            for (i = 0; i <= 10; i++) {
                 drawRowDataProduct(data[i]);
             }
         }
         else {
             drawRowDataUserHeader();
 
-            for (var i = 0; i <data.length ; i++) {
+            for (i = 0; i <= 10; i++) {
                 drawRowDataUser(data[i]);
             }
         }
@@ -68,7 +71,7 @@ $(function() {
         row.append($("<td>" + rowData.name + "</td>"));
         row.append($("<td>" + rowData.categoryName + "</td>"));
         row.append($("<td>" + rowData.inStock + "</td>"));
-        row.append($("<td>" + rowData.price + "</td>"));
+        row.append($("<td>" + accounting.formatMoney(rowData.price, "") + "</td>"));
         row.append($("<td>" + getValue(rowData.top) + "</td>"));
 
     }
@@ -81,7 +84,7 @@ function drawRowDataUser(rowData){
     row.append($("<td>" + rowData.name + "</td>"));
     row.append($("<td>" + rowData.surname + "</td>"));
     row.append($("<td>" + rowData.email + "</td>"));
-    row.append($("<td>" + rowData.moneySpent + "</td>"));
+    row.append($("<td>" + accounting.formatMoney(rowData.moneySpent, "") + "</td>"));
 
 }
 
@@ -110,5 +113,6 @@ function drawRowDataUserHeader(){
     row.append($('<th/>').text('Money spent'));
 
 }
+
 
 
