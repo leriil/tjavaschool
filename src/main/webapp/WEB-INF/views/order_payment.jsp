@@ -63,7 +63,7 @@
                 <form:input path="cvv" cssClass="form-control" id="card-cvv"/>
             </div>
 
-            <button type="submit" class="btn btn-default">OK</button>
+            <button type="submit" class="btn btn-success">OK</button>
 
         </div>
 
