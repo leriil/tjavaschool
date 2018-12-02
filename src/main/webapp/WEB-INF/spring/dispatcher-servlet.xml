@@ -15,16 +15,19 @@ custom converters, jsr303 validation support, conversion factory-->
     <context:component-scan base-package="com.tsystems.tshop.resolvers"/>
 
     <bean class="com.tsystems.tshop.config.SwaggerConfig"></bean>
+    <bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"/>
 
-    <!--<beans profile="test">-->
-        <!--&lt;!&ndash; allows for ${} replacement in the spring xml configuration from the-->
-          <!--application-default.properties, application-test files on the classpath &ndash;&gt;-->
-        <!--<context:property-placeholder -->
-                <!--location="classpath:properties/application-default.properties, -->
-                          <!--classpath:properties/application-test.properties" -->
-                <!--ignore-unresolvable="true"/>-->
-        <!--<context:component-scan base-package="com.tsystems.tshop.services"></context:component-scan>-->
-    <!--</beans>-->
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="objectMapper" ref="jacksonObjectMapper"/>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+
+    <bean id="jacksonObjectMapper" class="com.tsystems.tshop.domain.util.MyJsonMapper"/>
+
     <context:property-placeholder location="classpath:properties/application-default.properties"/>
 
     <!--<mvc:default-servlet-handler />-->
@@ -32,7 +35,7 @@ custom converters, jsr303 validation support, conversion factory-->
     <mvc:resources mapping="/resources/**" location="/resources/"/>
     <mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/"/>
     <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>
-
+    <!--let the dispatcher-servlet to choose a representation for a model returned by the controller-->
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/views/"/>
         <property name="suffix" value=".jsp"/>
