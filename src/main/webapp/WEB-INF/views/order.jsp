@@ -2,6 +2,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +13,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="<c:url value="/resources/js/global.js"/>"></script>
     <script src="<c:url value="/resources/js/addToCart.js"/>"></script>
-    <script src="<c:url value="/resources/js/order.js"/>"></script>
+    <script src="<c:url value="/resources/js/orders.js"/>"></script>
     <script>var ctx = "${pageContext.request.contextPath}"</script>
 
     <sec:csrfMetaTags/>
@@ -21,13 +22,26 @@
 </head>
 <body>
 <jsp:include page="../views/fragments/header.jsp"></jsp:include>
+<sec:authorize access="hasAuthority('CLIENT')" var="client"/>
+<sec:authorize access="hasAuthority('SALESPERSON')" var="salesperson"/>
 <div class="container">
 
     <div class="row">
         <h2>Order # ${order.orderId}</h2>
+        <c:choose>
+            <c:when test="${client}">
+                <button class="btn btn-primary" style="margin-left: 5px" onclick="repeatOrder(${order.orderId})">Repeat
+                    order
+                </button>
+            </c:when>
+            <c:otherwise>
+                <button class="btn btn-primary" style="margin-left: 15px" onclick="location.href=ctx+'/order/edit'">
+                    Edit
+                </button>
+            </c:otherwise>
+        </c:choose>
 
 
-        <button class="btn btn-primary" onclick="repeatOrder(${order.orderId})">Repeat order</button>
     </div>
 
     <h3>User Details</h3>
@@ -44,22 +58,6 @@
             </div>
         </div>
     </div>
-    <%--TODO:remove when not needed anymore--%>
-<%--<br>--%>
-    <%--<address>--%>
-        <%--<strong><span>${order.user.name}</span> <span>${order.user.surname}</span></strong><br>--%>
-        <%--<a href="mailto:#"><span>${order.user.email}</span></a>--%>
-    <%--</address>--%>
-
-    <%--<address>--%>
-        <%--<strong>Address</strong><br>--%>
-        <%--<span>${order.address.house}</span> <span>${order.address.street}</span>, <span>${order.address.flat}</span><br>--%>
-        <%--<span>${order.address.city}</span>, <span>${order.address.zipCode}</span><br>--%>
-        <%--&lt;%&ndash;<abbr title="Phone">P:</abbr> (123) 456-7890&ndash;%&gt;--%>
-    <%--</address>--%>
-    <%--<strong>Payment and Delivery details</strong><br>--%>
-    <%--Order: <span>${order.deliveryMethod}</span><br>--%>
-    <%--Paid : <span>${order.paymentMethod}</span><br>--%>
 
     <h3>Products</h3>
     <table class="table table-hover table-striped">
@@ -126,6 +124,7 @@
             </div>
             <div class="form-group">
                 <label>Order Status</label> <span>${order.orderStatus}</span>
+
             </div>
         </div>
     </div>
