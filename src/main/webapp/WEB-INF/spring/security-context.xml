@@ -6,14 +6,10 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/security
        http://www.springframework.org/schema/security/spring-security.xsd">
+
     <bean class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler"/>
-    <!--<bean name="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>-->
-    <bean name="passwordEncoder" class="org.springframework.security.crypto.password.NoOpPasswordEncoder"/>
-    <!--<beans:bean id="concurrencyFilter"-->
-                <!--class="org.springframework.security.web.session.ConcurrentSessionFilter">-->
-        <!--<beans:constructor-arg ref="sessionRegistry" />-->
-        <!--<beans:constructor-arg value="/session-expired.htm" />-->
-    <!--</beans:bean>-->
+    <bean name="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+
 <sec:http use-expressions="true">
     <sec:logout logout-url="/logout"
                 logout-success-url="/login?logout=true"/>
@@ -37,10 +33,7 @@
 
     <sec:authentication-manager>
         <sec:authentication-provider user-service-ref="userDetailsServiceImpl">
-            <!--<sec:password-encoder ref="passwordEncoder"/>-->
-            <!--<sec:user-service>-->
-                <!--<sec:user name="katya" password="$2a$04$Tv6i5jzZ7OzQ50gMm9FhC.CmoOZh1OtSZlbktGSz31FEjV2oDu8Im" authorities="ROLE_USER"/>-->
-            <!--</sec:user-service>-->
+            <sec:password-encoder ref="passwordEncoder"/>
         </sec:authentication-provider>
     </sec:authentication-manager>
 </beans>
