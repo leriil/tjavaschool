@@ -3,6 +3,7 @@ package com.tsystems.tshop.controllers;
 import com.tsystems.tshop.domain.User;
 import com.tsystems.tshop.domain.UserTop;
 import com.tsystems.tshop.services.UserService;
+import com.tsystems.tshop.validators.EmailAndLoginValidator;
 import com.tsystems.tshop.validators.PasswordValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,8 +22,9 @@ import java.util.List;
 @SessionAttributes({"user"})
 public class UserController {
 
-    private final UserService userService;
     Logger LOGGER = LogManager.getLogger(UserController.class);
+
+    private final UserService userService;
 
 
     @Autowired
@@ -77,6 +79,6 @@ public class UserController {
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
-        binder.addValidators(new PasswordValidator());
+        binder.addValidators(new PasswordValidator(), new EmailAndLoginValidator(userService));
     }
 }

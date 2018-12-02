@@ -1,6 +1,7 @@
 package com.tsystems.tshop.domain;
 
 import com.tsystems.tshop.domain.util.LocalDateConverter;
+import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
