@@ -6,10 +6,12 @@
 <script>var ctx = "${pageContext.request.contextPath}"</script>
 
 
-<nav class="navbar navbar-default bg-light navbar-inverse fixed-top">
+<nav class="navbar navbar-default bg-light navbar-inverse">
 
     <sec:authorize access="hasAuthority('CLIENT')" var="client"/>
     <sec:authorize access="hasAuthority('SALESPERSON')" var="salesperson"/>
+    <sec:authorize access="!hasAuthority('SALESPERSON')" var="anonymousOrClient"/>
+
 
     <div class="container-fluid">
 
@@ -34,7 +36,6 @@
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="<spring:url value="/order/history"/>">History</a></li>
                             <li><a href="<spring:url value="/order/place"/>">Place an order</a></li>
-                            <li><a href="<spring:url value="/order/status"/>">Status</a></li>
                         </ul>
 
                     </li>
@@ -54,6 +55,8 @@
                             </li>
                         </ul>
                     </li>
+
+
                 </c:when>
 
                 <c:when test="${salesperson}">
@@ -66,10 +69,8 @@
 
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="<spring:url value="/product/stats"/>">Products and Clients</a></li>
-                            <li><a href="<spring:url value="/user/find/top"/>">Top 10 clients</a></li>
-                            <li><a href="<spring:url value="/product/find/top"/>">Top 10 products</a></li>
-                            <li><a href="<spring:url value="/profit/month/"/>">Monthly profit</a></li>
-                            <li><a href="<spring:url value="/profit/week"/>">Weekly profit</a></li>
+                            <li><a href="<spring:url value="/order/all"/>">Orders</a></li>
+                            <li><a href="<spring:url value="/order/profit"/>">Profit</a></li>
                         </ul>
 
                     </li>
@@ -83,7 +84,7 @@
                         <ul class="dropdown-menu" role="menu">
 
                             <li><a href="<spring:url value="/product/add"/>">Add product</a></li>
-                            <li><a href="<spring:url value="/product/fileImport"/>">Import from file</a></li>
+                            <li><a href="<spring:url value="/product/file/upload"/>">Import from file</a></li>
 
                         </ul>
 
@@ -122,27 +123,31 @@
             </c:choose>
         </ul>
 <%--TODO:change this copied code to search for  a particular product--%>
-        <form class="navbar-form navbar-left" action="/action_page.php">
+        <form class="navbar-form navbar-left" action="${pageContext.request.contextPath}/product/find">
             <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search" name="search">
+                <input type="text" class="form-control" placeholder="Enter a product name" name="search"
+                       id="searchName">
                 <div class="input-group-btn">
-                    <button class="btn btn-default" type="submit">
+                    <button id="searchProductButton" class="btn btn-default" type="submit">
                         <i class="glyphicon glyphicon-search"></i>
                     </button>
                 </div>
             </div>
         </form>
-        <ul class="nav navbar-nav navbar-right">
-<%--TODO:hide cart from salesperson--%>
-            <li style="margin-top: 7px; margin-right: 7px">
-                <button type="button" class="btn btn-primary"
-                        onclick="window.location.href='<spring:url value="/order/place"/>'">
-                    <span class="glyphicon glyphicon-shopping-cart"/>
-                    Cart
-                    <span id="basket" class="badge bg-primary"></span>
-                </button>
-            </li>
-        </ul>
+        <c:if test="${anonymousOrClient}">
+            <ul class="nav navbar-nav navbar-right">
+                    <%--TODO:hide cart from salesperson--%>
+                <li style="margin-top: 7px; margin-right: 7px">
+                    <button type="button" class="btn btn-primary"
+                            onclick="window.location.href='<spring:url value="/order/place"/>'">
+                        <span class="glyphicon glyphicon-shopping-cart"/>
+                        Cart
+                        <span id="basket" class="badge bg-primary"></span>
+                    </button>
+                </li>
+            </ul>
+        </c:if>
+
 
     </div>
 </nav>
