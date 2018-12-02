@@ -25,15 +25,13 @@
                     default-target-url="/product/all"
                     always-use-default-target="true"
                     authentication-failure-url="/login?error=true"/>
-    <!--<sec:intercept-url pattern="/client/*" access="ROLE_USER"/>-->
-    <!--<sec:intercept-url pattern="/order/*" access="hasAuthority('CLIENT')"/>-->
-    <!--<sec:intercept-url pattern="/login" access="permitAll()"/>-->
-    <!--<sec:intercept-url pattern="/product/*" access="hasRole('CLIENT')"/>-->
-    <sec:intercept-url pattern="/order/*" access="hasAuthority('CLIENT')"/>
-    <!--<sec:intercept-url pattern="/**" access="hasAuthority('ANONYMOUS')"/>-->
+
+    <sec:intercept-url pattern="/order/all" access="hasAuthority('SALESPERSON')"/>
+    <sec:intercept-url pattern="/order/*" access="hasAuthority('CLIENT') or hasAuthority('SALESPERSON')"/>
+
     <sec:intercept-url pattern="/**" access="permitAll()"/>
     <sec:remember-me key="Unique"/>
-    <!--<sec:csrf disabled="true"/>-->
+
 </sec:http>
 
 
