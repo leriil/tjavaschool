@@ -4,6 +4,7 @@ import com.tsystems.tshop.domain.Product;
 import com.tsystems.tshop.domain.ProductTop;
 import com.tsystems.tshop.repositories.CategoryRepository;
 import com.tsystems.tshop.repositories.ProductRepository;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,7 +105,7 @@ public class ProductService {
 
     }
 
-    public Product findProductById(Long productId) throws RuntimeException {
+    public Product findProductById(Long productId) {
 
         Optional<Product> product = this.repository.findById(productId);
         if (product.isPresent()) {
@@ -161,10 +162,8 @@ public class ProductService {
                 return repository.findAll(new Sort(Sort.Direction.ASC, "inStock"));
             }
             if (columnName.equals("Category")) {
-//
                 return repository.findAllByOrderByCategoryCategoryNameAsc();
             }
-
         } else if (sortingOrder.equals("desc")) {
             if (columnName.equals("Name")) {
                 return repository.findAll(new Sort(Sort.Direction.DESC, "name"));
@@ -204,7 +203,7 @@ public class ProductService {
                 LOGGER.info("product from file is: " + product);
             }
         } catch (JAXBException | IOException | NullPointerException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.ERROR,"an exception was thrown", e);
             throw new Exception();
         }
     }

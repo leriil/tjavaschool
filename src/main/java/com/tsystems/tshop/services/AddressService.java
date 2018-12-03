@@ -23,6 +23,7 @@ public class AddressService {
     public void save(Address address) {
 
         this.addressRepository.save(address);
+        LOGGER.info("Address {} has been saved", address);
     }
 
 }
