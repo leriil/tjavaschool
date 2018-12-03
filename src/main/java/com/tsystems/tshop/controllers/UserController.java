@@ -80,6 +80,7 @@ public class UserController {
         try {
             model.addAttribute("user", userService.getUserById(userId));
         } catch (NoSuchElementException e) {
+            LOGGER.error("An exception was thrown while getting the user with id {} from the database.", userId);
             return "user_not_found";
         }
         return "user";
