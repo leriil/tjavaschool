@@ -51,7 +51,7 @@ public class User implements UserDetails {
 
 
     @Column(name = "login", nullable = false, unique = true, updatable = false)
-    @Pattern(regexp = "^[a-zA-Z0-9]{5,15}$", message = "Your username contains invalid characters or is too short.")
+    @Pattern(regexp = "^[a-zA-Z0-9]{2,15}$", message = "Your username contains invalid characters or is too short.")
     private String login;
 
 
@@ -76,7 +76,7 @@ public class User implements UserDetails {
     private LocalDate birthDate;
 
     @NotBlank(message = "example: hello@yandex.ru")
-    @Column(name = "email", nullable = false, unique = true, updatable = false)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     public User() {
