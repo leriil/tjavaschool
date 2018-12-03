@@ -12,10 +12,7 @@ public class Address {
     @Column(name = "address_id")
     private Long addressId;
 
-//    @OneToMany(mappedBy = "address")
-//    private Set<User> users = new HashSet<>();
-
-    @Pattern(regexp = "^[A-Z][a-z]+$", message = "Invalid characters")
+    @Pattern(regexp = "^[A-Za-z]+$", message = "Invalid characters")
     @Column(name = "country")
     private String country;
 
