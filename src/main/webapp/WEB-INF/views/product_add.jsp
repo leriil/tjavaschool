@@ -67,8 +67,8 @@
             </div>
 
             <div class="form-group">
-                <label for="product-volume">Volume</label>
-                <form:input path="volume" cssClass="form-control" id="product-volume"/>
+                <label for="product-color">Color</label>
+                <form:input path="color" cssClass="form-control" id="product-color"/>
                     <%--<input type="text" id="resource-name" class="form-control" name="name" />--%>
             </div>
 

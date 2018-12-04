@@ -110,7 +110,7 @@ function drawRowData(rowData) {
     row.append($("<td/>").html('<a href="' + ctx + '/product/' + rowData.productId + '">' + rowData.name + '</a>'));
     row.append($("<td>" + accounting.formatMoney(rowData.price, "") + "</td>"));
     row.append($("<td>" + getValue(rowData.weight) + "</td>"));
-    row.append($("<td>" + getValue(rowData.volume) + "</td>"));
+    row.append($("<td>" + getStringValue(rowData.color) + "</td>"));
     row.append($("<td>" + rowData.inStock + "</td>"));
     row.append($("<td>" + rowData.category.categoryName + "</td>"));
 }
@@ -146,10 +146,11 @@ function repeatOrder(id) {
                         data: JSON.stringify(productId),
                         processData: false
                     }
-                )
-
+                ).done(function () {
+                    window.location = ctx + "/order/place";
+                });
             }
-            window.location = ctx + "/order/place";
+
         })
         .fail(function () {
             alert("no luck");
@@ -161,16 +162,14 @@ function getValue(val) {
     else return 0;
 }
 
+function getStringValue(val) {
+    if (val != null) return val;
+    else return '';
+}
+
 function clearCart() {
     $.get(ctx + "/order/cart/clear");
 }
 
-function supportsHtml5Storage() {
-    try {
-        return 'localStorage' in window && window['localStorage'] != null;
-    } catch (e) {
-        return false;
-    }
-}
 
 

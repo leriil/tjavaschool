@@ -55,7 +55,7 @@
                 <th>Name</th>
                 <th>Price</th>
                 <th>Weight</th>
-                <th>Volume</th>
+                <th>Color</th>
                 <th>Category</th>
 
             </tr>
@@ -65,7 +65,7 @@
                     <td><a href="<spring:url value="/product/${p.productId}"/>">${p.name}</a></td>
                     <td>${p.price}</td>
                     <td>${p.weight}</td>
-                    <td>${p.volume}</td>
+                    <td>${p.color}</td>
                     <td>${p.category.categoryName}</td>
                 </tr>
             </c:forEach>

@@ -45,7 +45,7 @@
         </div>
 
         <div class="form-group">
-            <label>Volume</label> <span>${product.volume}</span>
+            <label>Color</label> <span>${product.color}</span>
         </div>
         <div class="form-group">
             <label>inStock</label> <span>${product.inStock}</span>

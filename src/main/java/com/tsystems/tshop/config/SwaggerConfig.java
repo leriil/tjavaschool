@@ -21,7 +21,7 @@ public class SwaggerConfig {
                 .apis(RequestHandlerSelectors.basePackage("com.tsystems.tshop.controllers"))
                 .paths(any()).build().apiInfo(new ApiInfo("Tshop",
                         "Online shopping", "1.0.0", null,
-                        new Contact("Katya Likhacheva", "https://vk.com/leriilleriil", "leriil@mail.ru"),null, null));
+                        new Contact("Ekaterina Likhacheva", "https://vk.com/leriilleriil", "leriil@mail.ru"),null, null));
     }
 
 

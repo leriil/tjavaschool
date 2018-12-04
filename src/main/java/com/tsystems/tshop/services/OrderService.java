@@ -21,7 +21,7 @@ import java.util.*;
  *
  */
 @Service
-
+@Transactional
 public class OrderService {
 
     private static final Logger LOGGER = LogManager.getLogger(OrderService.class);
@@ -58,7 +58,8 @@ public class OrderService {
      * @throws RuntimeException if the statusCode() of the return value of the RestTemplate object
      *                          is not HttpStatus.OK.
      */
-    public void payWithCard(Card card, Order order, List<Product> products) throws RuntimeException {
+
+    public void payWithCard(Card card, Order order, List<Product> products)  {
 
         CardWithdrawal data = new CardWithdrawal(card, productService.getTotal(products));
 
@@ -75,20 +76,18 @@ public class OrderService {
 
     /**
      * Saves an order to the a database.
-     *
      * @param order    an order to be saved
      * @param products products to be associated with that order
      */
-    @Transactional
+
     public void saveOrder(Order order, List<Product> products) {
 
-        this.addressService.save(order.getAddress());
+        addressService.save(order.getAddress());
         order.getUser().setAddress(order.getAddress());
-        this.userService.saveUser(order.getUser());
+        userService.saveUser(order.getUser());
         order.setProducts(products);
-        this.orderRepository.save(order);
+        orderRepository.save(order);
         LOGGER.info("Order saved: {} ", order);
-
     }
 
 
@@ -99,7 +98,6 @@ public class OrderService {
 
         final String login = SecurityContextHolder.getContext().getAuthentication().getName();
         Set<Order> orders = orderRepository.findAllByUser_Login(login);
-
         LOGGER.info("user's orders with login {} are {}", login, orders);
         return orders;
     }

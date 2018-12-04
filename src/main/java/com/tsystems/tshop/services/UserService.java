@@ -12,10 +12,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
 @Service
+@Transactional
 public class UserService {
 
     private static final Logger LOGGER = LogManager.getLogger(UserService.class);
@@ -67,6 +69,7 @@ public class UserService {
      * @param user is updated
      * @return the updated user
      */
+
     public User updateUserInfo(User user) {
 
         addressService.save(user.getAddress());

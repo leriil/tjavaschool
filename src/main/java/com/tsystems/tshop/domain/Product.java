@@ -24,11 +24,10 @@ import java.util.Set;
                         @ColumnResult(name = "categoryName"),
                         @ColumnResult(name = "inStock", type = Integer.class),
                         @ColumnResult(name = "price", type = BigDecimal.class),
-                        @ColumnResult(name = "volume", type = Double.class),
+                        @ColumnResult(name = "color"),
                         @ColumnResult(name = "weight", type = Double.class),
                         @ColumnResult(name = "top", type = Integer.class)
                 }))
-//@JsonIgnoreProperties(ignoreUnknown = true)
 @XmlRootElement
 public class Product {
     @Id
@@ -36,9 +35,6 @@ public class Product {
     @Column(name = "product_id")
     private Long productId;
 
-    //means that the property may only be written (set) for deserialization,
-    // but will not be read (get) on serialization, that is, the value of the
-    // property is not included in serialization.
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToMany(mappedBy = "products")
     private Set<Order> orders = new HashSet<>();
@@ -61,8 +57,8 @@ public class Product {
     @JoinColumn(name = "category_id")
     private ProductCategory category;
 
-    @Column(name = "volume")
-    private Double volume;
+    @Column(name = "color")
+    private String color;
 
     public Product() {
     }
@@ -121,12 +117,14 @@ public class Product {
         this.category = category;
     }
 
-    public Double getVolume() {
-        return volume;
-    }
+    public String getColor() {
 
-    public void setVolume(Double volume) {
-        this.volume = volume;
+        return color;
+    }
+    @XmlElement
+    public void setColor(String color) {
+
+        this.color = color;
     }
 
     public Set<Order> getOrders() {
@@ -137,23 +135,9 @@ public class Product {
         this.orders = orders;
     }
 
-
-//	@Override
-//	public boolean equals(Object o) {
-//		if (o == null || getClass() != o.getClass()) return false;
-//		Product product = (Product) o;
-//		return Objects.equals(productId, product.productId) &&
-//				Objects.equals(name, product.name) &&
-//				Objects.equals(price, product.price) &&
-//				Objects.equals(weight, product.weight) &&
-//				Objects.equals(inStock, product.inStock) &&
-//				category == product.category &&
-//				Objects.equals(volume, product.volume);
-//	}
-
-
     @Override
     public boolean equals(Object o) {
+
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
         return Objects.equals(productId, product.productId) &&
@@ -162,25 +146,12 @@ public class Product {
                 Objects.equals(weight, product.weight) &&
                 Objects.equals(inStock, product.inStock) &&
                 Objects.equals(category, product.category) &&
-                Objects.equals(volume, product.volume);
+                Objects.equals(color, product.color);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(productId, name, price, weight, inStock, category, volume);
-    }
-
-    @Override
-    public String toString() {
-        return "Product{" +
-                "productId=" + productId +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", weight=" + weight +
-                ", inStock=" + inStock +
-                ", category=" + category +
-                ", volume=" + volume +
-                '}';
+        return Objects.hash(productId, name, price, weight, inStock, category, color);
     }
 }

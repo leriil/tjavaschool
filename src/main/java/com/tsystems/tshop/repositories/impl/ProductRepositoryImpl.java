@@ -10,7 +10,7 @@ import java.util.List;
 public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
     private static final String TOP_PRODUCTS = "select product_id as productId, name, product.category_id as categoryId, category_name as categoryName, in_stock as inStock, price, " +
-            "volume, weight, top from product left join " +
+            "color, weight, top from product left join " +
             "(select product.product_id as pid, count(order_product.product_id) as top " +
             "from product join order_product " +
             "on product.product_id=order_product.product_id " +

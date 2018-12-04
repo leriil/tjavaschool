@@ -11,8 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-
-//@PropertySource("classpath:/properties/application-default.properties")
 public class PaymentRepositoryImpl implements PaymentRepository {
 
     private static final Logger LOGGER = LogManager.getLogger(PaymentRepositoryImpl.class);

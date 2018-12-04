@@ -66,7 +66,7 @@
             <th>Name</th>
             <th>Price</th>
             <th>Weight</th>
-            <th>Volume</th>
+            <th>Color</th>
             <th>inStock</th>
             <th>Category</th>
         </tr>
@@ -76,7 +76,7 @@
                 <td id="productToCart"><a href="<spring:url value="/product/${product.productId}"/>">${product.name}</a></td>
                 <td>${product.price}</td>
                 <td>${product.weight}</td>
-                <td>${product.volume}</td>
+                <td>${product.color}</td>
                 <td>${product.inStock}</td>
                 <td>${product.category.categoryName}</td>
 

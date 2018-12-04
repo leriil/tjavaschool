@@ -8,10 +8,6 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd
-
-
-
-
         http://www.springframework.org/schema/data/jpa
         http://www.springframework.org/schema/data/jpa/spring-jpa.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
     <!--here we configure various beans for our business logic: data access services, etc.
@@ -48,7 +44,6 @@
         <property name="packagesToScan" value="com.tsystems.tshop.domain"/>
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-                <!--<property name="showSql" value="true"/>-->
             </bean>
         </property>
         <property name="jpaProperties">

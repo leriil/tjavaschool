@@ -37,28 +37,33 @@ public class OrderController {
 
     @Autowired
     public OrderController(OrderService orderService, ProductService productService) {
+
         this.orderService = orderService;
         this.productService = productService;
     }
 
     @ModelAttribute("productsInCart")
     public List<Product> getProducts() {
+
         return new ArrayList<>();
     }
 
     @ModelAttribute("orderStatusOptions")
     public List<OrderStatus> getStatusOptions() {
+
         return Arrays.asList(OrderStatus.values());
 
     }
 
     @ModelAttribute("order")
     public Order getOrder() {
+
         return new Order();
     }
 
     @GetMapping("/cart/clear")
     public void clearCart(@ModelAttribute("productsInCart") List<Product> productsInCart) {
+
         for (int i = 0; i < productsInCart.size(); i++) {
             orderService.removeProductFromCart(productsInCart, productsInCart.get(i).getProductId());
             LOGGER.info("cart has been cleared: " + productsInCart);
@@ -89,6 +94,7 @@ public class OrderController {
     @ResponseBody
     @GetMapping("/cart/count")
     public int countProducts(@ModelAttribute("productsInCart") List<Product> productsInCart) {
+
         LOGGER.info(" Products in cart : "
                 + productsInCart);
         return productsInCart.size();
@@ -131,6 +137,7 @@ public class OrderController {
                              Model model,
                              @ModelAttribute("productsInCart") List<Product> productsInCart
     ) {
+
         List<String> paymentOptions = new ArrayList<>(Arrays.asList("cash", "online"));
         model.addAttribute("paymentOptions", paymentOptions);
         List<String> deliveryOptions = new ArrayList<>(Arrays.asList("pickup", "delivery"));
@@ -147,6 +154,7 @@ public class OrderController {
     public String updateOrder(
             Model model
     ) {
+
         List<OrderStatus> orderStatusOptions = Arrays.asList(OrderStatus.values());
         List<PaymentStatus> paymentStatusOptions = Arrays.asList(PaymentStatus.values());
         model.addAttribute("paymentStatusOptions", paymentStatusOptions);
@@ -156,6 +164,7 @@ public class OrderController {
 
     @PostMapping("/update")
     public String updateOrder(@ModelAttribute("order") Order order) {
+
         try {
             orderService.updateOrder(order);
             return "redirect:/order/edit?orderUpdated=true";
@@ -169,6 +178,7 @@ public class OrderController {
     public String reviewOrder(@ModelAttribute("order") Order order,
                               @ModelAttribute("productsInCart") List<Product> productsInCart
     ) {
+
         return "order_review";
     }
 
@@ -177,6 +187,7 @@ public class OrderController {
                             @ModelAttribute("order") Order order,
                             @ModelAttribute("productsInCart") List<Product> productsInCart,
                             @ModelAttribute("card") Card card) {
+
         if (order.getPaymentMethod().equals("cash")) {
             this.orderService.saveOrder(order, productsInCart);
             LOGGER.info("order " + order + " was saved");
@@ -194,6 +205,7 @@ public class OrderController {
                               @ModelAttribute("order") Order order,
                               @ModelAttribute("productsInCart") List<Product> productsInCart,
                               SessionStatus sessionStatus) {
+
         try {
             this.orderService.payWithCard(card, order, productsInCart);
             sessionStatus.setComplete();
@@ -208,12 +220,14 @@ public class OrderController {
 
     @GetMapping("/all")
     public String getOrders() {
+
         return "orders";
     }
 
     @ResponseBody
     @GetMapping("/find/all")
     public List<Order> getAllOrders() {
+
         return orderService.getOrders();
     }
 
@@ -222,6 +236,7 @@ public class OrderController {
     public List<Order> getAllOrdersByDates(
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate firstDay,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate lastDay) {
+
         return orderService.getOrdersWithDatesBetween(firstDay, lastDay);
     }
 
@@ -239,11 +254,13 @@ public class OrderController {
             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate firstDay,
             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate lastDay,
             @RequestParam(required = false) String period) {
+
         return orderService.getProfit(firstDay, lastDay, period);
     }
 
     @GetMapping("/profit")
     public String getProfit() {
+
         return "profit";
     }
 

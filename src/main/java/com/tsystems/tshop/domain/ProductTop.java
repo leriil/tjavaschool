@@ -16,12 +16,11 @@ public class ProductTop {
 
     private BigDecimal price;
 
-    private Double volume;
+    private String color;
 
     private Double weight;
 
     private Integer top;
-
 
     public ProductTop(Long productId,
                       String name,
@@ -29,7 +28,7 @@ public class ProductTop {
                       String categoryName,
                       Integer inStock,
                       BigDecimal price,
-                      Double volume,
+                      String color,
                       Double weight,
                       Integer top) {
         this.productId = productId;
@@ -38,7 +37,7 @@ public class ProductTop {
         this.categoryName = categoryName;
         this.inStock = inStock;
         this.price = price;
-        this.volume = volume;
+        this.color = color;
         this.weight = weight;
         this.top = top;
     }
@@ -91,12 +90,12 @@ public class ProductTop {
         this.categoryName = categoryName;
     }
 
-    public Double getVolume() {
-        return volume;
+    public String getColor() {
+        return color;
     }
 
-    public void setVolume(Double volume) {
-        this.volume = volume;
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public Double getWeight() {
@@ -115,23 +114,4 @@ public class ProductTop {
         this.top = top;
     }
 
-    //TODO:delete this if not used
-    public Product translateTopToProduct() {
-
-        Product product = new Product();
-        product.setName(this.getName());
-        product.setProductId(this.getProductId());
-        product.setInStock(this.getInStock());
-
-        ProductCategory category = new ProductCategory();
-        category.setCategoryId(this.getCategoryId());
-        category.setCategoryName(this.getCategoryName());
-        product.setCategory(category);
-
-        product.setPrice(this.getPrice());
-        product.setWeight(this.getWeight());
-        product.setVolume(this.getVolume());
-
-        return product;
-    }
 }

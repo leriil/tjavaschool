@@ -27,17 +27,17 @@ insert into user(name, surname, login, password, confirm_password, birth_date, e
 insert into user(name, surname, login, password, confirm_password, birth_date, email, address_id) values ('Linda','Brown','linda','$2a$10$U5RECaV.RxfRq9..StuIEuk8V3MLADAqrsQKkXovjxrbnQybJt.7W','$2a$10$U5RECaV.RxfRq9..StuIEuk8V3MLADAqrsQKkXovjxrbnQybJt.7W','1878-06-23','linda@yandex.ru',4);
 insert into user(name, surname, login, password, confirm_password, birth_date, email, address_id) values ('Anna','Jones','anna','$2a$10$xjdEZDHt5k/sS0hEoGu4d.xrvgkqp2UDnrzIF3cQ6ulPXJ/daNL52','$2a$10$xjdEZDHt5k/sS0hEoGu4d.xrvgkqp2UDnrzIF3cQ6ulPXJ/daNL52','1990-11-19','anna@yandex.ru',6);
 
-insert into product(name, category_id, in_stock, price, volume, weight) values ('Energizer AA Batteries, Double A Battery Max Alkaline (48 Count)',1,20,18.99 ,NULL ,100);
-insert into product(name, category_id, in_stock, price, volume, weight) values ('Fitbit Versa Smart Watch, Gray/Silver Aluminium, One Size (S & L Bands Included)',1,10,199.95 ,NULL ,57);
-insert into product(name, category_id, in_stock, price, volume, weight) values ('Fujifilm Instax Mini 9 Ice Blue Instant Camera',2,15,56.00 ,NULL ,200);
-insert into product(name, category_id, in_stock, price, volume, weight) values ('GoPro HERO5 Black Waterproof Digital Action Camera for Travel with Touch Screen 4K HD Video 12MP Photos',2,15,248.00 ,NULL ,150);
-insert into product(name, category_id, in_stock, price, volume, weight) values ('WD 2TB Elements Portable External Hard Drive - USB 3.0 - WDBU6Y0020BBK-WESN',3,5,74.47 ,NULL ,20);
-insert into product(name, category_id, in_stock, price, volume, weight) values ('HP 23.8-inch FHD IPS Monitor with Tilt/Height Adjustment and Built-in Speakers (VH240a, Black)',3,20,109.99 ,NULL ,3020);
-insert into product(name, category_id, in_stock, price, volume, weight) values ('Jabra Elite Active 65t Alexa Enabled True Wireless Sports Earbuds with Charging Case Copper Blue',4,20, 159.99 ,NULL ,13);
-insert into product(name, category_id, in_stock, price, volume, weight) values ('Samsung Galaxy S7 SM-G930V 32GB for Verizon (Certified Refurbished)',5,20, 210.07 ,NULL ,90);
-insert into product(name, category_id, in_stock, price, volume, weight) values ('Apple iPod Touch 128GB Space Gray (6th Generation) Newest Model',5,20,215.40 ,NULL ,110);
-insert into product(name, category_id, in_stock, price, volume, weight) values ('All-New Kindle Paperwhite Leather Cover (10th Generation-2018), Black ',6,20, 39.99 ,NULL ,60);
-insert into product(name, category_id, in_stock, price, volume, weight) values ('All-new Kindle Paperwhite Now Waterproof with 2x the Storage (International Version)',5,20,149.00 ,NULL ,75);
+insert into product(name, category_id, in_stock, price, color, weight) values ('Energizer AA Batteries, Double A Battery Max Alkaline (48 Count)',1,20,18.99 ,NULL ,100);
+insert into product(name, category_id, in_stock, price, color, weight) values ('Fitbit Versa Smart Watch, One Size (S & L Bands Included)',1,10,199.95 ,'Gray/Silver Aluminium' ,57);
+insert into product(name, category_id, in_stock, price, color, weight) values ('Fujifilm Instax Mini 9 Instant Camera',2,15,56.00 ,'Ice Blue' ,200);
+insert into product(name, category_id, in_stock, price, color, weight) values ('GoPro HERO5 Waterproof Digital Action Camera for Travel with Touch Screen 4K HD Video 12MP Photos',2,15,248.00 ,'Black' ,150);
+insert into product(name, category_id, in_stock, price, color, weight) values ('WD 2TB Elements Portable External Hard Drive - USB 3.0 - WDBU6Y0020BBK-WESN',3,5,74.47 ,NULL ,20);
+insert into product(name, category_id, in_stock, price, color, weight) values ('HP 23.8-inch FHD IPS Monitor with Tilt/Height Adjustment and Built-in Speakers (VH240a, Black)',3,20,109.99 ,NULL ,3020);
+insert into product(name, category_id, in_stock, price, color, weight) values ('Jabra Elite Active 65t Alexa Enabled True Wireless Sports Earbuds with Charging Case',4,20, 159.99 ,'Copper Blue' ,13);
+insert into product(name, category_id, in_stock, price, color, weight) values ('Samsung Galaxy S7 SM-G930V 32GB for Verizon (Certified Refurbished)',5,20, 210.07 ,NULL ,90);
+insert into product(name, category_id, in_stock, price, color, weight) values ('Apple iPod Touch 128GB (6th Generation) Newest Model',5,20,215.40 ,'Space Gray' ,110);
+insert into product(name, category_id, in_stock, price, color, weight) values ('All-New Kindle Paperwhite Leather Cover (10th Generation-2018)',6,20, 39.99 ,'Black' ,60);
+insert into product(name, category_id, in_stock, price, color, weight) values ('All-new Kindle Paperwhite Now Waterproof with 2x the Storage (International Version)',5,20,149.00 ,NULL ,75);
 
 insert into user_role(user_id,role_id)values (1,1);
 insert into user_role(user_id,role_id)values (2,1);
@@ -61,7 +61,7 @@ insert into order_(order_id, address_id, user_id, payment_method, delivery_metho
 insert into order_(order_id, address_id, user_id, payment_method, delivery_method, payment_status, order_status, order_date) values (8,3,8,'cash','pickup','NOT_PAID','IN_TRANSIT', '2018-11-13');
 insert into order_(order_id, address_id, user_id, payment_method, delivery_method, payment_status, order_status, order_date) values (9,4,9,'cash','pickup','PAID','IN_TRANSIT', '2018-11-16');
 insert into order_(order_id, address_id, user_id, payment_method, delivery_method, payment_status, order_status, order_date) values (10,4,10,'online','pickup','PAID','SHIPPED', '2018-11-23');
-insert into order_(order_id, address_id, user_id, payment_method, delivery_method, payment_status, order_status, order_date) values (11,6,11,'cash','pickup','NOT_PAID','PENDING_APPROVAL', '2018-11-26');
+insert into order_(order_id, address_id, user_id, payment_method, delivery_method, payment_status, order_status, order_date) values (11,6,11,'cash','pickup','PAID','PENDING_APPROVAL', '2018-12-4');
 
 insert into order_product (order_id,product_id)values (1,2);
 insert into order_product (order_id,product_id)values (1,2);

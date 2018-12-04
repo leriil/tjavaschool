@@ -49,22 +49,10 @@
             <th id="columnName">Name</th>
             <th id="columnPrice">Price</th>
             <th>Weight</th>
-            <th>Volume</th>
-            <th>in Stock</th>
+            <th>Color</th>
+            <th>inStock</th>
             <th>Category</th>
         </tr>
-
-        <%--<c:forEach items="${products}" var="product">--%>
-            <%--<tr>--%>
-                <%--<td><a href="<spring:url value="/product/${product.productId}"/>">${product.name}</a></td>--%>
-                <%--<td>${product.price}</td>--%>
-                <%--<td>${product.weight}</td>--%>
-                <%--<td>${product.volume}</td>--%>
-                <%--<td>${product.inStock}</td>--%>
-                <%--<td>${product.category}</td>--%>
-            <%--</tr>--%>
-        <%--</c:forEach>--%>
-
         </tbody>
     </table>
 </div>

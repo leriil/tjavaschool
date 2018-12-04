@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,11 +26,22 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class ProductService {
 
     private static final Logger LOGGER = LogManager.getLogger(ProductService.class);
+    private static final String PRICE = "price";
+    private static final String COLOR = "color";
+    private static final String WEIGHT = "weight";
+    private static final String INSTOCK = "inStock";
+    private static final String NAME = "name";
+    private static final String CATEGORY = "category";
+    private static final String ORDER_ASC = "asc";
+    private static final String ORDER_DESC = "desc";
     private final ProductRepository repository;
     private final CategoryRepository categoryRepository;
+    @Value("${file.path}")
+    private String filePath;
 
     @Autowired
     public ProductService(ProductRepository repository,
@@ -41,32 +53,11 @@ public class ProductService {
 
     public List<Product> getSortedProducts(String option, String order) {
 
-        if (option.equals("price") && (order.contains("alt"))) {
-            return this.repository.findAll(new Sort(Sort.Direction.ASC, "price"));
+        if (option.equals(PRICE) && (order.contains("alt"))) {
+            return this.repository.findAll(new Sort(Sort.Direction.ASC, PRICE));
         }
-
-        if (option.equals("price") && !(order.contains("alt"))) {
-            return this.repository.findAll(new Sort(Sort.Direction.DESC, "price"));
-        }
-        if (option.equals("popularity") && (order.contains("alt"))) {
-            List<ProductTop> tops = this.repository.getTopProductsDesc();
-            List<Product> products = new ArrayList<>();
-            for (ProductTop p : tops
-                    ) {
-                products.add(p.translateTopToProduct());
-            }
-            LOGGER.info("the most popular products are: " + products);
-            return products;
-        }
-        if (option.equals("popularity") && !(order.contains("alt"))) {
-            List<ProductTop> tops = this.repository.getTopProductsAsc();
-            List<Product> products = new ArrayList<>();
-            for (ProductTop p : tops
-                    ) {
-                products.add(p.translateTopToProduct());
-            }
-            LOGGER.info("the least popular products are: " + products);
-            return products;
+        if (option.equals(PRICE) && !(order.contains("alt"))) {
+            return this.repository.findAll(new Sort(Sort.Direction.DESC, PRICE));
         } else return this.repository.findAll();
     }
 
@@ -82,7 +73,9 @@ public class ProductService {
         if (!products.isEmpty()) {
 
             products.forEach(product -> values.add(product.getPrice()));
-            total = values.stream().reduce(BigDecimal::add).get();
+            total = values.stream()
+                    .reduce(BigDecimal::add)
+                    .get();
             LOGGER.info("The total for products in the shopping cart is: {}", total);
         }
 
@@ -91,7 +84,8 @@ public class ProductService {
 
 
     /**
-     * @param product
+     * @param product is saved to the database, before that its category is
+     *                also saved (if it's a new category)
      */
     public void save(Product product) {
 
@@ -136,66 +130,35 @@ public class ProductService {
         return products;
     }
 
-    public List<Product> sortProducts() {
-
-        return this.repository.findAllByOrderByNameAsc();
-    }
-
     public List<Product> sortProducts(String columnName, String sortingOrder) {
 
         if (Objects.isNull(columnName)) {
             return this.repository.findAll();
-        } else if (sortingOrder.equals("asc")) {
-            if (columnName.equals("Name")) {
-                return repository.findAll(new Sort(Sort.Direction.ASC, "name"));
+        } else if (sortingOrder.equals(ORDER_ASC)) {
+            if (columnName.equals(INSTOCK)) {
+                return repository.findAll(new Sort(Sort.Direction.ASC, INSTOCK));
+            } else {
+                columnName = columnName.toLowerCase();
+                return repository.findAll(new Sort(Sort.Direction.ASC, columnName));
             }
-            if (columnName.equals("Price")) {
-                return repository.findAll(new Sort(Sort.Direction.ASC, "price"));
+        } else if (sortingOrder.equals(ORDER_DESC)) {
+            if (columnName.equals(INSTOCK)) {
+                return repository.findAll(new Sort(Sort.Direction.DESC, INSTOCK));
+            } else {
+                columnName = columnName.toLowerCase();
+                return repository.findAll(new Sort(Sort.Direction.DESC, columnName));
             }
-            if (columnName.equals("Weight")) {
-                return repository.findAll(new Sort(Sort.Direction.ASC, "weight"));
-            }
-            if (columnName.equals("Volume")) {
-                return repository.findAll(new Sort(Sort.Direction.ASC, "volume"));
-            }
-            if (columnName.equals("in Stock")) {
-                return repository.findAll(new Sort(Sort.Direction.ASC, "inStock"));
-            }
-            if (columnName.equals("Category")) {
-                return repository.findAllByOrderByCategoryCategoryNameAsc();
-            }
-        } else if (sortingOrder.equals("desc")) {
-            if (columnName.equals("Name")) {
-                return repository.findAll(new Sort(Sort.Direction.DESC, "name"));
-            }
-            if (columnName.equals("Price")) {
-                return repository.findAll(new Sort(Sort.Direction.DESC, "price"));
-            }
-            if (columnName.equals("Weight")) {
-                return repository.findAll(new Sort(Sort.Direction.DESC, "weight"));
-            }
-            if (columnName.equals("Volume")) {
-                return repository.findAll(new Sort(Sort.Direction.DESC, "volume"));
-            }
-            if (columnName.equals("in Stock")) {
-                return repository.findAll(new Sort(Sort.Direction.DESC, "inStock"));
-            }
-            if (columnName.equals("Category")) {
-
-                return repository.findAllByOrderByCategoryCategoryNameDesc();
-            }
-        }
-        return this.repository.findAll();
+        } else return this.repository.findAll();
     }
 
-    public void parseFile(MultipartFile file) throws Exception {
+    public void parseFile(MultipartFile file) {
 
         file.getContentType();
         LOGGER.info("file content type: " + file.getContentType());
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(Product.class);
             if (Objects.nonNull(file.getOriginalFilename())) {
-                File f = new File("C:\\Users\\Leriil\\Desktop", file.getOriginalFilename());
+                File f = new File(filePath, file.getOriginalFilename());
                 file.transferTo(f);
                 Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
                 Product product = (Product) jaxbUnmarshaller.unmarshal(f);
@@ -203,8 +166,8 @@ public class ProductService {
                 LOGGER.info("product from file is: " + product);
             }
         } catch (JAXBException | IOException | NullPointerException e) {
-            LOGGER.log(Level.ERROR,"an exception was thrown", e);
-            throw new Exception();
+            LOGGER.log(Level.ERROR, "an exception was thrown", e);
+            throw new RuntimeException();
         }
     }
 
