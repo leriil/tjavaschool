@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 @Controller
@@ -116,13 +117,7 @@ public class ProductController {
                           @RequestParam(value = "sortingOption", required = false) String sortingOption,
                           @RequestParam(value = "sortingOrder", required = false) String sortingOrder) {
 
-        List<Product> products;
-        if ((Objects.nonNull(sortingOption)) && (Objects.nonNull(sortingOrder))) {
-            products = productService.getSortedProducts(sortingOption, sortingOrder);
-        } else {
-            products = productService.findProducts();
-        }
-        model.addAttribute("products", products);
+        model.addAttribute("products", productService.findProducts());
         return "products";
     }
 
@@ -130,10 +125,15 @@ public class ProductController {
     public String findProduct(Model model,
                               @PathVariable Long productId,
                               SessionStatus status) {
+        try{
+            model.addAttribute("product", this.productService.findProductById(productId));
+            status.setComplete();
+            return "product";
+        }catch (NoSuchElementException e){
+            return "product_not_found";
+        }
 
-        model.addAttribute("product", this.productService.findProductById(productId));
-        status.setComplete();
-        return "product";
+
     }
 
     @RequestMapping(value = "/find")
