@@ -7,10 +7,7 @@ $(function () {
             // addCategoryToProduct();
         }
     );
-    addCategoryToProduct();
-});
 
-function addCategoryToProduct() {
     $('#addProductForReview').click(function () {
             var csrfParameter = $("meta[name='_csrf_parameter']").attr("content");
             var csrfHeader = $("meta[name='_csrf_header']").attr("content");
@@ -30,7 +27,7 @@ function addCategoryToProduct() {
             );
         }
     );
-}
+});
 
 function addDeviderAndUserOption() {
     var content = "<input type='text' class='bss-input' onKeyDown='event.stopPropagation();' onKeyPress='addSelectInpKeyPress(this,event)' onClick='event.stopPropagation()' placeholder='Add item'> <span class='glyphicon glyphicon-plus addnewicon' onClick='addSelectItem(this,event,1);'></span>";
