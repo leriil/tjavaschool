@@ -1,21 +1,28 @@
 $(function () {
+
     $.get(
         ctx + "/product/categories",
         function (result) {
             addOptions(result);
             addDeviderAndUserOption();
-            // addCategoryToProduct();
+            addCategoryToProduct();
         }
     );
+    $('.selectpicker').change(function () {
+        addCategoryToProduct();
+    });
 
-    $('#addProductForReview').click(function () {
+});
+
+function addCategoryToProduct() {
+    // $('#addProductForReview').click(function () {
             var csrfParameter = $("meta[name='_csrf_parameter']").attr("content");
             var csrfHeader = $("meta[name='_csrf_header']").attr("content");
             var csrfToken = $("meta[name='_csrf']").attr("content");
             var headers = {};
             headers[csrfHeader] = csrfToken;
-            var value = $(":selected").val();
-            var text = $(":selected").text();
+            var value=$(":selected").val();
+            var text=$(":selected").text();
             $.ajax({
                     url: ctx + "/product/category/add",
                     dataType: 'json',
@@ -23,11 +30,10 @@ $(function () {
                     headers: headers,
                     contentType: 'text/plain',
                     data: value
+
                 }
             );
-        }
-    );
-});
+}
 
 function addDeviderAndUserOption() {
     var content = "<input type='text' class='bss-input' onKeyDown='event.stopPropagation();' onKeyPress='addSelectInpKeyPress(this,event)' onClick='event.stopPropagation()' placeholder='Add item'> <span class='glyphicon glyphicon-plus addnewicon' onClick='addSelectItem(this,event,1);'></span>";
@@ -51,6 +57,7 @@ function addOptions(options) {
         $('.selectpicker')
             .append(option);
     }
+    $(".selectpicker :first").attr("selected", "selected");
     $('.selectpicker').selectpicker('refresh');
 }
 
@@ -66,6 +73,8 @@ function addSelectItem(t, ev) {
         "text": txt
     }));
     p.selectpicker('refresh');
+    addCategoryToProduct();
+
 }
 
 function addSelectInpKeyPress(t, ev) {
