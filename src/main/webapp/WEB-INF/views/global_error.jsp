@@ -18,10 +18,11 @@
 
 <div class="container">
 
-    <h2>An error was encountered and handled by a global ExceptionHandlerResolver</h2>
-    Requested URL= ${requestUri}<br><br>
+    <h2>This message is displayed when something goes wrong in the application</h2>
+    <h2>Try to repeat the process and be careful with the data you submit</h2>
+    <%--Requested URL= ${requestUri}<br><br>--%>
 
-    Exception= ${exception}<br><br>
+    <%--Exception= ${exception}<br><br>--%>
 </div>
 </body>
 </html>
