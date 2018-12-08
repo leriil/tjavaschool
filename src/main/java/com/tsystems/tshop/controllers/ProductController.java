@@ -19,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Objects;
 
 @Controller
 @SessionAttributes({"product"})
@@ -48,10 +47,11 @@ public class ProductController {
 
     @ResponseBody
     @PostMapping("/category/add")
-    public void setProductCategory(@RequestBody String categoryName,
-                                   @ModelAttribute Product product) {
+    public Product setProductCategory(@RequestBody String categoryName,
+                                      @ModelAttribute Product product) {
 
         product.setCategory(categoryService.getCategoryByName(categoryName));
+        return product;
 
     }
 
@@ -125,11 +125,12 @@ public class ProductController {
     public String findProduct(Model model,
                               @PathVariable Long productId,
                               SessionStatus status) {
-        try{
+
+        try {
             model.addAttribute("product", this.productService.findProductById(productId));
             status.setComplete();
             return "product";
-        }catch (NoSuchElementException e){
+        } catch (NoSuchElementException e) {
             return "product_not_found";
         }
 
