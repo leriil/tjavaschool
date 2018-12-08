@@ -85,13 +85,34 @@ $(document).ready(function () {
         });
     $("#user-birthdate").on('change',
         function () {
-            if (!moment($("#user-birthdate").val(), 'YYYY-MM-DD', true).isValid()) {
+            if ( $("#user-birthdate").val().length == 0) {
+                $("#valid-user-birthday").text("");
+                $("#btn-save").removeAttr("disabled");
+            }
+            else if (!moment($("#user-birthdate").val(), 'YYYY-MM-DD', true).isValid()) {
                 $("#valid-user-birthday").text("Invalid date format. Try using a calendar.");
                 $("#btn-save").attr("disabled", "disabled");
             }
             else if (moment($("#user-birthdate").val(), 'YYYY-MM-DD', true).isValid()) {
                 $("#valid-user-birthday").text("");
                 $("#btn-save").removeAttr("disabled");
+            }
+        }
+    );
+
+    $("#account-user-birthdate").on('change',
+        function () {
+            if ($("#account-user-birthdate").val().length == 0) {
+                $("#valid-account-user-birthday").text("");
+                $("#account-valid").removeAttr("disabled");
+            }
+            else if (!moment($("#account-user-birthdate").val(), 'YYYY-MM-DD', true).isValid()) {
+                $("#valid-account-user-birthday").text("Invalid date format. Try using a calendar.");
+                $("#account-valid").attr("disabled", "disabled");
+            }
+            else if (moment($("#account-user-birthdate").val(), 'YYYY-MM-DD', true).isValid()) {
+                $("#valid-account-user-birthday").text("");
+                $("#account-valid").removeAttr("disabled");
             }
         }
     );
