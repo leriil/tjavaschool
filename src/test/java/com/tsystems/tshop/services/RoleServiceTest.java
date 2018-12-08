@@ -16,7 +16,6 @@ import static org.mockito.Mockito.when;
 
 @DisplayName("RoleService")
 @ExtendWith(MockitoExtension.class)
-//@RunWith(JUnitPlatform.class)
 class RoleServiceTest {
 
     private RoleService roleService;
@@ -48,21 +47,4 @@ class RoleServiceTest {
 
     }
 
-    //TODO:remove this . it's a learning test
-    @Test
-    @DisplayName("first test")
-    void firstTest() {
-
-        Throwable exception = assertThrows(IllegalArgumentException.class,
-                () -> {
-                    throw new IllegalArgumentException("a message");
-                });
-
-        assertAll(
-                () -> assertEquals(2, 1 + 1, "optional parameter"),
-                () -> assertTrue('a' < 'b', "message"),
-                () -> assertNotNull(role.getName()),
-                () -> assertEquals("a message", exception.getMessage())
-        );
-    }
 }
