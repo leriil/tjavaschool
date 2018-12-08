@@ -9,13 +9,6 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long>, ProductRepositoryCustom {
 
-    List<Product> findAllByOrderByNameAsc();
-
     List<Product> findProductsByNameContains(String name);
-
-    List<Product> findAllByOrderByCategoryCategoryNameAsc();
-
-    List<Product> findAllByOrderByCategoryCategoryNameDesc();
-
 
 }

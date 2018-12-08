@@ -7,6 +7,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "address")
 public class Address {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "address_id")
@@ -37,63 +38,78 @@ public class Address {
     private String flat;
 
     public String getCountry() {
+
         return country;
     }
 
     public void setCountry(String country) {
+
         this.country = country;
     }
 
     public String getCity() {
+
         return city;
     }
 
     public void setCity(String city) {
+
         this.city = city;
     }
 
     public String getZipCode() {
+
         return zipCode;
     }
 
     public void setZipCode(String postalCode) {
+
         this.zipCode = postalCode;
     }
 
     public String getStreet() {
+
         return street;
     }
 
     public void setStreet(String street) {
+
         this.street = street;
     }
 
     public String getHouse() {
+
         return house;
     }
 
     public void setHouse(String house) {
+
         this.house = house;
     }
 
     public String getFlat() {
+
         return flat;
     }
 
     public void setFlat(String flat) {
+
         this.flat = flat;
     }
 
     public Long getAddressId() {
+
         return addressId;
     }
 
     public void setAddressId(Long addressId) {
+
         this.addressId = addressId;
     }
 
     @Override
     public boolean equals(Object o) {
+
         if (o == null || getClass() != o.getClass()) return false;
         Address address = (Address) o;
         return Objects.equals(country, address.country) &&
@@ -112,6 +128,7 @@ public class Address {
 
     @Override
     public String toString() {
+
         return "Address{" +
                 "country='" + country + '\'' +
                 ", city='" + city + '\'' +
