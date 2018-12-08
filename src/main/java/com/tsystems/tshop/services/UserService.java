@@ -38,8 +38,10 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    /**Creates a new user with role ClIENT, no address, and an encoded password,
+    /**
+     * Creates a new user with role ClIENT, no address, and an encoded password,
      * then authenticates that user.
+     *
      * @param user is saved and authenticated
      */
     public void saveAndAuthenticateNewUser(User user) {
@@ -72,7 +74,9 @@ public class UserService {
 
     public User updateUserInfo(User user) {
 
-        addressService.save(user.getAddress());
+        if (Objects.nonNull(user.getAddress())) {
+            addressService.save(user.getAddress());
+        }
         this.encodeAndSetPassword(user);
         userRepository.save(user);
         return this.getUser();
@@ -136,8 +140,10 @@ public class UserService {
         return user;
     }
 
-    /** Encodes the password entered by the user and assigns it to password
+    /**
+     * Encodes the password entered by the user and assigns it to password
      * and confirmPassword fields.
+     *
      * @param user for whom the password is set
      */
     private void encodeAndSetPassword(User user) {

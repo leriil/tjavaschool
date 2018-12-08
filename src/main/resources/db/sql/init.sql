@@ -28,16 +28,16 @@ insert into user(name, surname, login, password, confirm_password, birth_date, e
 insert into user(name, surname, login, password, confirm_password, birth_date, email, address_id) values ('Anna','Jones','anna','$2a$10$xjdEZDHt5k/sS0hEoGu4d.xrvgkqp2UDnrzIF3cQ6ulPXJ/daNL52','$2a$10$xjdEZDHt5k/sS0hEoGu4d.xrvgkqp2UDnrzIF3cQ6ulPXJ/daNL52','1990-11-19','anna@yandex.ru',6);
 
 insert into product(name, category_id, in_stock, price, color, weight) values ('Energizer AA Batteries, Double A Battery Max Alkaline (48 Count)',1,20,18.99 ,NULL ,100);
-insert into product(name, category_id, in_stock, price, color, weight) values ('Fitbit Versa Smart Watch, One Size (S & L Bands Included)',1,10,199.95 ,'Gray/Silver Aluminium' ,57);
+insert into product(name, category_id, in_stock, price, color, weight) values ('Fitbit Versa Smart Watch, One Size (S & L Bands Included)',1,10,199.95 ,'Gray/Silver' ,57);
 insert into product(name, category_id, in_stock, price, color, weight) values ('Fujifilm Instax Mini 9 Instant Camera',2,15,56.00 ,'Ice Blue' ,200);
-insert into product(name, category_id, in_stock, price, color, weight) values ('GoPro HERO5 Waterproof Digital Action Camera for Travel with Touch Screen 4K HD Video 12MP Photos',2,15,248.00 ,'Black' ,150);
-insert into product(name, category_id, in_stock, price, color, weight) values ('WD 2TB Elements Portable External Hard Drive - USB 3.0 - WDBU6Y0020BBK-WESN',3,5,74.47 ,NULL ,20);
-insert into product(name, category_id, in_stock, price, color, weight) values ('HP 23.8-inch FHD IPS Monitor with Tilt/Height Adjustment and Built-in Speakers (VH240a, Black)',3,20,109.99 ,NULL ,3020);
-insert into product(name, category_id, in_stock, price, color, weight) values ('Jabra Elite Active 65t Alexa Enabled True Wireless Sports Earbuds with Charging Case',4,20, 159.99 ,'Copper Blue' ,13);
-insert into product(name, category_id, in_stock, price, color, weight) values ('Samsung Galaxy S7 SM-G930V 32GB for Verizon (Certified Refurbished)',5,20, 210.07 ,NULL ,90);
+insert into product(name, category_id, in_stock, price, color, weight) values ('GoPro HERO5 Waterproof Digital Action Camera for Travel with Touch Screen',2,15,248.00 ,'Black' ,150);
+insert into product(name, category_id, in_stock, price, color, weight) values ('WD 2TB Elements Portable External Hard Drive - USB 3.0',3,5,74.47 ,NULL ,20);
+insert into product(name, category_id, in_stock, price, color, weight) values ('HP 23.8-inch FHD IPS Monitor with Tilt/Height Adjustment and Built-in Speakers',3,20,109.99 ,'Black' ,3020);
+insert into product(name, category_id, in_stock, price, color, weight) values ('Jabra Elite Active 65t Alexa Enabled True Wireless Sports Earbuds',4,20, 159.99 ,'Copper Blue' ,13);
+insert into product(name, category_id, in_stock, price, color, weight) values ('Samsung Galaxy S7 SM-G930V 32GB',5,20, 210.07 ,NULL ,90);
 insert into product(name, category_id, in_stock, price, color, weight) values ('Apple iPod Touch 128GB (6th Generation) Newest Model',5,20,215.40 ,'Space Gray' ,110);
 insert into product(name, category_id, in_stock, price, color, weight) values ('All-New Kindle Paperwhite Leather Cover (10th Generation-2018)',6,20, 39.99 ,'Black' ,60);
-insert into product(name, category_id, in_stock, price, color, weight) values ('All-new Kindle Paperwhite Now Waterproof with 2x the Storage (International Version)',5,20,149.00 ,NULL ,75);
+insert into product(name, category_id, in_stock, price, color, weight) values ('All-new Kindle Paperwhite Now Waterproof with 2x the Storage',5,20,149.00 ,NULL ,75);
 
 insert into user_role(user_id,role_id)values (1,1);
 insert into user_role(user_id,role_id)values (2,1);

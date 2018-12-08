@@ -45,21 +45,20 @@ public class OrderService {
         this.paymentRepository = paymentRepository;
     }
 
-
     /**
      * Creates a CardWithdrawal object which is passed to PaymentRepository
      * in an HttpEntity via RestTemplate. If the response.statusCode() is ok,
      * sets order's paymentStatus to PAID and passes the order and the products
-     * to saveOrder(Order order, List <Product> products) method.
+     * to saveOrder method.
      *
      * @param card     used to create a CardWithdrawal object
      * @param order    saved to the database if payment process is successful
      * @param products a total for this list is estimated and used to create a CardWithrawal object
-     * @throws RuntimeException if the statusCode() of the return value of the RestTemplate object
+     * @throws Exception if the statusCode() of the return value of the RestTemplate object
      *                          is not HttpStatus.OK.
      */
 
-    public void payWithCard(Card card, Order order, List<Product> products)  {
+    public void payWithCard(Card card, Order order, List<Product> products) throws Exception {
 
         CardWithdrawal data = new CardWithdrawal(card, productService.getTotal(products));
 
@@ -70,16 +69,14 @@ public class OrderService {
             order.setPaymentStatus(PaymentStatus.PAID);
             this.saveOrder(order, products);
 
-        } else throw new RuntimeException();
+        } else throw new Exception();
     }
 
 
     /**
-     * Saves an order to the a database.
-     * @param order    an order to be saved
-     * @param products products to be associated with that order
+     * @param order    is saved to the database
+     * @param products a list of products to be added to the order
      */
-
     public void saveOrder(Order order, List<Product> products) {
 
         addressService.save(order.getAddress());
@@ -261,7 +258,7 @@ public class OrderService {
      *
      * @param productsInCart a user's shopping cart
      * @param productId      an id of the product to be removed from the database
-     * @return
+     * @return user's shopping cart without the removed product
      */
     public List<Product> removeProductFromCart(List<Product> productsInCart, Long productId) {
 
