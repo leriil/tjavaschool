@@ -48,7 +48,7 @@
     <spring:url value="/register" var="registerVar"/>
     <form:form action="${registerVar}" method="POST" modelAttribute="user">
         <div class="form-group">
-            <label for="user-login"> Login<span class="errors">&#42;</span></label>
+            <label for="user-login">Login<span class="errors">&#42;</span></label>
             <form:input path="login" cssClass="form-control" id="user-login"/>
             <form:errors path="login" cssClass="errors"></form:errors>
         </div>
@@ -76,9 +76,9 @@
                  data-date="" data-date-format="yyyy-mm-dd">
                 <div class="form-inline col-sm-5">
                     <form:input path="birthDate" cssClass="pull-left form-control" id="user-birthdate"/>
+                    <form:errors path="birthDate" cssClass="errors"></form:errors>
                     <span style="margin-left: 7px; margin-top: 7px" class="add-on pull-left"><i
                             class="glyphicon glyphicon-calendar"></i></span></div>
-                    <%--<form:errors path="birthDate" cssClass="errors"></form:errors>--%>
             </div>
             <p class="errors" id="valid-user-birthday"></p>
 

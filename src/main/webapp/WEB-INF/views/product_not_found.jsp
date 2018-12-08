@@ -21,7 +21,7 @@
     <table class="table table-hover">
         <tbody>
         <tr>
-            <h2>Sorry, the product you are asking for doesn't seem to be present in our database</h2>
+            <h4>Sorry, the product you are asking for doesn't seem to be present in our database</h4>
         </tr>
 
         </tbody>

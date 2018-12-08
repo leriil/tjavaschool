@@ -55,15 +55,8 @@
         </div>
 
 
-        <%--<div class="form-group">--%>
-        <%--<label>Indicators</label>--%>
-        <%--<c:forEach var="indicator" items="${resource.indicators}">--%>
-        <%--<span>${indicator}</span>--%>
-        <%--</c:forEach>--%>
-        <%--</div>--%>
-
-        <a href="<spring:url value="/product/add"/>" class="btn btn-default">Edit</a>
-        <a href="<spring:url value="/product/save"/>" class="btn btn-default">Save</a>
+        <a href="<spring:url value="/product/add"/>" class="btn btn-primary">Edit</a>
+        <a href="<spring:url value="/product/save"/>" class="btn btn-primary">Save</a>
         <p>
 
 

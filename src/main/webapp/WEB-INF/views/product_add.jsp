@@ -45,7 +45,7 @@
     </c:if>
 
     <spring:url value="/product/review" var="formUrl"/>
-    <form:form action="${formUrl}" method="POST" modelAttribute="product">
+    <form:form action="${formUrl}" method="POST" modelAttribute="product" id="productForm">
 
         <div class="row">
 

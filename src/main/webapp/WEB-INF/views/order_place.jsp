@@ -90,13 +90,13 @@
         <div class="row">
 
             <div class="form-group">
-                <label for="order-user-name">Name</label>
+                <label for="order-user-name">Name<span class="errors">&#42;</span></label>
                 <form:input path="user.name" cssClass="form-control" id="order-user-name"/>
 
             </div>
 
             <div class="form-group">
-                <label for="order-user-surname">Surname</label>
+                <label for="order-user-surname">Surname<span class="errors">&#42;</span></label>
                 <form:input path="user.surname" cssClass="form-control" id="order-user-surname"/>
 
             </div>
@@ -104,36 +104,35 @@
         <h2>2.Shipping Address</h2>
         <div class="row">
             <div class="form-group">
-                <label for="order-country">Country</label>
+                <label for="order-country">Country<span class="errors">&#42;</span></label>
                 <form:input path="address.country" cssClass="form-control" id="order-country"/>
-
             </div>
 
             <div class="form-group">
-                <label for="order-city">City</label>
+                <label for="order-city">City<span class="errors">&#42;</span></label>
                 <form:input path="address.city" cssClass="form-control" id="order-city"/>
 
             </div>
             <div class="form-group">
-                <label for="order-zip">ZipCode</label>
+                <label for="order-zip">ZipCode<span class="errors">&#42;</span></label>
                 <form:input path="address.zipCode" cssClass="form-control" id="order-zip"/>
 
             </div>
 
             <div class="form-group">
-                <label for="order-street">Street</label>
+                <label for="order-street">Street<span class="errors">&#42;</span></label>
                 <form:input path="address.street" cssClass="form-control" id="order-street"/>
 
             </div>
 
             <div class="form-group">
-                <label for="order-house">House</label>
+                <label for="order-house">House<span class="errors">&#42;</span></label>
                 <form:input path="address.house" cssClass="form-control" id="order-house"/>
 
             </div>
 
             <div class="form-group">
-                <label for="order-flat">Flat</label>
+                <label for="order-flat">Flat<span class="errors">&#42;</span></label>
                 <form:input path="address.flat" cssClass="form-control" id="order-flat"/>
 
             </div>

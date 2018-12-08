@@ -19,20 +19,12 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="<spring:url value="/resources/js/bootstrap-datepicker.js"/>"></script>
 
-
-    <%--<head>--%>
-    <%--<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">--%>
-    <%--<title>Account</title>--%>
-    <%--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">--%>
     <link rel="stylesheet" href="<spring:url value="/resources/css/bootstrap-select.min.css"/>" type="text/css"/>
 
-    <%--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>--%>
-    <%--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>--%>
     <script src="<spring:url value="/resources/js/bootstrap-select.min.js"/>"></script>
 
-    <%----%>
-
     <script src="<c:url value="/resources/js/global.js"/>"></script>
+    <script src="<spring:url value="/resources/js/moment.js"/>"></script>
     <script src="<c:url value="/resources/js/addToCart.js"/>"></script>
     <script src="<c:url value="/resources/js/removeFromCart.js"/>"></script>
     <script src="<spring:url value="/resources/js/dates.js"/>"></script>
@@ -85,6 +77,7 @@
                             class="glyphicon glyphicon-calendar"></i></span></div>
                 <form:errors path="birthDate" cssClass="errors"></form:errors>
             </div>
+            <p class="errors" id="valid-account-user-birthday"></p>
 
         </div>
 
@@ -140,11 +133,10 @@
         <div class="form-group">
             <label for="account-password">Confirm Password</label>
             <form:password path="confirmPassword" cssClass="form-control" id="account-password"/>
-                <%--<form:errors path="confirmPassword" cssClass="errors"/>--%>
-                <%--showPassword="true"--%>
+
         </div>
         <div class="row button-spacing">
-            <button type="submit" class="btn btn-primary button-spacing">Confirm</button>
+            <button id="account-valid" type="submit" class="btn btn-primary button-spacing">Confirm</button>
         </div>
     </div>
 
