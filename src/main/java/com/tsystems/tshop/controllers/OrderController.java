@@ -142,9 +142,7 @@ public class OrderController {
         model.addAttribute("paymentOptions", paymentOptions);
         List<String> deliveryOptions = new ArrayList<>(Arrays.asList("pickup", "delivery"));
         model.addAttribute("deliveryOptions", deliveryOptions);
-
         model.addAttribute("cartItems", productsInCart.size());
-
         this.orderService.createNewOrder(order);
         LOGGER.info("order " + order + " was created");
         return "order_place";
@@ -209,7 +207,7 @@ public class OrderController {
         try {
             this.orderService.payWithCard(card, order, productsInCart);
             sessionStatus.setComplete();
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             return "redirect:/order/save?paymentProblem=true";
         }
 
